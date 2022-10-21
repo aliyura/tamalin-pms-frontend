@@ -6,17 +6,19 @@ import "../static/css/color_2.css";
 import "../static/css/bootstrap-select.css";
 import "../static/css/perfect-scrollbar.css";
 import "../static/css/custom.css";
+import "../static/css/users.css";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
+import { useTokenContext } from "../store/loginContext";
 
 const Login = () => {
-  const [emailText, setEmailText] = useState("");
+  const [phoneText, setPhoneText] = useState("");
   const [passwordText, setPasswordText] = useState("");
-  const emailRef = useRef();
+  const phoneRef = useRef();
   const passwordRef = useRef();
   const [signInButtonActivated, setSignInButtonActivated] = useState(false);
-  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const { setisAuthenticated } = useLoginContext();
   const navigate = useNavigate();
@@ -26,12 +28,14 @@ const Login = () => {
 
     await instance
       .post(`auth/login`, {
-        username: emailText,
+        username: phoneText,
         password: passwordText,
       })
       .then((res) => {
-        console.log(`Successfully logged in ${res}`);
+        console.log(res.data);
         setisAuthenticated(true);
+        sessionStorage.setItem("token", res.data.data.access_token);
+        const token = sessionStorage.getItem("token");
         navigate("/");
       })
       .catch((err) => {
@@ -57,14 +61,14 @@ const Login = () => {
 
   let formIsValid = false;
 
-  const EmailHandler = () => {
-    setEmailText(emailRef.current.value);
-    if (emailText === "") {
+  const PhoneHandler = () => {
+    setPhoneText(phoneRef.current.value);
+    if (phoneText === "") {
       // if (emailRef.current.value === "") {
-      setEmailError(true);
+      setPhoneError(true);
       setSignInButtonActivated(false);
     } else {
-      setEmailError(false);
+      setPhoneError(false);
       setSignInButtonActivated(passwordError ? false : true);
     }
 
@@ -79,7 +83,7 @@ const Login = () => {
       setSignInButtonActivated(false);
     } else {
       setPasswordError(false);
-      setSignInButtonActivated(emailError ? false : true);
+      setSignInButtonActivated(phoneError ? false : true);
     }
 
     // validate();
@@ -100,24 +104,26 @@ const Login = () => {
           <div className="login_section">
             <div className="logo_login">
               <div className="center">
-                <img width="210" src="assets/images/logo/logo.png" alt="#" />
+                <h1 className="heading">Login</h1>
+                {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
               </div>
             </div>
             <div className="login_form">
               <form onSubmit={LoginUser}>
                 <fieldset>
                   <div className="field">
-                    <label className="label_field">Email Address</label>
+                    <label className="label_field">Phone Number</label>
                     <input
-                      type="email"
-                      ref={emailRef}
-                      // value={emailText}
-                      name="email"
-                      placeholder="E-mail"
-                      onBlur={EmailHandler}
-                      onChange={EmailHandler}
+                      type="tel"
+                      ref={phoneRef}
+                      name="tel"
+                      placeholder="Phone number"
+                      onBlur={PhoneHandler}
+                      onChange={PhoneHandler}
                     />
-                    <p>{emailError ? "Invalid Email Address" : ""}</p>
+                    <p className="err-color">
+                      {phoneError ? "Invalid Phone Number" : ""}
+                    </p>
                   </div>
                   <div className="field">
                     <label className="label_field">Password</label>
@@ -130,7 +136,9 @@ const Login = () => {
                       onBlur={PasswordHandler}
                       onChange={PasswordHandler}
                     />
-                    <p>{passwordError ? "Password empty" : ""}</p>
+                    <p className="err-color">
+                      {passwordError ? "Password empty" : ""}
+                    </p>
                   </div>
                   <div className="field">
                     <label className="label_field hidden">hidden label</label>
