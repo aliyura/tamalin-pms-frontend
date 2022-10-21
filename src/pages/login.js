@@ -6,6 +6,7 @@ import "../static/css/color_2.css";
 import "../static/css/bootstrap-select.css";
 import "../static/css/perfect-scrollbar.css";
 import "../static/css/custom.css";
+import { instance } from "../api";
 
 const Login = () => {
   const emailRef = useRef();
@@ -14,8 +15,20 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const Validate = (e) => {
+  const LoginUser = (e) => {
     e.preventDefault();
+
+    instance
+      .post(`auth/login`, {
+        username: emailRef.current.value,
+        password: passwordRef.current.value,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   const EmailBlurHandler = () => {
@@ -59,7 +72,7 @@ const Login = () => {
               </div>
             </div>
             <div className="login_form">
-              <form onSubmit={Validate}>
+              <form onSubmit={LoginUser}>
                 <fieldset>
                   <div className="field">
                     <label className="label_field">Email Address</label>
@@ -101,7 +114,7 @@ const Login = () => {
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
                     {signInButtonActivated ? (
-                      <button className="main_bt" onClick={Validate}>
+                      <button className="main_bt" onClick={LoginUser}>
                         Sign In
                       </button>
                     ) : (

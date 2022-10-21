@@ -4,19 +4,35 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 
-import { Routes, Route } from "react-router-dom";
-import Clients from "./pages/Clients";
-import Contracts from "./pages/Contracts";
-import Vehicles from "./pages/Vehicles";
-import Payments from "./pages/Payments";
-import Reports from "./pages/Reports";
-import Login from "./pages/Login";
+import { Routes, Route } from 'react-router-dom'
+import {useEffect} from 'react'
+import Clients from './pages/Clients';
+import Contracts from './pages/Contracts';
+import Vehicles from './pages/Vehicles';
+import Payments from './pages/Payments';
+import Reports from './pages/Reports';
+import instance from './api';
 
 function App() {
+
+      // useEffect(() => {
+      //   async function login() {
+      //     const request = await instance.post('auth/login/',
+      //          {   
+      //             "username":"08000000000",
+      //             "password":"Tamalin@2022"
+      //         })
+      //     console.log(request)
+      //   }
+      //   login()
+      // }, []);
+  
   return (
-    <div className="inner_container flex flex-column">
-      <Sidebar />
-      <div id="content">
+
+      
+        <div className='inner_container flex flex-column'>
+        <Sidebar />
+        <div id="content">
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
@@ -31,5 +47,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
