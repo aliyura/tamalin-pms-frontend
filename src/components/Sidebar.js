@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
     return (
@@ -6,7 +7,7 @@ const Sidebar = () => {
                <div className="sidebar_blog_1">
                   <div className="sidebar-header">
                      <div className="logo_section">
-                        <a href="index.html"><img className="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
+                        <Link to={'/'} ><img className="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></Link>
                      </div>
                   </div>
                </div>
@@ -14,16 +15,16 @@ const Sidebar = () => {
                 <h4>TAMALIN Logo</h4>
                   <ul className="list-unstyled components">
                      <li className="active">
-                            <a href="#dashboard" data-toggle="collapse" aria-expanded="false" className=""><i
-                                    className="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
+                            <Link to={'/'} data-toggle="collapse" aria-expanded="false" className=""><i
+                                    className="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></Link>
                     </li>
                     
                         <li>
                             <a href="#vehicles" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
                                     className="fa fa-diamond purple_color"></i> <span>Manage Vehicles</span></a>
                             <ul className="collapse list-unstyled" id="vehicles">
-                                <li><a href="general_elements.html">&gt; <span>Register Vehicles</span></a></li>
-                                <li><a href="media_gallery.html">&gt; <span>All Vehicles</span></a></li>
+                                <li><Link to={'/vehicles/'}>&gt; <span>Register Vehicles</span></Link></li>
+                                <li><Link to={'/vehicles'}>&gt; <span>All Vehicles</span></Link></li>
                             </ul>
                     </li>
                     
@@ -31,8 +32,8 @@ const Sidebar = () => {
                             <a href="#clients" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
                                     className="fa fa-object-group blue2_color"></i> <span>Manage Clients</span></a>
                             <ul className="collapse list-unstyled" id="clients">
-                                <li><a href="email.html">&gt; <span>Register a Client</span></a></li>
-                                <li><a href="calendar.html">&gt; <span>All Clients</span></a></li>
+                                <li><Link to={'/clients/'}>&gt; <span>Register a Client</span></Link></li>
+                                <li><Link  to={'/clients/'}>&gt; <span>All Clients</span></Link></li>
                             </ul>
                     </li>
 
@@ -40,7 +41,7 @@ const Sidebar = () => {
                             <a href="#contracts" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
                                     className="fa fa-object-group blue2_color"></i> <span>Manage Contracts</span></a>
                             <ul className="collapse list-unstyled" id="contracts">
-                                <li><a href="calendar.html">&gt; <span>All Contracts</span></a></li>
+                                <li><Link to={'/contracts'}>&gt; <span>All Contracts</span></Link></li>
                             </ul>
                     </li>
                     
@@ -48,8 +49,18 @@ const Sidebar = () => {
                             <a href="#payments" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
                                     className="fa fa-object-group blue2_color"></i> <span>Manage Payments</span></a>
                             <ul className="collapse list-unstyled" id="payments">
-                                <li><a href="email.html">&gt; <span>Pending Payments</span></a></li>
-                                <li><a href="calendar.html">&gt; <span>Monthly Report</span></a></li>
+                                <li><Link to={'/contracts'}>&gt; <span>Pending Payments</span></Link></li>
+                                <li><Link to={'/contracts/monthly-report'}>&gt; <span>Monthly Report</span></Link></li>
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <a href="#payments" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
+                                    className="fa fa-object-group blue2_color"></i> <span>Reports</span></a>
+                            <ul className="collapse list-unstyled" id="payments">
+                                <li><Link to={'/contracts'}>&gt; <span>Clients</span></Link></li>
+                                <li><Link to={'/contracts/monthly-report'}>&gt; <span>Vehicles</span></Link></li>
+                                <li><Link to={'/contracts/monthly-report'}>&gt; <span>Payments</span></Link></li>
                             </ul>
                         </li>
                     </ul>

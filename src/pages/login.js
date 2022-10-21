@@ -1,44 +1,112 @@
-const login = () => {
+import { useRef, useState } from "react";
+import "../static/css/bootstrap.min.css";
+import "../static/css/responsive.css";
+import "../static/css/style.css";
+import "../static/css/color_2.css";
+import "../static/css/bootstrap-select.css";
+import "../static/css/perfect-scrollbar.css";
+import "../static/css/custom.css";
+
+const Login = () => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const [signInButtonActivated, setSignInButtonActivated] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  const Validate = (e) => {
+    e.preventDefault();
+  };
+
+  const EmailBlurHandler = () => {
+    if (emailRef.current.value !== "" && emailRef.current.value.includes("@"))
+      setEmailError(false);
+    else setEmailError(true);
+  };
+
+  const PasswordBlurHandler = () => {
+    if (passwordRef.current.value === "") setPasswordError(true);
+    else setPasswordError(false);
+  };
+
+  const EmailHandler = () => {
+    if (emailRef.current.value !== "" && emailRef.current.value.includes("@"))
+      setEmailError(false);
+    else setEmailError(true);
+
+    if (emailError === true || passwordError === true)
+      setSignInButtonActivated(false);
+    else setSignInButtonActivated(true);
+  };
+
+  const PasswordHandler = () => {
+    if (passwordRef.current.value === "") setPasswordError(true);
+    else setPasswordError(false);
+
+    if (emailError === true || passwordError === true)
+      setSignInButtonActivated(false);
+    else setSignInButtonActivated(true);
+  };
+
   return (
-    <div class="full_container">
-      <div class="container">
-        <div class="center verticle_center full_height">
-          <div class="login_section">
-            <div class="logo_login">
-              <div class="center">
-                <img width="210" src="images/logo/logo.png" alt="#" />
+    <div className="full_container">
+      <div className="container">
+        <div className="center verticle_center full_height">
+          <div className="login_section">
+            <div className="logo_login">
+              <div className="center">
+                <img width="210" src="assets/images/logo/logo.png" alt="#" />
               </div>
             </div>
-            <div class="login_form">
-              <form>
+            <div className="login_form">
+              <form onSubmit={Validate}>
                 <fieldset>
-                  <div class="field">
-                    <label class="label_field">Email Address</label>
-                    <input type="email" name="email" placeholder="E-mail" />
+                  <div className="field">
+                    <label className="label_field">Email Address</label>
+                    <input
+                      type="email"
+                      ref={emailRef}
+                      name="email"
+                      placeholder="E-mail"
+                      onBlur={EmailBlurHandler}
+                      onChange={EmailHandler}
+                    />
+                    <p>{emailError ? "Invalid Email Address" : ""}</p>
                   </div>
-                  <div class="field">
-                    <label class="label_field">Password</label>
+                  <div className="field">
+                    <label className="label_field">Password</label>
                     <input
                       type="password"
+                      ref={passwordRef}
                       name="password"
                       placeholder="Password"
+                      onBlur={PasswordBlurHandler}
+                      onChange={PasswordHandler}
                     />
+                    <p>{passwordError ? "Password empty" : ""}</p>
                   </div>
-                  <div class="field">
-                    <label class="label_field hidden">hidden label</label>
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                        {" "}
-                        Remember Me
-                      </input>
+                  <div className="field">
+                    <label className="label_field hidden">hidden label</label>
+                    <label className="form-check-label">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        placeholder="Remember Me"
+                      />
                     </label>
-                    <a class="forgot" href="">
+                    <a className="forgot" href="#">
                       Forgotten Password?
                     </a>
                   </div>
-                  <div class="field margin_0">
-                    <label class="label_field hidden">hidden label</label>
-                    <button class="main_bt">Sing In</button>
+                  <div className="field margin_0">
+                    <label className="label_field hidden">hidden label</label>
+                    {signInButtonActivated ? (
+                      <button className="main_bt" onClick={Validate}>
+                        Sign In
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </fieldset>
               </form>
@@ -49,3 +117,5 @@ const login = () => {
     </div>
   );
 };
+
+export default Login;

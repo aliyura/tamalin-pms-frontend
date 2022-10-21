@@ -1,4 +1,5 @@
 import React from 'react';
+import DashboardCalender from '../components/DashboardCalender';
 import StatsCard from '../components/StatsCard';
 
 const Dashboard = () => {
@@ -15,11 +16,14 @@ const Dashboard = () => {
                 </div>
             {/* Entities Card */}
                 <div className="row column1">
-                <StatsCard title={"Vehicles"} total={345} icon={'automobile'} />
-                <StatsCard title={"Clients"} total={345} icon={'users'} />
-                <StatsCard title={"Contracts"} total={345} icon={'file'} />
-                <StatsCard title={"Payments"} total={345} icon={'money'} />
-                </div>
+                    <StatsCard title={"Vehicles"} total={345} icon={'automobile'} />
+                    <StatsCard title={"Clients"} total={345} icon={'users'} />
+                    <StatsCard title={"Contracts"} total={345} icon={'file'} />
+                    <StatsCard title={"Payments"} total={345} icon={'money'} />
+            </div>
+            {/* Calender */ }
+            <DashboardCalender />
+            
         </div>
 
 
