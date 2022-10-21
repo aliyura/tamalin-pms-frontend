@@ -1,17 +1,17 @@
-                <div class="charts">
-                    <div class="col-md-4 charts-grids widget">
-                        <h4 class="title">Bar Chart Example</h4>
+                <div className="charts">
+                    <div className="col-md-4 charts-grids widget">
+                        <h4 className="title">Bar Chart Example</h4>
                         <canvas id="bar" height="300" width="400"> </canvas>
                     </div>
-                    <div class="col-md-4 charts-grids widget states-mdl">
-                        <h4 class="title">Line Chart Example</h4>
+                    <div className="col-md-4 charts-grids widget states-mdl">
+                        <h4 className="title">Line Chart Example</h4>
                         <canvas id="line" height="300" width="400"> </canvas>
                     </div>
-                    <div class="col-md-4 charts-grids widget">
-                        <h4 class="title">Pie Chart Example</h4>
+                    <div className="col-md-4 charts-grids widget">
+                        <h4 className="title">Pie Chart Example</h4>
                         <canvas id="pie" height="300" width="400"> </canvas>
                     </div>
-                    <div class="clearfix"> </div>
+                    <div className="clearfix"> </div>
                     <script>
                         var barChartData = {
                             labels: ["Jan", "Feb", "March", "April", "May", "June", "July"],

@@ -12,21 +12,8 @@ const Main = () => {
                             </div>
                         </div>
                         <div className="row column1">
-                            <div className="col-md-6 col-lg-3">
-                                <div className="full counter_section margin_bottom_30">
-                                    <div className="couter_icon">
-                                        <div>
-                                            <i className="fa fa-user yellow_color"></i>
-                                        </div>
-                                    </div>
-                                    <div className="counter_no">
-                                        <div>
-                                            <p className="total_no">2500</p>
-                                            <p className="head_couter">Welcome</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
+                    
                             <div className="col-md-6 col-lg-3">
                                 <div className="full counter_section margin_bottom_30">
                                     <div className="couter_icon">
