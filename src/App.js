@@ -13,6 +13,7 @@ import Payments from "./pages/Payments";
 import Reports from "./pages/Reports";
 import Login from "./pages/Login";
 import { LoginContext } from "./store/loginContext";
+import CreateUser from "./pages/CreateUser";
 
 function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -43,6 +44,7 @@ function App() {
             <Route path="/payments" element={<Payments />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/createuser" element={<CreateUser />} />
           </Routes>
         </LoginContext.Provider>
       </div>
