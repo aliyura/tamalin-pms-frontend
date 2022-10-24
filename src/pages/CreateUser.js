@@ -22,17 +22,20 @@ const CreateUser = () => {
   const passwordRef = useRef();
   const ninRef = useRef();
   const roleRef = useRef();
-  const [signInButtonActivated, setSignInButtonActivated] = useState(false);
+  const [createButtonActivated, setSignInButtonActivated] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [ninError, setNinError] = useState(false);
   const [roleError, setRoleError] = useState(false);
+  const [error, setError] = useState("");
   const { setisAuthenticated } = useLoginContext();
+  const [createIsClicked, setCreateIsClicked] = useState(false);
   const navigate = useNavigate();
 
   const CreateUser = async (e) => {
     e.preventDefault();
+    setCreateIsClicked(true);
     const token = sessionStorage.getItem("token");
     await instance
       .post(
@@ -55,8 +58,12 @@ const CreateUser = () => {
         console.log(res);
         setisAuthenticated(true);
         navigate("/");
+        setCreateIsClicked(false);
       })
       .catch((err) => {
+        const { message } = err.response.data;
+        setError(message);
+        setCreateIsClicked(false);
         console.log(err);
       });
 
@@ -139,6 +146,7 @@ const CreateUser = () => {
               </div>
             </div>
             <div className="login_form">
+              <p className="err-color">{error}</p>
               <form onSubmit={CreateUser}>
                 <fieldset>
                   <div className="field">
@@ -230,8 +238,15 @@ const CreateUser = () => {
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
 
-                    {signInButtonActivated ? (
-                      <button className="main_bt" onClick={CreateUser}>
+                    {createButtonActivated ? (
+                      <button
+                        className="main_bt"
+                        onClick={CreateUser}
+                        disabled={createIsClicked ? true : false}
+                        style={{
+                          backgroundColor: createIsClicked ? "#e6e6e6" : null,
+                        }}
+                      >
                         Sign In
                       </button>
                     ) : (
