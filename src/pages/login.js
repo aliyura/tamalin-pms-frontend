@@ -1,12 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import "../static/css/bootstrap.min.css";
-import "../static/css/responsive.css";
-import "../static/css/style.css";
-import "../static/css/color_2.css";
-import "../static/css/bootstrap-select.css";
-import "../static/css/perfect-scrollbar.css";
-import "../static/css/custom.css";
-import "../static/css/users.css";
+import { useRef, useState } from "react";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
@@ -34,7 +26,7 @@ const Login = () => {
         console.log(res.data);
         setIsAuthenticated(true);
         sessionStorage.setItem("token", res.data.data.access_token);
-        const token = sessionStorage.getItem("token");
+        // const token = sessionStorage.getItem("token");
         sessionStorage.setItem("isAuthenticated", "true");
         navigate("/");
       })
@@ -59,7 +51,7 @@ const Login = () => {
   //   // } else setPasswordError(false);
   // };
 
-  let formIsValid = false;
+  // let formIsValid = false;
 
   const PhoneHandler = () => {
     setPhoneText(phoneRef.current.value);
