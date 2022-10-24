@@ -1,4 +1,3 @@
-import "./App.css";
 // import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -13,32 +12,26 @@ import Reports from "./pages/Reports";
 import Login from "./pages/login";
 import { LoginContext } from "./store/loginContext";
 import CreateUser from "./pages/CreateUser";
+import Layout from "./Layout";
 
 function App() {
-  const [isAuthenticated, setisAuthenticated] = useState(false);
-  const [isLoginPage, setLoginPage] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("isAuthenticated"));
 
   return (
-    <div className="inner_container flex flex-column">
-      {isLoginPage ? <p></p> : <Sidebar />}
-      <div id="content">
-        {isLoginPage ? <p></p> : <Header isAuthenticated={isAuthenticated} />}
-        <LoginContext.Provider
-          value={{ isAuthenticated, setisAuthenticated, isLoginOn: isLoginPage, setLoginPage }}
-        >
-          <Routes>
+        <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Layout />} >
             <Route path="/" element={<Dashboard />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/contracts" element={<Contracts />} />
             <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/payments" element={<Payments />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/login" element={<Login login={setLoginPage} />} />
             <Route path="/createuser" element={<CreateUser />} />
-          </Routes>
+          </Route>
+      </Routes>
         </LoginContext.Provider>
-      </div>
-    </div>
   );
 }
 
