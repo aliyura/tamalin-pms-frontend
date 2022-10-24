@@ -3270,6 +3270,7 @@ table.projects tr td:first-child {
     min-height: 540px;
     width: 100%;
     box-shadow: 0px 0 10px -8px #000;
+    margin-top: 80rem;
     margin: 0px;
     padding: 0;
     border-radius: 10px;

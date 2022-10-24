@@ -19,12 +19,19 @@ const Login = () => {
   const [signInButtonActivated, setSignInButtonActivated] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [error, setError] = useState("");
+  const [loginIsClicked, setLoginIsClicked] = useState(false);
   const { setIsAuthenticated } = useLoginContext();
+
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   props.login(true);
+  // }, []);
 
   const LoginUser = async (e) => {
     e.preventDefault();
-
+    setLoginIsClicked(true);
     await instance
       .post(`auth/login`, {
         username: phoneText,
@@ -34,46 +41,27 @@ const Login = () => {
         console.log(res.data);
         setIsAuthenticated(true);
         sessionStorage.setItem("token", res.data.data.access_token);
-        const token = sessionStorage.getItem("token");
         sessionStorage.setItem("isAuthenticated", "true");
         navigate("/");
+        setLoginIsClicked(false);
+        setError("");
       })
       .catch((err) => {
-        console.log(err.message);
+        const { message } = err.response.data;
+        setError(message);
+        setLoginIsClicked(false);
       });
   };
-
-  // const EmailBlurHandler = () => {
-  //   EmailHandler();
-  //   // if (emailText === "") {
-  //   //   // if (emailRef.current.value === "") {
-  //   //   setEmailError(true);
-  //   // } else setEmailError(false);
-  // };
-
-  // const PasswordBlurHandler = () => {
-  //   PasswordHandler();
-  //   // if (passwordText === "") {
-  //   //   // if (passwordRef.current.value === "") {
-  //   //   setPasswordError(true);
-  //   // } else setPasswordError(false);
-  // };
-
-  let formIsValid = false;
 
   const PhoneHandler = () => {
     setPhoneText(phoneRef.current.value);
     if (phoneText === "") {
-      // if (emailRef.current.value === "") {
       setPhoneError(true);
       setSignInButtonActivated(false);
     } else {
       setPhoneError(false);
       setSignInButtonActivated(passwordError ? false : true);
     }
-
-    // validate();
-    // setSignInButtonActivated(formIsValid);
   };
 
   const PasswordHandler = () => {
@@ -85,17 +73,7 @@ const Login = () => {
       setPasswordError(false);
       setSignInButtonActivated(phoneError ? false : true);
     }
-
-    // validate();
-    // setSignInButtonActivated(formIsValid);
   };
-
-  // const validate = () => {
-  //   if (emailError === true || passwordError === true) formIsValid = false;
-  //   // setSignInButtonActivated(false);
-  //   if (emailError === false && passwordError === false) formIsValid = true;
-  //   // setSignInButtonActivated(true);
-  // };
 
   return (
     <div className="full_container">
@@ -109,6 +87,7 @@ const Login = () => {
               </div>
             </div>
             <div className="login_form">
+              <p className="err-color">{error}</p>
               <form onSubmit={LoginUser}>
                 <fieldset>
                   <div className="field">
@@ -130,7 +109,6 @@ const Login = () => {
                     <input
                       type="password"
                       ref={passwordRef}
-                      // value={passwordText}
                       name="password"
                       placeholder="Password"
                       onBlur={PasswordHandler}
@@ -157,11 +135,18 @@ const Login = () => {
                     <label className="label_field hidden">hidden label</label>
 
                     {signInButtonActivated ? (
-                      <button className="main_bt" onClick={LoginUser}>
+                      <button
+                        className="main_bt"
+                        disabled={loginIsClicked ? true : false}
+                        style={{
+                          backgroundColor: loginIsClicked ? "#e6e6e6" : null,
+                        }}
+                        onClick={LoginUser}
+                      >
                         Sign In
                       </button>
                     ) : (
-                      ""
+                      <p></p>
                     )}
                   </div>
                 </fieldset>
@@ -175,3 +160,6 @@ const Login = () => {
 };
 
 export default Login;
+
+// Login page doesn't show error message - DONE
+// Disable Login Button when clicked - DONE
