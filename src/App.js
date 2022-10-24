@@ -13,41 +13,26 @@ import Reports from "./pages/Reports";
 import Login from "./pages/Login";
 import { LoginContext } from "./store/loginContext";
 import CreateUser from "./pages/CreateUser";
+import Layout from "./Layout";
 
 function App() {
-  const [isAuthenticated, setisAuthenticated] = useState(false);
-
-  // useEffect(() => {
-  //   async function login() {
-  //     const request = await instance.post('auth/login/',
-  //          {
-  //             "username":"08000000000",
-  //             "password":"Tamalin@2022"
-  //         })
-  //     console.log(request)
-  //   }
-  //   login()
-  // }, []);
+  const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("isAuthenticated"));
 
   return (
-    <div className="inner_container flex flex-column">
-      <Sidebar />
-      <div id="content">
-        <Header />
-        <LoginContext.Provider value={{ isAuthenticated, setisAuthenticated }}>
-          <Routes>
+        <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Layout />} >
             <Route path="/" element={<Dashboard />} />
             <Route path="/clients" element={<Clients />} />
             <Route path="/contracts" element={<Contracts />} />
             <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/payments" element={<Payments />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/createuser" element={<CreateUser />} />
-          </Routes>
+          </Route>
+      </Routes>
         </LoginContext.Provider>
-      </div>
-    </div>
   );
 }
 

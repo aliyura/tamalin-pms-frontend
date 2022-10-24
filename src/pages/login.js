@@ -10,7 +10,6 @@ import "../static/css/users.css";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
-import { useTokenContext } from "../store/loginContext";
 
 const Login = () => {
   const [phoneText, setPhoneText] = useState("");
@@ -20,7 +19,7 @@ const Login = () => {
   const [signInButtonActivated, setSignInButtonActivated] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const { setisAuthenticated } = useLoginContext();
+  const { setIsAuthenticated } = useLoginContext();
   const navigate = useNavigate();
 
   const LoginUser = async (e) => {
@@ -33,9 +32,10 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res.data);
-        setisAuthenticated(true);
+        setIsAuthenticated(true);
         sessionStorage.setItem("token", res.data.data.access_token);
         const token = sessionStorage.getItem("token");
+        sessionStorage.setItem("isAuthenticated", "true");
         navigate("/");
       })
       .catch((err) => {
