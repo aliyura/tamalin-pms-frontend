@@ -1,5 +1,4 @@
 import Dashboard from "./pages/Dashboard";
-
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Clients from "./pages/Clients";
@@ -7,7 +6,7 @@ import Contracts from "./pages/Contracts";
 import Vehicles from "./pages/Vehicles";
 import Payments from "./pages/Payments";
 import Reports from "./pages/Reports";
-import Login from "./pages/Login";
+import Login from "./pages/login";
 import { LoginContext } from "./store/loginContext";
 import CreateUser from "./pages/CreateUser";
 import Layout from "./Layout";
