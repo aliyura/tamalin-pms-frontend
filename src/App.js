@@ -25,7 +25,8 @@ function App() {
             <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/payments" element={<Payments />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/createuser" element={<CreateUser />} />
+            <Route path="/create/admin" element={<CreateUser role={"ADMIN"} />} />
+            <Route path="/create/agent" element={<CreateUser role={"AGENT"} />} />
           </Route>
       </Routes>
         </LoginContext.Provider>

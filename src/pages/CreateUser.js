@@ -3,7 +3,7 @@ import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
 
-const CreateUser = () => {
+const CreateUser = ({role}) => {
   const [nameText, setNameText] = useState("");
   const [phoneText, setPhoneText] = useState("");
   const [passwordText, setPasswordText] = useState("");
@@ -37,7 +37,7 @@ const CreateUser = () => {
           phoneNumber: phoneRef.current.value,
           password: passwordRef.current.value,
           nin: ninRef.current.value,
-          role: roleRef.current.value,
+          role: {role}
         },
         {
           headers: {
@@ -134,57 +134,55 @@ const CreateUser = () => {
             <div className="logo_login">
               <div className="center">
                 {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
-                <h1 className="heading">Register User</h1>
+                <h1 className="heading text-white">Register {role}</h1>
               </div>
             </div>
-            <div className="login_form">
+            <div className="register_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={CreateUser}>
+              <form onSubmit={CreateUser} className="px-4 mx-4">
                 <fieldset>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">Full Name</label>
                     <input
                       type="text"
                       ref={nameRef}
                       name="name"
-                      placeholder="Full Name"
                       onBlur={NameHandler}
-                      onChange={NameHandler}
+                      onChange={ NameHandler }
+                      className="form-control mr-4"
                     />
-                    <p>{nameText}</p>
                     <p className="err-color">{nameError ? "Name empty" : ""}</p>
                   </div>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">Phone Number</label>
                     <input
                       type="tel"
-                      ref={phoneRef}
                       name="tel"
-                      placeholder="Phone Number"
+                      // placeholder="Phone Number"
                       onBlur={PhoneHandler}
-                      onChange={PhoneHandler}
+                      onChange={ PhoneHandler }
+                      className="form-control mr-4"
                     />
-                    <p>{phoneText}</p>
                     <p className="err-color">
                       {phoneError ? "Invalid Phone Number" : ""}
                     </p>
                   </div>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">Password</label>
                     <input
                       type="password"
                       ref={passwordRef}
                       name="password"
-                      placeholder="Password"
+                      // placeholder="Password"
                       onBlur={PasswordHandler}
-                      onChange={PasswordHandler}
+                      onChange={ PasswordHandler }
+                      className="form-control mr-4"
                     />
-                    <p>{passwordText}</p>
                     <p className="err-color">
                       {passwordError ? "Password empty" : ""}
                     </p>
                   </div>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">NIN</label>
                     <input
                       type="text"
@@ -192,41 +190,12 @@ const CreateUser = () => {
                       name="nin"
                       placeholder="National Identity Number"
                       onBlur={ninHandler}
-                      onChange={ninHandler}
+                      onChange={ ninHandler }
+                      className="form-control mr-4"
                     />
-                    <p>{ninText}</p>
                     <p className="err-color">{ninError ? "NIN empty" : ""}</p>
                   </div>
-                  <div className="field">
-                    <label className="label_field">Role</label>
-                    <select
-                      id="cars"
-                      ref={roleRef}
-                      onChange={roleHandler}
-                      onBlur={roleHandler}
-                    >
-                      <option value=""></option>
-                      <option value="admin">ADMIN</option>
-                      <option value="agent">AGENT</option>
-                    </select>
-                    <p>{roleText}</p>
-                    <p className="err-color">
-                      {roleError ? "Choose a Role" : ""}
-                    </p>
-                  </div>
-                  <div className="field">
-                    <label className="label_field hidden">hidden label</label>
-                    <label className="form-check-label">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        placeholder="Remember Me"
-                      />
-                    </label>
-                    <a className="forgot" href="#">
-                      Forgotten Password?
-                    </a>
-                  </div>
+
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
 

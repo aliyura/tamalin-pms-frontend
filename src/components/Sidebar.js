@@ -16,48 +16,41 @@ const Sidebar = () => {
                   <ul className="list-unstyled components">
                      <li className="active">
                             <Link to={'/'} data-toggle="collapse" aria-expanded="false" className=""><i
-                                    className="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></Link>
+                                    className="fa fa-dashboard blue2_color"></i> <span>Dashboard</span></Link>
                     </li>
                     
                         <li>
                             <a href="#staffs" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
-                                    className="fa fa-diamond purple_color"></i> <span>Manage Staffs</span></a>
+                                    className="fa fa-users blue2_color"></i> <span>Manage Users</span></a>
                             <ul className="collapse list-unstyled" id="staffs">
-                                <li><Link to={'/vehicles/'}>&gt; <span>Create Staff</span></Link></li>
-                                <li><Link to={'/vehicles'}>&gt; <span>All Staffs</span></Link></li>
+                                <li><Link to={'/vehicles/'}>&gt; <span>Create Admin</span></Link></li>
+                                <li><Link to={'/vehicles'}>&gt; <span>All Admins</span></Link></li>
+                                <li><Link to={'/vehicles/'}>&gt; <span>Create Agent</span></Link></li>
+                                <li><Link to={'/vehicles'}>&gt; <span>All Agents</span></Link></li>
                             </ul>
                     </li>
                     
                                             <li>
                             <a href="#agents" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
-                                    className="fa fa-diamond purple_color"></i> <span>Manage Agents</span></a>
+                                    className="fa fa-users blue2_color"></i> <span>Manage Clients</span></a>
                             <ul className="collapse list-unstyled" id="agents">
-                                <li><Link to={'/vehicles/'}>&gt; <span>Create Agent</span></Link></li>
-                                <li><Link to={'/vehicles'}>&gt; <span>All Agents</span></Link></li>
+                                <li><Link to={'/vehicles/'}>&gt; <span>Create Client</span></Link></li>
+                                <li><Link to={'/vehicles'}>&gt; <span>All Clients</span></Link></li>
                             </ul>
                     </li>
 
                                             <li>
                             <a href="#vehicles" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
-                                    className="fa fa-diamond purple_color"></i> <span>Manage Vehicles</span></a>
+                                    className="fa fa-automobile blue2_color"></i> <span>Manage Vehicles</span></a>
                             <ul className="collapse list-unstyled" id="vehicles">
                                 <li><Link to={'/vehicles/'}>&gt; <span>Register Vehicles</span></Link></li>
                                 <li><Link to={'/vehicles'}>&gt; <span>All Vehicles</span></Link></li>
                             </ul>
                     </li>
 
-                        <li>
-                            <a href="#clients" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
-                                    className="fa fa-object-group blue2_color"></i> <span>Manage Clients</span></a>
-                            <ul className="collapse list-unstyled" id="clients">
-                                <li><Link to={'/clients/'}>&gt; <span>Register a Client</span></Link></li>
-                                <li><Link  to={'/clients/'}>&gt; <span>All Clients</span></Link></li>
-                            </ul>
-                    </li>
-
                     <li>
                             <a href="#contracts" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
-                                    className="fa fa-object-group blue2_color"></i> <span>Manage Contracts</span></a>
+                                    className="fa fa-file blue2_color"></i> <span>Manage Contracts</span></a>
                             <ul className="collapse list-unstyled" id="contracts">
                                 <li><Link to={'/contracts'}>&gt; <span>All Contracts</span></Link></li>
                             </ul>
@@ -65,7 +58,7 @@ const Sidebar = () => {
                     
                         <li>
                             <a href="#payments" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
-                                    className="fa fa-object-group blue2_color"></i> <span>Manage Payments</span></a>
+                                    className="fa fa-money blue2_color"></i> <span>Manage Payments</span></a>
                             <ul className="collapse list-unstyled" id="payments">
                                 <li><Link to={'/contracts'}>&gt; <span>Pending Payments</span></Link></li>
                                 <li><Link to={'/contracts/monthly-report'}>&gt; <span>Monthly Report</span></Link></li>
@@ -73,9 +66,9 @@ const Sidebar = () => {
                         </li>
                         
                         <li>
-                            <a href="#payments" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
-                                    className="fa fa-object-group blue2_color"></i> <span>Reports</span></a>
-                            <ul className="collapse list-unstyled" id="payments">
+                            <a href="#reports" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
+                                    className="fa fa-file blue2_color"></i> <span>Reports</span></a>
+                            <ul className="collapse list-unstyled" id="reports">
                                 <li><Link to={'/contracts'}>&gt; <span>Clients</span></Link></li>
                                 <li><Link to={'/contracts/monthly-report'}>&gt; <span>Vehicles</span></Link></li>
                                 <li><Link to={'/contracts/monthly-report'}>&gt; <span>Payments</span></Link></li>
