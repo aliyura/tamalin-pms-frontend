@@ -8,27 +8,31 @@ import Payments from "./pages/Payments";
 import Reports from "./pages/Reports";
 import Login from "./pages/login";
 import { LoginContext } from "./store/loginContext";
-import CreateUser from "./pages/CreateUser";
+import CreateAdmin from "./pages/CreateAdmin";
 import Layout from "./Layout";
+import CreateAgent from "./pages/CreateAgent";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("isAuthenticated"));
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    sessionStorage.getItem("isAuthenticated")
+  );
 
   return (
-        <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Layout />} >
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/contracts" element={<Contracts />} />
-            <Route path="/vehicles" element={<Vehicles />} />
-            <Route path="/payments" element={<Payments />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/createuser" element={<CreateUser />} />
-          </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/contracts" element={<Contracts />} />
+          <Route path="/vehicles" element={<Vehicles />} />
+          <Route path="/payments" element={<Payments />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/createadmin" element={<CreateAdmin />} />
+          <Route path="/createagent" element={<CreateAgent />} />
+        </Route>
       </Routes>
-        </LoginContext.Provider>
+    </LoginContext.Provider>
   );
 }
 

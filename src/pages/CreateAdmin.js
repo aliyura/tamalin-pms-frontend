@@ -2,32 +2,31 @@ import { useRef, useState } from "react";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
+import "../static/css/users.css";
+import Spinner from "../components/Spinner";
 
-const CreateUser = () => {
+const CreateAdmin = () => {
   const [nameText, setNameText] = useState("");
   const [phoneText, setPhoneText] = useState("");
   const [passwordText, setPasswordText] = useState("");
   const [ninText, setNinText] = useState("");
-  const [roleText, setRoleText] = useState("");
   const phoneRef = useRef();
   const nameRef = useRef();
   const passwordRef = useRef();
   const ninRef = useRef();
-  const roleRef = useRef();
   const [createButtonActivated, setSignInButtonActivated] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [ninError, setNinError] = useState(false);
-  const [roleError, setRoleError] = useState(false);
   const [error, setError] = useState("");
   const { setisAuthenticated } = useLoginContext();
-  const [createIsClicked, setCreateIsClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const CreateUser = async (e) => {
     e.preventDefault();
-    setCreateIsClicked(true);
+    setIsLoading(true);
     const token = sessionStorage.getItem("token");
     await instance
       .post(
@@ -37,7 +36,7 @@ const CreateUser = () => {
           phoneNumber: phoneRef.current.value,
           password: passwordRef.current.value,
           nin: ninRef.current.value,
-          role: roleRef.current.value,
+          role: "ADMIN".toUpperCase(),
         },
         {
           headers: {
@@ -50,27 +49,24 @@ const CreateUser = () => {
         console.log(res);
         setisAuthenticated(true);
         navigate("/");
-        setCreateIsClicked(false);
+        setIsLoading(false);
       })
       .catch((err) => {
         const { message } = err.response.data;
         setError(message);
-        setCreateIsClicked(false);
-        console.log(err);
+        setIsLoading(false);
       });
-
-    console.log(roleText.toUpperCase());
   };
 
   const NameHandler = () => {
     setNameText(nameRef.current.value);
-    if (phoneText === "") {
+    if (nameText === "") {
       setNameError(true);
       setSignInButtonActivated(false);
     } else {
       setNameError(false);
       setSignInButtonActivated(
-        passwordError && phoneError && ninError && roleError ? false : true
+        passwordError && phoneError && ninError ? false : true
       );
     }
   };
@@ -83,7 +79,7 @@ const CreateUser = () => {
     } else {
       setPhoneError(false);
       setSignInButtonActivated(
-        passwordError && nameError && ninError && roleError ? false : true
+        passwordError && nameError && ninError ? false : true
       );
     }
   };
@@ -96,7 +92,7 @@ const CreateUser = () => {
     } else {
       setPasswordError(false);
       setSignInButtonActivated(
-        phoneError && ninError && nameError && roleError ? false : true
+        phoneError && ninError && nameError ? false : true
       );
     }
   };
@@ -109,19 +105,7 @@ const CreateUser = () => {
     } else {
       setNinError(false);
       setSignInButtonActivated(
-        phoneError && roleError && nameError && passwordError ? false : true
-      );
-    }
-  };
-  const roleHandler = () => {
-    setRoleText(roleRef.current.value);
-    if (passwordText === "") {
-      setRoleError(true);
-      setSignInButtonActivated(false);
-    } else {
-      setRoleError(false);
-      setSignInButtonActivated(
-        phoneError && passwordError && ninError && nameError ? false : true
+        phoneError && nameError && passwordError ? false : true
       );
     }
   };
@@ -151,7 +135,6 @@ const CreateUser = () => {
                       onBlur={NameHandler}
                       onChange={NameHandler}
                     />
-                    <p>{nameText}</p>
                     <p className="err-color">{nameError ? "Name empty" : ""}</p>
                   </div>
                   <div className="field">
@@ -164,7 +147,6 @@ const CreateUser = () => {
                       onBlur={PhoneHandler}
                       onChange={PhoneHandler}
                     />
-                    <p>{phoneText}</p>
                     <p className="err-color">
                       {phoneError ? "Invalid Phone Number" : ""}
                     </p>
@@ -179,7 +161,6 @@ const CreateUser = () => {
                       onBlur={PasswordHandler}
                       onChange={PasswordHandler}
                     />
-                    <p>{passwordText}</p>
                     <p className="err-color">
                       {passwordError ? "Password empty" : ""}
                     </p>
@@ -194,25 +175,7 @@ const CreateUser = () => {
                       onBlur={ninHandler}
                       onChange={ninHandler}
                     />
-                    <p>{ninText}</p>
                     <p className="err-color">{ninError ? "NIN empty" : ""}</p>
-                  </div>
-                  <div className="field">
-                    <label className="label_field">Role</label>
-                    <select
-                      id="cars"
-                      ref={roleRef}
-                      onChange={roleHandler}
-                      onBlur={roleHandler}
-                    >
-                      <option value=""></option>
-                      <option value="admin">ADMIN</option>
-                      <option value="agent">AGENT</option>
-                    </select>
-                    <p>{roleText}</p>
-                    <p className="err-color">
-                      {roleError ? "Choose a Role" : ""}
-                    </p>
                   </div>
                   <div className="field">
                     <label className="label_field hidden">hidden label</label>
@@ -234,12 +197,12 @@ const CreateUser = () => {
                       <button
                         className="main_bt"
                         onClick={CreateUser}
-                        disabled={createIsClicked ? true : false}
+                        disabled={isLoading}
                         style={{
-                          backgroundColor: createIsClicked ? "#e6e6e6" : null,
+                          backgroundColor: isLoading ? "#e6e6e6" : null,
                         }}
                       >
-                        Sign In
+                        {isLoading ? <Spinner /> : "Create User"}
                       </button>
                     ) : (
                       ""
@@ -255,4 +218,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default CreateAdmin;
