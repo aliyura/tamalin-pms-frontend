@@ -2,32 +2,31 @@ import { useRef, useState } from "react";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
+import "../static/css/users.css";
+import Spinner from "../components/Spinner";
 
-const CreateUser = ({role}) => {
+const CreateAgent = () => {
   const [nameText, setNameText] = useState("");
   const [phoneText, setPhoneText] = useState("");
   const [passwordText, setPasswordText] = useState("");
   const [ninText, setNinText] = useState("");
-  const [roleText, setRoleText] = useState("");
   const phoneRef = useRef();
   const nameRef = useRef();
   const passwordRef = useRef();
   const ninRef = useRef();
-  const roleRef = useRef();
   const [createButtonActivated, setSignInButtonActivated] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [ninError, setNinError] = useState(false);
-  const [roleError, setRoleError] = useState(false);
   const [error, setError] = useState("");
   const { setisAuthenticated } = useLoginContext();
-  const [createIsClicked, setCreateIsClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const CreateUser = async (e) => {
     e.preventDefault();
-    setCreateIsClicked(true);
+    setIsLoading(true);
     const token = sessionStorage.getItem("token");
     await instance
       .post(
@@ -37,7 +36,7 @@ const CreateUser = ({role}) => {
           phoneNumber: phoneRef.current.value,
           password: passwordRef.current.value,
           nin: ninRef.current.value,
-          role: {role}
+          role: "AGENT".toUpperCase(),
         },
         {
           headers: {
@@ -50,27 +49,24 @@ const CreateUser = ({role}) => {
         console.log(res);
         setisAuthenticated(true);
         navigate("/");
-        setCreateIsClicked(false);
+        setIsLoading(false);
       })
       .catch((err) => {
         const { message } = err.response.data;
         setError(message);
-        setCreateIsClicked(false);
-        console.log(err);
+        setIsLoading(false);
       });
-
-    console.log(roleText.toUpperCase());
   };
 
   const NameHandler = () => {
     setNameText(nameRef.current.value);
-    if (phoneText === "") {
+    if (nameText === "") {
       setNameError(true);
       setSignInButtonActivated(false);
     } else {
       setNameError(false);
       setSignInButtonActivated(
-        passwordError && phoneError && ninError && roleError ? false : true
+        passwordError && phoneError && ninError ? false : true
       );
     }
   };
@@ -83,7 +79,7 @@ const CreateUser = ({role}) => {
     } else {
       setPhoneError(false);
       setSignInButtonActivated(
-        passwordError && nameError && ninError && roleError ? false : true
+        passwordError && nameError && ninError ? false : true
       );
     }
   };
@@ -96,7 +92,7 @@ const CreateUser = ({role}) => {
     } else {
       setPasswordError(false);
       setSignInButtonActivated(
-        phoneError && ninError && nameError && roleError ? false : true
+        phoneError && ninError && nameError ? false : true
       );
     }
   };
@@ -109,19 +105,7 @@ const CreateUser = ({role}) => {
     } else {
       setNinError(false);
       setSignInButtonActivated(
-        phoneError && roleError && nameError && passwordError ? false : true
-      );
-    }
-  };
-  const roleHandler = () => {
-    setRoleText(roleRef.current.value);
-    if (passwordText === "") {
-      setRoleError(true);
-      setSignInButtonActivated(false);
-    } else {
-      setRoleError(false);
-      setSignInButtonActivated(
-        phoneError && passwordError && ninError && nameError ? false : true
+        phoneError && nameError && passwordError ? false : true
       );
     }
   };
@@ -134,7 +118,7 @@ const CreateUser = ({role}) => {
             <div className="logo_login">
               <div className="center">
                 {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
-                <h1 className="heading text-white">Register {role}</h1>
+                <h1 className="heading text-white">Register Agent</h1>
               </div>
             </div>
             <div className="register_form">
@@ -203,12 +187,12 @@ const CreateUser = ({role}) => {
                       <button
                         className="main_bt"
                         onClick={CreateUser}
-                        disabled={createIsClicked ? true : false}
+                        disabled={isLoading}
                         style={{
-                          backgroundColor: createIsClicked ? "#e6e6e6" : null,
+                          backgroundColor: isLoading ? "#e6e6e6" : null,
                         }}
                       >
-                        Sign In
+                        {isLoading ? <Spinner /> : "Create Agent"}
                       </button>
                     ) : (
                       ""
@@ -224,4 +208,4 @@ const CreateUser = ({role}) => {
   );
 };
 
-export default CreateUser;
+export default CreateAgent;
