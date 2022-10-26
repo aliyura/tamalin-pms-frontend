@@ -4,41 +4,70 @@ import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
-import { Link } from "react-router-dom";
 
-const Login = () => {
+const ResetPassword = () => {
   const [phoneText, setPhoneText] = useState("");
-  const [passwordText, setPasswordText] = useState("");
+  const [newPasswordText, setPasswordText] = useState("");
+  const [currentPasswordText, setCurrentPasswordText] = useState("");
   const phoneRef = useRef();
-  const passwordRef = useRef();
+  const newPasswordRef = useRef();
+  const currentPasswordRef = useRef();
   const [signInButtonActivated, setSignInButtonActivated] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [newPasswordError, setPasswordError] = useState(false);
+  const [currentPasswordError, setCurrentPasswordError] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { setIsAuthenticated } = useLoginContext();
 
   const navigate = useNavigate();
 
-  const LoginUser = async (e) => {
+  const Reset = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    let token;
     await instance
       .post(`auth/login`, {
         username: phoneText,
-        password: passwordText,
+        password: currentPasswordText,
       })
       .then((res) => {
         console.log(res.data);
         setIsAuthenticated(true);
         sessionStorage.setItem("token", res.data.data.access_token);
+        token = sessionStorage.getItem("token");
         sessionStorage.setItem("isAuthenticated", "true");
-        navigate("/");
+        setIsLoading(false);
+        setError("");
+      });
+
+    await instance
+      .post(
+        `user/password-reset`,
+        {
+          username: phoneText,
+          newPassword: newPasswordText,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setIsAuthenticated(true);
+        sessionStorage.setItem("token", res.data.data.access_token);
+        sessionStorage.setItem("isAuthenticated", "true");
+        navigate("/login");
         setIsLoading(false);
         setError("");
       })
       .catch((err) => {
         const { message } = err.response.data;
+        console.log(err);
+        console.log(message);
         setError(message);
         setIsLoading(false);
       });
@@ -51,18 +80,33 @@ const Login = () => {
       setSignInButtonActivated(false);
     } else {
       setPhoneError(false);
-      setSignInButtonActivated(passwordError ? false : true);
+      setSignInButtonActivated(
+        newPasswordError && currentPasswordError ? false : true
+      );
     }
   };
 
-  const PasswordHandler = () => {
-    setPasswordText(passwordRef.current.value);
-    if (passwordText === "") {
+  const CurrentPasswordHandler = () => {
+    setCurrentPasswordText(currentPasswordRef.current.value);
+    if (currentPasswordText === "") {
+      setCurrentPasswordError(true);
+      setSignInButtonActivated(false);
+    } else {
+      setCurrentPasswordError(false);
+      setSignInButtonActivated(phoneError && newPasswordError ? false : true);
+    }
+  };
+
+  const NewPasswordHandler = () => {
+    setPasswordText(newPasswordRef.current.value);
+    if (newPasswordText === "") {
       setPasswordError(true);
       setSignInButtonActivated(false);
     } else {
       setPasswordError(false);
-      setSignInButtonActivated(phoneError ? false : true);
+      setSignInButtonActivated(
+        phoneError && currentPasswordError ? false : true
+      );
     }
   };
 
@@ -73,13 +117,12 @@ const Login = () => {
           <div className="login_section">
             <div className="logo_login">
               <div className="center">
-                <h1 className="heading">Login</h1>
-                {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
+                <h1 className="heading">Reset Password</h1>
               </div>
             </div>
             <div className="login_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={LoginUser}>
+              <form onSubmit={Reset}>
                 <fieldset>
                   <div className="field">
                     <label className="label_field">Phone Number</label>
@@ -96,31 +139,35 @@ const Login = () => {
                     </p>
                   </div>
                   <div className="field">
-                    <label className="label_field">Password</label>
+                    <label className="label_field label">Current Password</label>
                     <input
                       type="password"
-                      ref={passwordRef}
-                      name="password"
-                      placeholder="Password"
-                      onBlur={PasswordHandler}
-                      onChange={PasswordHandler}
+                      ref={currentPasswordRef}
+                      name="current password"
+                      placeholder="Current Password"
+                      onBlur={CurrentPasswordHandler}
+                      onChange={CurrentPasswordHandler}
                     />
                     <p className="err-color">
-                      {passwordError ? "Password empty" : ""}
+                      {currentPasswordError ? "Current Password empty" : ""}
+                    </p>
+                  </div>
+                  <div className="field">
+                    <label className="label_field">New Password</label>
+                    <input
+                      type="texts"
+                      ref={newPasswordRef}
+                      name="password"
+                      placeholder="Password"
+                      onBlur={NewPasswordHandler}
+                      onChange={NewPasswordHandler}
+                    />
+                    <p className="err-color">
+                      {newPasswordError ? "Password empty" : ""}
                     </p>
                   </div>
                   <div className="field">
                     <label className="label_field hidden">hidden label</label>
-                    <label className="form-check-label">
-                      {/* <input
-                        type="checkbox"
-                        className="form-check-input"
-                        placeholder="Remember Me"
-                      /> */}
-                    </label>
-                    <Link className="forgot" to="/resetPassword">
-                      Forgotten Password?
-                    </Link>
                   </div>
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
@@ -131,9 +178,9 @@ const Login = () => {
                         style={{
                           backgroundColor: isLoading ? "#e6e6e6" : null,
                         }}
-                        onClick={LoginUser}
+                        onClick={Reset}
                       >
-                        {isLoading ? <Spinner /> : "Sign In"}
+                        {isLoading ? <Spinner /> : "Reset"}
                       </button>
                     ) : (
                       <p></p>
@@ -149,7 +196,4 @@ const Login = () => {
   );
 };
 
-export default Login;
-
-// Login page doesn't show error message - DONE
-// Disable Login Button when clicked - DONE
+export default ResetPassword;

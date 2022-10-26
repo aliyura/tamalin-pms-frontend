@@ -118,7 +118,7 @@ const CreateAdmin = () => {
             <div className="logo_login">
               <div className="center">
                 {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
-                <h1 className="heading">Register User</h1>
+                <h1 className="heading">Create Admin</h1>
               </div>
             </div>
             <div className="login_form">
@@ -128,10 +128,11 @@ const CreateAdmin = () => {
                   <div className="field">
                     <label className="label_field">Full Name</label>
                     <input
+                      className="input"
                       type="text"
                       ref={nameRef}
                       name="name"
-                      placeholder="Full Name"
+                      placeholder="ex. John Doe"
                       onBlur={NameHandler}
                       onChange={NameHandler}
                     />
@@ -140,10 +141,11 @@ const CreateAdmin = () => {
                   <div className="field">
                     <label className="label_field">Phone Number</label>
                     <input
+                      className="input"
                       type="tel"
                       ref={phoneRef}
                       name="tel"
-                      placeholder="Phone Number"
+                      placeholder="ex. 08000000000"
                       onBlur={PhoneHandler}
                       onChange={PhoneHandler}
                     />
@@ -154,10 +156,11 @@ const CreateAdmin = () => {
                   <div className="field">
                     <label className="label_field">Password</label>
                     <input
+                      className="input"
                       type="password"
                       ref={passwordRef}
                       name="password"
-                      placeholder="Password"
+                      placeholder="****"
                       onBlur={PasswordHandler}
                       onChange={PasswordHandler}
                     />
@@ -168,10 +171,11 @@ const CreateAdmin = () => {
                   <div className="field">
                     <label className="label_field">NIN</label>
                     <input
+                      className="input"
                       type="text"
                       ref={ninRef}
                       name="nin"
-                      placeholder="National Identity Number"
+                      placeholder="61250945671"
                       onBlur={ninHandler}
                       onChange={ninHandler}
                     />
@@ -179,20 +183,9 @@ const CreateAdmin = () => {
                   </div>
                   <div className="field">
                     <label className="label_field hidden">hidden label</label>
-                    <label className="form-check-label">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        placeholder="Remember Me"
-                      />
-                    </label>
-                    <a className="forgot" href="#">
-                      Forgotten Password?
-                    </a>
                   </div>
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
-
                     {createButtonActivated ? (
                       <button
                         className="main_bt"

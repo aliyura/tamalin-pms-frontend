@@ -11,6 +11,7 @@ import { LoginContext } from "./store/loginContext";
 import CreateAdmin from "./pages/CreateAdmin";
 import Layout from "./Layout";
 import CreateAgent from "./pages/CreateAgent";
+import ResetPassword from "./pages/resetPassword";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -21,6 +22,7 @@ function App() {
     <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/clients" element={<Clients />} />

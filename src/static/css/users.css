@@ -1,7 +1,17 @@
 .err-color {
   color: #ff0000;
+  white-space: wrap;
 }
 
 .heading {
   color: #fff;
+}
+
+.input {
+  border-radius: 15% !important;
+  border-style: groove !important;
+}
+
+.label {
+  white-space: nowrap;
 }
