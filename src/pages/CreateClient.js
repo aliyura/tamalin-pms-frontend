@@ -126,15 +126,16 @@ const CreateClient = () => {
 //   };
 
   return (
-    <div className="full_container">
-      <div className="container">
-        <div className="center verticle_center full_height">
+    <div className="full_container ">
+      <div className="container ">
+        <div className="center verticle_center">
           <div className="login_section">
-            <div className="logo_login">
+            {/* <div className="logo_login">
               <div className="center">
                 <h1 className="heading">Register Client</h1>
               </div>
-            </div>
+            </div> */}
+                       <h1 className=" mx-4 px-4">Register Client</h1>
             <div className="register_form">
               <p className="err-color">{error}</p>
               <form onSubmit={CreateUser} className="px-4 mx-4">
@@ -148,7 +149,6 @@ const CreateClient = () => {
                                 type="text"
                                 ref={nameRef}
                                 name="name"
-                                placeholder="ex. John Doe"
                                 />
                             </div>
                         </div>
@@ -175,7 +175,7 @@ const CreateClient = () => {
                                 type="text"
                                 ref={nameRef}
                                 name="name"
-                                placeholder="ex. John Doe"
+                                placeholder="NIN"
                                 />
                             </div>
                         </div>
@@ -193,7 +193,7 @@ const CreateClient = () => {
                          </div>
                     </div>
                     
-                    <div className="row">
+                    <div className="row mb-4">
                         <div className="col-md-6 col-sm-12 mt-2">
                             <div className="input-field ">
                                 <label className="label_field">Passport</label>
@@ -218,7 +218,7 @@ const CreateClient = () => {
                          </div>
                     </div>
                     
-                                  
+                    <hr />        
 
                     <div className="row">
                         <div className="col-md-6 col-sm-12 mt-2">
@@ -229,7 +229,6 @@ const CreateClient = () => {
                                 type="text"
                                 ref={nameRef}
                                 name="name"
-                                placeholder="ex. John Doe"
                                 />
                             </div>
                         </div>
@@ -256,7 +255,7 @@ const CreateClient = () => {
                                 type="text"
                                 ref={nameRef}
                                 name="name"
-                                placeholder="ex. John Doe"
+                                placeholder="PVC"
                                 />
                             </div>
                         </div>
@@ -316,7 +315,7 @@ const CreateClient = () => {
                     
                                   
 
-
+                      
 
 
                        <div className="button m-4">
