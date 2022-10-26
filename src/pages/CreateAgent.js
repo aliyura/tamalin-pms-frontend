@@ -124,25 +124,26 @@ const CreateAgent = () => {
               <p className="err-color">{error}</p>
               <form onSubmit={CreateUser} className="px-4 mx-4">
                 <fieldset>
-                  <div className="field m-2 mb-4">
+                  <div className="input-field ">
                     <label className="label_field">Full Name</label>
                     <input
                       className="input"
                       type="text"
                       ref={nameRef}
                       name="name"
+                      placeholder="ex. John Doe"
                       onBlur={NameHandler}
                       onChange={NameHandler}
                     />
                     <p className="err-color">{nameError ? "Name empty" : ""}</p>
                   </div>
-                  <div className="field m-2 mb-4">
+                  <div className="input-field ">
                     <label className="label_field">Phone Number</label>
                     <input
                       className="input"
                       type="tel"
                       name="tel"
-                      placeholder="Phone Number"
+                      placeholder="ex. 08000000000"
                       onBlur={PhoneHandler}
                       onChange={PhoneHandler}
                     />
@@ -150,7 +151,7 @@ const CreateAgent = () => {
                       {phoneError ? "Invalid Phone Number" : ""}
                     </p>
                   </div>
-                  <div className="field m-2 mb-4">
+                  <div className="input-field ">
                     <label className="label_field">Password</label>
                     <input
                       className="input"
@@ -165,7 +166,7 @@ const CreateAgent = () => {
                       {passwordError ? "Password empty" : ""}
                     </p>
                   </div>
-                  <div className="field m-2 mb-4">
+                  <div className="input-field ">
                     <label className="label_field">NIN</label>
                     <input
                       className="input"
@@ -174,15 +175,15 @@ const CreateAgent = () => {
                       name="nin"
                       placeholder="61250945671"
                       onBlur={ninHandler}
-                      onChange={ninHandler}
+                      onChange={ ninHandler }
                     />
                     <p className="err-color">{ninError ? "NIN empty" : ""}</p>
                   </div>
-
-                  <div className="field margin_0">
+                  <div className="input-field margin_0">
                     <label className="label_field hidden">hidden label</label>
                     {createButtonActivated ? (
-                      <button
+                       <div className="button">
+                        <button
                         className="main_bt"
                         onClick={CreateUser}
                         disabled={isLoading}
@@ -191,7 +192,8 @@ const CreateAgent = () => {
                         }}
                       >
                         {isLoading ? <Spinner /> : "Create User"}
-                      </button>
+                        </button>
+                      </div>
                     ) : (
                       ""
                     )}

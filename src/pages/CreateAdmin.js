@@ -117,17 +117,15 @@ const CreateAdmin = () => {
           <div className="login_section">
             <div className="logo_login">
               <div className="center">
-                {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
-
                 <h1 className="heading">Create Admin</h1>
               </div>
             </div>
-            <div className="login_form">
+            <div className="register_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={CreateUser}>
+              <form onSubmit={CreateUser} className="px-4 mx-4">
                 <fieldset>
-                  <div className="field">
-                    <label className="label_field">Full Name</label>
+                  <div className="input-field">
+                    <label className="">Full Name</label>
                     <input
                       className="input"
                       type="text"
@@ -139,7 +137,7 @@ const CreateAdmin = () => {
                     />
                     <p className="err-color">{nameError ? "Name empty" : ""}</p>
                   </div>
-                  <div className="field">
+                  <div className="input-field">
                     <label className="label_field">Phone Number</label>
                     <input
                       className="input"
@@ -154,7 +152,7 @@ const CreateAdmin = () => {
                       {phoneError ? "Invalid Phone Number" : ""}
                     </p>
                   </div>
-                  <div className="field">
+                  <div className="input-field">
                     <label className="label_field">Password</label>
                     <input
                       className="input"
@@ -169,7 +167,7 @@ const CreateAdmin = () => {
                       {passwordError ? "Password empty" : ""}
                     </p>
                   </div>
-                  <div className="field">
+                  <div className="input-field">
                     <label className="label_field">NIN</label>
                     <input
                       className="input"
@@ -182,13 +180,14 @@ const CreateAdmin = () => {
                     />
                     <p className="err-color">{ninError ? "NIN empty" : ""}</p>
                   </div>
-                  <div className="field">
+                  <div className="input-field">
                     <label className="label_field hidden">hidden label</label>
                   </div>
-                  <div className="field margin_0">
+                  <div className="input-field margin_0">
                     <label className="label_field hidden">hidden label</label>
                     {createButtonActivated ? (
-                      <button
+                      <div className="button">
+                        <button
                         className="main_bt"
                         onClick={CreateUser}
                         disabled={isLoading}
@@ -197,7 +196,8 @@ const CreateAdmin = () => {
                         }}
                       >
                         {isLoading ? <Spinner /> : "Create User"}
-                      </button>
+                        </button>
+                      </div>
                     ) : (
                       ""
                     )}

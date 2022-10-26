@@ -11,6 +11,7 @@ import { LoginContext } from "./store/loginContext";
 import CreateAdmin from "./pages/CreateAdmin";
 import Layout from "./Layout";
 import CreateAgent from "./pages/CreateAgent";
+import CreateClient from "./pages/CreateClient";
 import ResetPassword from "./pages/resetPassword";
 
 function App() {
@@ -31,7 +32,8 @@ function App() {
           <Route path="/payments" element={<Payments />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/createadmin" element={<CreateAdmin />} />
-          <Route path="/createagent" element={<CreateAgent />} />
+          <Route path="/createagent" element={ <CreateAgent /> } />
+           <Route path="/registerclient" element={<CreateClient />} />
         </Route>
       </Routes>
     </LoginContext.Provider>
