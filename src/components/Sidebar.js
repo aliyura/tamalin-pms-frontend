@@ -23,10 +23,10 @@ const Sidebar = () => {
                             <a href="#staffs" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i
                                     className="fa fa-users blue2_color"></i> <span>Manage Users</span></a>
                             <ul className="collapse list-unstyled" id="staffs">
-                                <li><Link to={'/vehicles/'}>&gt; <span>Create Admin</span></Link></li>
-                                <li><Link to={'/vehicles'}>&gt; <span>All Admins</span></Link></li>
-                                <li><Link to={'/vehicles/'}>&gt; <span>Create Agent</span></Link></li>
-                                <li><Link to={'/vehicles'}>&gt; <span>All Agents</span></Link></li>
+                                <li><Link to={'/createadmin'}>&gt; <span>Create Admin</span></Link></li>
+                                <li><Link to={'/admins'}>&gt; <span>All Admins</span></Link></li>
+                                <li><Link to={'/createagent/'}>&gt; <span>Create Agent</span></Link></li>
+                                <li><Link to={'/agents'}>&gt; <span>All Agents</span></Link></li>
                             </ul>
                     </li>
                     
