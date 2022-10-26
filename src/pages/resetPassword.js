@@ -145,7 +145,7 @@ const ResetPassword = () => {
                       ref={currentPasswordRef}
                       name="current password"
                       placeholder="Current Password"
-                      onBlur={CurrentPasswordHandler}
+                      onBlur={CurrentPasswordHandler} 
                       onChange={CurrentPasswordHandler}
                     />
                     <p className="err-color">
