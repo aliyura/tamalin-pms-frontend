@@ -118,6 +118,7 @@ const CreateAdmin = () => {
             <div className="logo_login">
               <div className="center">
                 {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
+
                 <h1 className="heading">Create Admin</h1>
               </div>
             </div>

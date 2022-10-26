@@ -120,31 +120,29 @@ const CreateAgent = () => {
                 <h1 className="heading">Create Agent</h1>
               </div>
             </div>
-            <div className="login_form">
+            <div className="register_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={CreateUser}>
+              <form onSubmit={CreateUser} className="px-4 mx-4">
                 <fieldset>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">Full Name</label>
                     <input
                       className="input"
                       type="text"
                       ref={nameRef}
                       name="name"
-                      placeholder="ex. John Doe"
                       onBlur={NameHandler}
                       onChange={NameHandler}
                     />
                     <p className="err-color">{nameError ? "Name empty" : ""}</p>
                   </div>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">Phone Number</label>
                     <input
                       className="input"
                       type="tel"
-                      ref={phoneRef}
                       name="tel"
-                      placeholder="ex. 08000000000"
+                      placeholder="Phone Number"
                       onBlur={PhoneHandler}
                       onChange={PhoneHandler}
                     />
@@ -152,14 +150,14 @@ const CreateAgent = () => {
                       {phoneError ? "Invalid Phone Number" : ""}
                     </p>
                   </div>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">Password</label>
                     <input
                       className="input"
                       type="password"
                       ref={passwordRef}
                       name="password"
-                      placeholder="****"
+                      // placeholder="Password"
                       onBlur={PasswordHandler}
                       onChange={PasswordHandler}
                     />
@@ -167,7 +165,7 @@ const CreateAgent = () => {
                       {passwordError ? "Password empty" : ""}
                     </p>
                   </div>
-                  <div className="field">
+                  <div className="field m-2 mb-4">
                     <label className="label_field">NIN</label>
                     <input
                       className="input"
@@ -180,9 +178,7 @@ const CreateAgent = () => {
                     />
                     <p className="err-color">{ninError ? "NIN empty" : ""}</p>
                   </div>
-                  <div className="field">
-                    <label className="label_field hidden">hidden label</label>
-                  </div>
+
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
                     {createButtonActivated ? (
