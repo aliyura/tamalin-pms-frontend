@@ -39,18 +39,18 @@ const Sidebar = () => {
               aria-expanded="false"
               className="dropdown-toggle"
             >
-              <i className="fa fa-diamond purple_color"></i>{" "}
-              <span>Manage Users</span>
+              <i className="fa fa-users purple_color"></i>{" "}
+              <span>Manage Admins</span>
             </a>
             <ul className="collapse list-unstyled" id="staffs">
               <li>
                 <Link to={"/vehicles/"}>
-                  &gt; <span>Create Staff</span>
+                  &gt; <span>Create Admin</span>
                 </Link>
               </li>
               <li>
                 <Link to={"/vehicles"}>
-                  &gt; <span>All Staffs</span>
+                  &gt; <span>All Admins</span>
                 </Link>
               </li>
             </ul>
@@ -63,7 +63,7 @@ const Sidebar = () => {
               aria-expanded="false"
               className="dropdown-toggle"
             >
-              <i className="fa fa-diamond purple_color"></i>{" "}
+              <i className="fa fa-user purple_color"></i>{" "}
               <span>Manage Agents</span>
             </a>
             <ul className="collapse list-unstyled" id="agents">
@@ -79,7 +79,6 @@ const Sidebar = () => {
               </li>
             </ul>
           </li>
-
           <li>
             <a
               href="#vehicles"
@@ -87,7 +86,7 @@ const Sidebar = () => {
               aria-expanded="false"
               className="dropdown-toggle"
             >
-              <i className="fa fa-diamond purple_color"></i>{" "}
+              <i className="fa fa-motorcycle purple_color"></i>
               <span>Manage Vehicles</span>
             </a>
             <ul className="collapse list-unstyled" id="vehicles">
@@ -111,7 +110,7 @@ const Sidebar = () => {
               aria-expanded="false"
               className="dropdown-toggle"
             >
-              <i className="fa fa-object-group blue2_color"></i>{" "}
+              <i className="fa fa-industry purple_color"></i>{" "}
               <span>Manage Clients</span>
             </a>
             <ul className="collapse list-unstyled" id="clients">
@@ -135,7 +134,7 @@ const Sidebar = () => {
               aria-expanded="false"
               className="dropdown-toggle"
             >
-              <i className="fa fa-object-group blue2_color"></i>{" "}
+              <i className="fa fa-compress purple_color"></i>{" "}
               <span>Manage Contracts</span>
             </a>
             <ul className="collapse list-unstyled" id="contracts">
@@ -154,7 +153,7 @@ const Sidebar = () => {
               aria-expanded="false"
               className="dropdown-toggle"
             >
-              <i className="fa fa-object-group blue2_color"></i>{" "}
+              <i className="fa fa-credit-card purple_color"></i>{" "}
               <span>Manage Payments</span>
             </a>
             <ul className="collapse list-unstyled" id="payments">
@@ -178,8 +177,7 @@ const Sidebar = () => {
               aria-expanded="false"
               className="dropdown-toggle"
             >
-              <i className="fa fa-object-group blue2_color"></i>{" "}
-              <span>Reports</span>
+              <i className="fa fa-table purple_color"></i> <span>Reports</span>
             </a>
             <ul className="collapse list-unstyled" id="payments">
               <li>

@@ -5,17 +5,14 @@ import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
 
-const ResetPassword = () => {
-  const [phoneText, setPhoneText] = useState("");
-  const [newPasswordText, setPasswordText] = useState("");
-  const [currentPasswordText, setCurrentPasswordText] = useState("");
-  const phoneRef = useRef();
+const ResetPassword = (props) => {
+  const [confirmPasswordText, setConfirmPasswordText] = useState("");
+  const [newPasswordText, setNewPasswordText] = useState("");
+  const confirmPasswordRef = useRef();
   const newPasswordRef = useRef();
-  const currentPasswordRef = useRef();
+  const [newPasswordError, setConfirmPasswordError] = useState(false);
+  const [confirmPasswordError, setNewPasswordError] = useState(false);
   const [signInButtonActivated, setSignInButtonActivated] = useState(false);
-  const [phoneError, setPhoneError] = useState(false);
-  const [newPasswordError, setPasswordError] = useState(false);
-  const [currentPasswordError, setCurrentPasswordError] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { setIsAuthenticated } = useLoginContext();
@@ -25,28 +22,13 @@ const ResetPassword = () => {
   const Reset = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    let token;
-    await instance
-      .post(`auth/login`, {
-        username: phoneText,
-        password: currentPasswordText,
-      })
-      .then((res) => {
-        console.log(res.data);
-        setIsAuthenticated(true);
-        sessionStorage.setItem("token", res.data.data.access_token);
-        token = sessionStorage.getItem("token");
-        sessionStorage.setItem("isAuthenticated", "true");
-        setIsLoading(false);
-        setError("");
-      });
-
+    const token = sessionStorage.getItem("token");
     await instance
       .post(
         `user/password-reset`,
         {
-          username: phoneText,
-          newPassword: newPasswordText,
+          username: props.username,
+          newPassword: confirmPasswordText,
         },
         {
           headers: {
@@ -58,9 +40,7 @@ const ResetPassword = () => {
       .then((res) => {
         console.log(res.data);
         setIsAuthenticated(true);
-        sessionStorage.setItem("token", res.data.data.access_token);
-        sessionStorage.setItem("isAuthenticated", "true");
-        navigate("/login");
+        navigate("/");
         setIsLoading(false);
         setError("");
       })
@@ -73,39 +53,32 @@ const ResetPassword = () => {
       });
   };
 
-  const PhoneHandler = () => {
-    setPhoneText(phoneRef.current.value);
-    if (phoneText === "") {
-      setPhoneError(true);
+  const NewPasswordHandler = () => {
+    setNewPasswordText(newPasswordRef.current.value);
+    if (newPasswordText === "") {
+      setNewPasswordError(true);
       setSignInButtonActivated(false);
     } else {
-      setPhoneError(false);
+      setNewPasswordError(false);
       setSignInButtonActivated(
-        newPasswordError && currentPasswordError ? false : true
+        newPasswordError || newPasswordText !== confirmPasswordText
+          ? false
+          : true
       );
     }
   };
 
-  const CurrentPasswordHandler = () => {
-    setCurrentPasswordText(currentPasswordRef.current.value);
-    if (currentPasswordText === "") {
-      setCurrentPasswordError(true);
+  const ConfirmPasswordHandler = () => {
+    setConfirmPasswordText(confirmPasswordRef.current.value);
+    if (confirmPasswordText === "") {
+      setConfirmPasswordError(true);
       setSignInButtonActivated(false);
     } else {
-      setCurrentPasswordError(false);
-      setSignInButtonActivated(phoneError && newPasswordError ? false : true);
-    }
-  };
-
-  const NewPasswordHandler = () => {
-    setPasswordText(newPasswordRef.current.value);
-    if (newPasswordText === "") {
-      setPasswordError(true);
-      setSignInButtonActivated(false);
-    } else {
-      setPasswordError(false);
+      setConfirmPasswordError(false);
       setSignInButtonActivated(
-        phoneError && currentPasswordError ? false : true
+        confirmPasswordError || confirmPasswordText !== newPasswordText
+          ? false
+          : true
       );
     }
   };
@@ -125,42 +98,28 @@ const ResetPassword = () => {
               <form onSubmit={Reset}>
                 <fieldset>
                   <div className="field">
-                    <label className="label_field">Phone Number</label>
-                    <input
-                      type="tel"
-                      ref={phoneRef}
-                      name="tel"
-                      placeholder="Phone number"
-                      onBlur={PhoneHandler}
-                      onChange={PhoneHandler}
-                    />
-                    <p className="err-color">
-                      {phoneError ? "Invalid Phone Number" : ""}
-                    </p>
-                  </div>
-                  <div className="field">
-                    <label className="label_field label">Current Password</label>
+                    <label className="label_field label">New Password</label>
                     <input
                       type="password"
-                      ref={currentPasswordRef}
+                      ref={newPasswordRef}
                       name="current password"
                       placeholder="Current Password"
-                      onBlur={CurrentPasswordHandler} 
-                      onChange={CurrentPasswordHandler}
+                      onBlur={NewPasswordHandler}
+                      onChange={NewPasswordHandler}
                     />
                     <p className="err-color">
-                      {currentPasswordError ? "Current Password empty" : ""}
+                      {confirmPasswordError ? "Current Password empty" : ""}
                     </p>
                   </div>
                   <div className="field">
-                    <label className="label_field">New Password</label>
+                    <label className="label_field label">Confirm Password</label>
                     <input
-                      type="texts"
-                      ref={newPasswordRef}
+                      type="password"
+                      ref={confirmPasswordRef}
                       name="password"
                       placeholder="Password"
-                      onBlur={NewPasswordHandler}
-                      onChange={NewPasswordHandler}
+                      onBlur={ConfirmPasswordHandler}
+                      onChange={ConfirmPasswordHandler}
                     />
                     <p className="err-color">
                       {newPasswordError ? "Password empty" : ""}
