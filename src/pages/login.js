@@ -109,19 +109,19 @@ const Login = () => {
                       {passwordError ? "Password empty" : ""}
                     </p>
                   </div>
-                  <div className="field">
+                  {/* <div className="field">
                     <label className="label_field hidden">hidden label</label>
                     <label className="form-check-label">
-                      {/* <input
+                      <input
                         type="checkbox"
                         className="form-check-input"
                         placeholder="Remember Me"
-                      /> */}
+                      />
                     </label>
                     <Link className="forgot" to="/resetPassword">
                       Forgotten Password?
                     </Link>
-                  </div>
+                  </div> */}
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
                     {signInButtonActivated ? (
