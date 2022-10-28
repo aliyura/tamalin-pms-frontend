@@ -12,6 +12,7 @@ import CreateAdmin from "./pages/CreateAdmin";
 import Layout from "./Layout";
 import CreateAgent from "./pages/CreateAgent";
 import ResetPassword from "./pages/resetPassword";
+import AllAdmins from "./pages/AllAdmins";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -32,6 +33,7 @@ function App() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/createadmin" element={<CreateAdmin />} />
           <Route path="/createagent" element={<CreateAgent />} />
+          <Route path="/alladmins" element={<AllAdmins />} />
         </Route>
       </Routes>
     </LoginContext.Provider>
