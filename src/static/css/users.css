@@ -7,11 +7,31 @@
   color: #fff;
 }
 
-.input {
-  border-radius: 15% !important;
-  border-style: groove !important;
+ .input-field {
+   display: flex;
+   flex-direction: column;
+ }
+
+.input-field .input {
+  border-radius: 10px !important;
+  border: 1px solid #adacac !important;
+  padding: 6px;
 }
 
 .label {
   white-space: nowrap;
+}
+.label_field{
+ margin-top: 8px;
+}
+
+.button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_bt{
+  max-width: 200px;
+
 }
