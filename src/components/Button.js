@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const Button = ({children}) => {
-    return (
-<button className='btn btn-outlined btn-success'>
-    {children}
-</button>
-    );
-}
+const Button = ({ children, onClick }) => {
+  return (
+    <button className="btn btn-outlined btn-success" onClick={onClick}>
+      {children}
+    </button>
+  );
+};
 
 export default Button;

@@ -8,32 +8,29 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 
-const Vehicles = () => {
-  const [vehicles, setVehicles] = useState([]);
+const AllAgents = () => {
+  const [agents, setAgents] = useState([]);
   const [totalPages, setTotalPage] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
-  let id;
 
-  const getVehicles = useCallback(async () => {
+  const getAllAgents = useCallback(async () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
-      .get(`vehicle/list?page=${currentPage}`, {
+      .get(`client/list?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         setInProgress(false);
-        console.log(res);
         const { page } = res.data.data;
         const { data } = res.data;
-        id = data.vuid;
-        setVehicles(data);
-        // if (page.length > 0) {
-        //   setTotalPage(++data.totalPages);
-        //   setCurrentPage(data.currentPage);
-        // }
+        setAgents(page);
+        if (page.length > 0) {
+          setTotalPage(++data.totalPages);
+          setCurrentPage(data.currentPage);
+        }
       })
       .catch((err) => {
         setInProgress(false);
@@ -41,10 +38,6 @@ const Vehicles = () => {
         throw new Error(message);
       });
   }, [currentPage]);
-
-  const deleteVehicle = async () => {
-    await instance.delete(`vehicle/${id}`);
-  };
 
   const changePage = (action) => {
     if (action === -1) {
@@ -55,11 +48,11 @@ const Vehicles = () => {
       currentPage = action;
     }
     setCurrentPage(currentPage);
-    getVehicles();
+    getAllAgents();
   };
 
   useEffect(() => {
-    getVehicles();
+    getAllAgents();
   }, []);
 
   return (
@@ -72,57 +65,41 @@ const Vehicles = () => {
           <div className="d-flex search-section m-4">
             <Search placeholder={"Search Admins e.g John Doe"} />
             <div className="col-6 register-btn m-2">
-              <Button onClick={() => navigate("/createvehicle")}>
-                Register a new Vehicle
+              <Button onClick={() => navigate("/createagent")}>
+                Register a new Agent
               </Button>
             </div>
           </div>
           <div className="col-12">
             <div className="white_shd full stretch margin_bottom_30">
-              <div className="table_section table-pad padding_infor_info">
+              <div className="table_section padding_infor_info">
                 <div className="table-responsive">
                   {inProgress ? (
                     <Loader />
-                  ) : vehicles.length > 0 ? (
+                  ) : agents.length > 0 ? (
                     <table className="table table-striped">
                       <thead>
                         <tr>
-                          <th>S/N</th>
-                          <th>Code</th>
-                          <th>Plate Number</th>
-                          <th>Model</th>
-                          <th>IMEI</th>
-                          <th>SIM</th>
-                          <th>Created By</th>
-                          <th>Created At</th>
-                          <th>Updated At</th>
-                          <th>Actions</th>
+                          <th>Full Name</th>
+                          <th>Phone Number</th>
+                          <th>Email</th>
+                          <th>action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {vehicles.map((v, index) => {
+                        {agents.map((admin, index) => {
                           return (
                             <>
                               <tr key={index}>
                                 <td>{++index}</td>
-                                <td>{v.code}</td>
-                                <td>{v.plateNumber}</td>
-                                <td>{v.model}</td>
-                                <td>{v.trackerIMEI}</td>
-                                <td>{v.trackerSIM}</td>
-                                <td>{v.createdBy}</td>
-                                <td>{v.createdAt}</td>
-                                <td>{v.updatedAt}</td>
-                                <td className="actions">
+                                <td>{admin.name}</td>
+                                <td>
                                   <Link to="/">
-                                    <i
-                                      className="fa fa-edit icon text-success"
-                                      onClick={deleteVehicle}
-                                    ></i>
+                                    <i className="fa fa-edit text-success"></i>
                                   </Link>
-                                  <p>&nbsp;|&nbsp;</p>
+                                  &nbsp;|&nbsp;
                                   <Link to="/">
-                                    <i className="fa fa-trash icon text-danger"></i>
+                                    <i className="fa fa-trash text-danger"></i>
                                   </Link>
                                 </td>
                               </tr>
@@ -133,7 +110,7 @@ const Vehicles = () => {
                     </table>
                   ) : (
                     <div className="text-center message-box">
-                      <p>No Administrator found</p>
+                      <p>No Agent found</p>
                     </div>
                   )}
                 </div>
@@ -180,4 +157,4 @@ const Vehicles = () => {
   );
 };
 
-export default Vehicles;
+export default AllAgents;

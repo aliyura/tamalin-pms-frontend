@@ -1,0 +1,31 @@
+.stretch {
+  width: 122.5% !important;
+}
+
+.search-section {
+  width: 120%;
+}
+
+.register-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-color {
+  color: #fff;
+  background-color: #034a6b;
+}
+
+.table-pad {
+  padding: 45px 0 !important;
+}
+
+.actions {
+  display: flex;
+  margin-top: 10px;
+  gap: 5px;
+}
+
+.icon {
+  font-size: 25px !important;
+}
