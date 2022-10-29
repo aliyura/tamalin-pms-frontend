@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { useState, useEffect, useCallback } from "react";
 import instance from "../api";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,8 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 
-const AllAdmins = () => {
-  const [admins, setAdmins] = useState([]);
+const AllClients = () => {
+  const [clients, setClients] = useState([]);
   const [totalPages, setTotalPage] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
@@ -26,7 +25,7 @@ const AllAdmins = () => {
         setInProgress(false);
         const { page } = res.data.data;
         const { data } = res.data;
-        setAdmins(page);
+        setClients(page);
         if (page.length > 0) {
           setTotalPage(++data.totalPages);
           setCurrentPage(data.currentPage);
@@ -37,7 +36,7 @@ const AllAdmins = () => {
         const { message } = err.response.data;
         throw new Error(message);
       });
-  },[currentPage]);
+  }, [currentPage]);
 
   const changePage = (action) => {
     if (action === -1) {
@@ -56,17 +55,17 @@ const AllAdmins = () => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <div className="row">
         <div className="col-12 recently registered"></div>
       </div>
       <div className="row mt-4">
         <div className="col-sm-12 col-md-10 col-lg-10 table">
           <div className="d-flex search-section m-4">
-            <Search placeholder={"Search Admins e.g John Doe"} />
+            <Search placeholder={"Search Clients e.g John Doe"} />
             <div className="col-6 register-btn m-2">
-              <Button onClick={() => navigate("/createadmin")}>
-                Register a new Admin
+              <Button onClick={() => navigate("/registerclient")}>
+                Register a new client
               </Button>
             </div>
           </div>
@@ -76,7 +75,7 @@ const AllAdmins = () => {
                 <div className="table-responsive">
                   {inProgress ? (
                     <Loader />
-                  ) : admins.length > 0 ? (
+                  ) : clients.length > 0 ? (
                     <table className="table table-striped">
                       <thead>
                         <tr>
@@ -87,7 +86,7 @@ const AllAdmins = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {admins.map((admin, index) => {
+                        {clients.map((admin, index) => {
                           return (
                             <>
                               <tr key={index}>
@@ -110,7 +109,7 @@ const AllAdmins = () => {
                     </table>
                   ) : (
                     <div className="text-center message-box">
-                      <p>No Administrator found</p>
+                      <p>No client found</p>
                     </div>
                   )}
                 </div>
@@ -153,8 +152,8 @@ const AllAdmins = () => {
           </li>
         </ul>
       </nav>
-    </Fragment>
+    </>
   );
 };
 
-export default AllAdmins;
+export default AllClients;

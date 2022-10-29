@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const [phoneText, setPhoneText] = useState("");
@@ -109,19 +108,6 @@ const Login = () => {
                       {passwordError ? "Password empty" : ""}
                     </p>
                   </div>
-                  {/* <div className="field">
-                    <label className="label_field hidden">hidden label</label>
-                    <label className="form-check-label">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        placeholder="Remember Me"
-                      />
-                    </label>
-                    <Link className="forgot" to="/resetPassword">
-                      Forgotten Password?
-                    </Link>
-                  </div> */}
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
                     {signInButtonActivated ? (

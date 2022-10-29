@@ -8,14 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 
-const AllAdmins = () => {
-  const [admins, setAdmins] = useState([]);
+const AllAgents = () => {
+  const [agents, setAgents] = useState([]);
   const [totalPages, setTotalPage] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
 
-  const getAllAdmins = useCallback(async () => {
+  const getAllAgents = useCallback(async () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
@@ -26,7 +26,7 @@ const AllAdmins = () => {
         setInProgress(false);
         const { page } = res.data.data;
         const { data } = res.data;
-        setAdmins(page);
+        setAgents(page);
         if (page.length > 0) {
           setTotalPage(++data.totalPages);
           setCurrentPage(data.currentPage);
@@ -37,7 +37,7 @@ const AllAdmins = () => {
         const { message } = err.response.data;
         throw new Error(message);
       });
-  },[currentPage]);
+  }, [currentPage]);
 
   const changePage = (action) => {
     if (action === -1) {
@@ -48,11 +48,11 @@ const AllAdmins = () => {
       currentPage = action;
     }
     setCurrentPage(currentPage);
-    getAllAdmins();
+    getAllAgents();
   };
 
   useEffect(() => {
-    getAllAdmins();
+    getAllAgents();
   }, []);
 
   return (
@@ -65,8 +65,8 @@ const AllAdmins = () => {
           <div className="d-flex search-section m-4">
             <Search placeholder={"Search Admins e.g John Doe"} />
             <div className="col-6 register-btn m-2">
-              <Button onClick={() => navigate("/createadmin")}>
-                Register a new Admin
+              <Button onClick={() => navigate("/createagent")}>
+                Register a new Agent
               </Button>
             </div>
           </div>
@@ -76,7 +76,7 @@ const AllAdmins = () => {
                 <div className="table-responsive">
                   {inProgress ? (
                     <Loader />
-                  ) : admins.length > 0 ? (
+                  ) : agents.length > 0 ? (
                     <table className="table table-striped">
                       <thead>
                         <tr>
@@ -87,7 +87,7 @@ const AllAdmins = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {admins.map((admin, index) => {
+                        {agents.map((admin, index) => {
                           return (
                             <>
                               <tr key={index}>
@@ -110,7 +110,7 @@ const AllAdmins = () => {
                     </table>
                   ) : (
                     <div className="text-center message-box">
-                      <p>No Administrator found</p>
+                      <p>No Agent found</p>
                     </div>
                   )}
                 </div>
@@ -157,4 +157,4 @@ const AllAdmins = () => {
   );
 };
 
-export default AllAdmins;
+export default AllAgents;
