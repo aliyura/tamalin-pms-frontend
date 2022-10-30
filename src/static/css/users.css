@@ -13,9 +13,9 @@
  }
 
 .input-field .input {
-  border-radius: 10px !important;
+  border-radius: 5px !important;
   border: 1px solid #adacac !important;
-  padding: 6px;
+  padding: 5px;
 }
 
 .label {
@@ -34,4 +34,33 @@
 .main_bt{
   max-width: 200px;
 
+}
+
+.multi-form{
+  background: red;
+  height: 150% !important;
+}
+
+.multi-page {
+  height: 00px;
+}
+
+/*progressbar*/
+#progressbar {
+display: flex;
+justify-content: space-between;
+padding: 6px;
+}
+
+#progressbar .active {
+  color: #1ed085;
+  font-weight: 400;
+}
+
+.success-green{
+  color: #1ed085;
+}
+
+.form-buttons{
+padding: 3rem 5rem;
 }

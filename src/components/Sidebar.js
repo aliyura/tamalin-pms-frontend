@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import tamalinlogo from '../static/images/logo/tamalinlogo.jpg'
 
 const Sidebar = () => {
     return (
@@ -7,7 +8,7 @@ const Sidebar = () => {
                <div className="sidebar_blog_1">
                   <div className="sidebar-header">
                      <div className="logo_section">
-                        <Link to={'/'} ><img className="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></Link>
+                        <Link to={'/'} ><img className="logo_icon img-responsive" src={tamalinlogo} alt="Tamalin" /></Link>
                      </div>
                   </div>
                </div>

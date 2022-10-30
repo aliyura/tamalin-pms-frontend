@@ -13,6 +13,7 @@ import Layout from "./Layout";
 import CreateAgent from "./pages/CreateAgent";
 import CreateClient from "./pages/CreateClient";
 import ResetPassword from "./pages/resetPassword";
+import ClientFormProvider from "./store/ClientFormContext";
 import AllClients from "./pages/AllClients";
 import AllAdmins from "./pages/AllAdmins";
 import AllAgents from "./pages/AllAgents";
@@ -24,7 +25,8 @@ function App() {
   );
 
   return (
-    <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <LoginContext.Provider value={ { isAuthenticated, setIsAuthenticated } }>
+      <ClientFormProvider>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
@@ -43,7 +45,8 @@ function App() {
           <Route path="/registerclient" element={<CreateClient />} />
           <Route path="/createvehicle" element={<CreateVehicle />} />
         </Route>
-      </Routes>
+        </Routes>
+      </ClientFormProvider>
     </LoginContext.Provider>
   );
 }
