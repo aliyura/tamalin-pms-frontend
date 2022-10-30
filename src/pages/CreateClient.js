@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import ClientCreated from '../components/ClientCreated';
 import CreateClientForm1 from '../components/CreateClientForm1';
 import CreateClientForm2 from '../components/CreateClientForm2';
 import CreateClientForm3 from '../components/CreateClientForm3';
@@ -22,27 +23,10 @@ const CreateClient = () => {
     <div className=" mt-0">
       <div className="col-11 col-sm-9 col-md-7 col-lg-6 p-0 mt-3 mb-2">
         <div className="card px-0 pt-4 pb-0 mt-3 mb-3">
-          { page === 1 ? <CreateClientForm1 handleChange={ handleChange } />
-            : page === 2 ? <CreateClientForm2 handleChange={ handleChange } />
-              : <CreateClientForm3 handleChange={ handleChange } /> }
-          
-          <div className='form-buttons row'>
-            <div className="previous col-6">
-              { page > 1 && <button onClick={ (e) => {
-                e.preventDefault()
-                setPage(prev => prev - 1)
-              } }>prev</button> }
-           </div>
-
-
-            <div className="previous col-6 text-right">
-            { page < 3 && <button onClick={ (e) => {
-              e.preventDefault()
-              setPage(prev => prev + 1)
-              } }>next</button> }
-              </div>
-
-          </div>
+          { page === 1 ? <CreateClientForm1 handleChange={ handleChange } setPage={ setPage } />
+            : page === 2 ? <CreateClientForm2 handleChange={ handleChange } setPage={ setPage } />
+              : page === 3 ? <CreateClientForm3 setPage={ setPage } /> 
+              : <ClientCreated setPage={ setPage } /> }
         </div>
       </div>
     </div>

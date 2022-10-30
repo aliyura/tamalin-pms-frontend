@@ -53,8 +53,12 @@ padding: 6px;
 }
 
 #progressbar .active {
-  color: #07b607;
+  color: #1ed085;
   font-weight: 400;
+}
+
+.success-green{
+  color: #1ed085;
 }
 
 .form-buttons{

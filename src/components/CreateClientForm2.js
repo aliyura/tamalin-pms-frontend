@@ -1,11 +1,27 @@
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import { ClientFormContext } from '../store/ClientFormContext';
 
 
 
-const CreateClientForm2 = ({ handleChange }) => {
+const CreateClientForm2 = ({ handleChange, setPage }) => {
     
-    const {client} = useContext(ClientFormContext)
+    const { client } = useContext(ClientFormContext)
+    const [textFieldErrorText] = useState("This field is can not be blank!")
+    const [error, setError] = useState(false)
+
+    const onNext = e => {
+        e.preventDefault()
+
+        if (client.guarantorName.length < 1 || client.guarantorPhone.length < 11 || client.guarantorIdentityType.length < 1 || client.guarantorIdentityNumber.length < 1 || client.guarantorAddress.length < 1 || client.guarantorRelationship.length < 1) {
+            setError(true)
+        }
+        else {
+            setError(false)
+            setPage(prev => prev + 1)
+        }
+    }
+
+
     return (
         <div className='p-6 m-4'>
             <h4 className='text-center'><strong>Register Client</strong></h4>
@@ -16,7 +32,6 @@ const CreateClientForm2 = ({ handleChange }) => {
                 <div className="active" id="client"><strong>Client's Info <i className="fa fa-check"></i></strong></div>
                 <div className="active" id="guarantor"><strong>Guarantor's Info</strong></div>
                 <div id="documents"><strong>Documents</strong></div>
-                <div id="confirm"><strong>Confirm</strong></div>
             </div>
             <div className="register_form">
                 <form className="px-4 mx-4">
@@ -33,6 +48,7 @@ const CreateClientForm2 = ({ handleChange }) => {
                                         onChange={ (e) => handleChange(e) }
                                     />
                                 </div>
+                                <sup className='text-danger'>{ (error & client.guarantorName.length < 1) ? textFieldErrorText : "" }</sup>
                             </div>
                         </div>
                         <div className="row">
@@ -45,8 +61,11 @@ const CreateClientForm2 = ({ handleChange }) => {
                                         name="guarantorPhone"
                                         value={ client.guarantorPhone }
                                         onChange={ (e) => handleChange(e) }
+                                        minLength="11"
+                                        maxLength="11"
                                     />
                                 </div>
+                                <sup className='text-danger'>{ (error & client.guarantorPhone.length < 11) ? textFieldErrorText : "" }</sup>
                             </div>
                         </div>
 
@@ -54,15 +73,24 @@ const CreateClientForm2 = ({ handleChange }) => {
                             <div className="col-md-6 col-sm-12 mt-2">
                                 <div className="input-field ">
                                     <label className="label_field">Gaurantor's Identity Type</label>
-                                    <input
+                                    <select class="custom-select" onChange={ (e) => handleChange(e) } name="guarantorIdentityType">
+                                        <option selected>Identification Type</option>
+                                        <option value="NIN">NIN</option>
+                                        <option value="PVC">PVC</option>
+                                        <option value="INTERNATIONAL PASSPORT">INTERNATIONAL PASSPORT</option>
+                                    </select>
+
+
+                                    {/* <input
                                         className="input"
                                         type="text"
                                         name="guarantorIdentityType"
                                         placeholder="NIN"
                                         value={ client.guarantorIdentityType }
                                         onChange={ (e) => handleChange(e) }
-                                    />
+                                    /> */}
                                 </div>
+                                <sup className='text-danger'>{ (error & client.guarantorIdentityType.length < 1) ? textFieldErrorText : "" }</sup>
                             </div>
                                 <div className="col-md-6 col-sm-12 mt-2">
                                     <div className="input-field ">
@@ -74,7 +102,8 @@ const CreateClientForm2 = ({ handleChange }) => {
                                             value={ client.guarantorIdentityNumber }
                                             onChange={ (e) => handleChange(e) }
                                         />
-                                    </div>
+                                </div>
+                                <sup className='text-danger'>{ (error & client.guarantorIdentityNumber < 1) ? "Incorrect or empty field": "" }</sup>
                                 </div>
                             
                         </div>
@@ -91,6 +120,7 @@ const CreateClientForm2 = ({ handleChange }) => {
                                         onChange={ (e) => handleChange(e) }
                                     />
                                 </div>
+                                <sup className='text-danger'>{ (error & client.guarantorAddress.length < 1) ? textFieldErrorText : "" }</sup>
                             </div>
                         </div>
 
@@ -106,6 +136,7 @@ const CreateClientForm2 = ({ handleChange }) => {
                                         onChange={ (e) => handleChange(e) }
                                     />
                                 </div>
+                                <sup className='text-danger'>{ (error & client.guarantorRelationship.length < 1) ? textFieldErrorText : "" }</sup>
                             </div>
                         </div>
 
@@ -114,6 +145,20 @@ const CreateClientForm2 = ({ handleChange }) => {
 
                     </fieldset>
                 </form>
+            </div>
+            <div className='form-buttons row'>
+                <div className="previous col-6">
+                    <button className='btn btn-success' onClick={ (e) => {
+                        e.preventDefault()
+                        setPage(prev => prev - 1)
+                    } }>prev</button>
+                </div>
+
+
+                <div className="previous col-6 text-right">
+                    <button className='btn btn-success' onClick={ onNext }>next</button>
+                </div>
+
             </div>
         </div>
 
