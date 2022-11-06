@@ -1,69 +1,20 @@
 import { useRef, useState } from "react";
 import instance from "../api";
-import { useNavigate } from "react-router-dom";
-import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
+import "../static/css/editvehicles.css";
 import Spinner from "../components/Spinner";
 
-const CreateVehicle = () => {
-  const [modelText, setModelText] = useState("");
+const EditVehicle = (props) => {
   const [plateNumberText, setPlateNumberText] = useState("");
-  const [identityNumberText, setidentityNumberText] = useState("");
   const [imeiText, setImeiText] = useState("");
   const [simText, setSimText] = useState("");
-  const modelRef = useRef();
   const plateNumberRef = useRef();
-  const identityNumberRef = useRef();
   const imeiRef = useRef();
   const simRef = useRef();
   const [createButtonActivated, setSignInButtonActivated] = useState(false);
   const [plateNumberError, setPlateNumberError] = useState(false);
-  const [identityNumberError, setIdentityNumberError] = useState(false);
   const [error, setError] = useState("");
-  // const { setisAuthenticated } = useLoginContext();
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const Registervehicle = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const token = sessionStorage.getItem("token");
-    await instance
-      .post(
-        `/vehicle`,
-        {
-          model:
-            modelRef.current.value === "" ? "Empty" : modelRef.current.value,
-          plateNumber: plateNumberRef.current.value,
-          identityNumber: identityNumberRef.current.value,
-          trackerIMEI:
-            imeiRef.current.value === "" ? "Empty" : imeiRef.current.value,
-          trackerSIM:
-            simRef.current.value === "" ? "Empty" : simRef.current.value,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        navigate("/");
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        // const { message } = err.response.data;
-        console.log(err);
-        // setError(message);
-        setIsLoading(false);
-      });
-  };
-
-  const ModelHandler = () => {
-    setModelText(modelRef.current.value);
-  };
 
   const PlateNumberHandler = () => {
     setPlateNumberText(plateNumberRef.current.value);
@@ -72,18 +23,7 @@ const CreateVehicle = () => {
       setSignInButtonActivated(false);
     } else {
       setPlateNumberError(false);
-      setSignInButtonActivated(identityNumberError ? false : true);
-    }
-  };
-
-  const identityNumberHandler = () => {
-    setidentityNumberText(identityNumberRef.current.value);
-    if (identityNumberText === "") {
-      setIdentityNumberError(true);
-      setSignInButtonActivated(false);
-    } else {
-      setIdentityNumberError(false);
-      setSignInButtonActivated(plateNumberError ? false : true);
+      //   setSignInButtonActivated(identityNumberError ? false : true);
     }
   };
 
@@ -96,31 +36,19 @@ const CreateVehicle = () => {
   };
 
   return (
-    <div className="full_container">
+    <div className="full_container modal">
       <div className="container">
         <div className="center verticle_center full_height">
           <div className="login_section">
             <div className="logo_login">
               <div className="center">
-                <h1 className="heading">Create Vehicle</h1>
+                <h1 className="heading">Edit Vehicle</h1>
               </div>
             </div>
             <div className="register_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={Registervehicle} className="px-4 mx-4">
+              <form className="px-4 mx-4">
                 <fieldset>
-                  <div className="input-field ">
-                    <label className="label_field">Model</label>
-                    <input
-                      className="input"
-                      type="text"
-                      ref={modelRef}
-                      name="name"
-                      placeholder="ex. Chrysler"
-                      onBlur={ModelHandler}
-                      onChange={ModelHandler}
-                    />
-                  </div>
                   <div className="input-field ">
                     <label className="label_field">Plate Number</label>
                     <input
@@ -136,21 +64,7 @@ const CreateVehicle = () => {
                       {plateNumberError ? "Invalid Plate Number" : ""}
                     </p>
                   </div>
-                  <div className="input-field ">
-                    <label className="label_field">Identity Number</label>
-                    <input
-                      className="input"
-                      type="text"
-                      ref={identityNumberRef}
-                      name="id-number"
-                      // placeholder="Password"
-                      onBlur={identityNumberHandler}
-                      onChange={identityNumberHandler}
-                    />
-                    <p className="err-color">
-                      {identityNumberError ? "Identity Number empty" : ""}
-                    </p>
-                  </div>
+
                   <div className="input-field ">
                     <label className="label_field">IMEI Number</label>
                     <input
@@ -181,7 +95,42 @@ const CreateVehicle = () => {
                       <div className="button">
                         <button
                           className="main_bt"
-                          onClick={Registervehicle}
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            props.setIsOpen(true);
+                            const token = sessionStorage.getItem("token");
+
+                            await instance
+                              .put(
+                                `vehicle/${props.vuid}`,
+                                {
+                                  plateNumber: plateNumberRef.current.value,
+                                  trackerIMEI:
+                                    imeiRef.current.value === ""
+                                      ? "Empty"
+                                      : imeiRef.current.value,
+                                  trackerSIM:
+                                    simRef.current.value === ""
+                                      ? "Empty"
+                                      : simRef.current.value,
+                                },
+                                {
+                                  headers: {
+                                    Authorization: `Bearer ${token}`,
+                                  },
+                                }
+                              )
+                              .then((res) => {
+                                console.log(res);
+                                props.setIsOpen(false);
+                                setIsLoading(false);
+                              })
+                              .catch((err) => {
+                                console.log(err);
+                                props.setIsOpen(true);
+                                setIsLoading(false);
+                              });
+                          }}
                           disabled={isLoading}
                           style={{
                             backgroundColor: isLoading ? "#e6e6e6" : null,
@@ -204,4 +153,4 @@ const CreateVehicle = () => {
   );
 };
 
-export default CreateVehicle;
+export default EditVehicle;
