@@ -18,6 +18,7 @@ import AllClients from "./pages/AllClients";
 import AllAdmins from "./pages/AllAdmins";
 import AllAgents from "./pages/AllAgents";
 import CreateVehicle from "./pages/CreateVehicle";
+import Client from "./pages/Client";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -37,7 +38,8 @@ function App() {
           <Route path="/vehicles" element={<Vehicles />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/reports" element={<Reports />} />
-          <Route path="/clients" element={<AllClients />} />
+            <Route path="/clients" element={ <AllClients /> } />
+            <Route path="/client" element={ <Client /> } />
           <Route path="/admins" element={<AllAdmins />} />
           <Route path="/agents" element={<AllAgents />} />
           <Route path="/createadmin" element={<CreateAdmin />} />

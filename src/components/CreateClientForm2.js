@@ -6,13 +6,13 @@ import { ClientFormContext } from '../store/ClientFormContext';
 const CreateClientForm2 = ({ handleChange, setPage }) => {
     
     const { client } = useContext(ClientFormContext)
-    const [textFieldErrorText] = useState("This field is can not be blank!")
+    const [textFieldErrorText] = useState("This field can not be blank!")
     const [error, setError] = useState(false)
 
     const onNext = e => {
         e.preventDefault()
 
-        if (client.guarantorName.length < 1 || client.guarantorPhone.length < 11 || client.guarantorIdentityType.length < 1 || client.guarantorIdentityNumber.length < 1 || client.guarantorAddress.length < 1 || client.guarantorRelationship.length < 1) {
+        if (client.guarantorName.length < 1 || client.guarantorPhone.length < 11 || client.guarantorIdentityType==="" || client.guarantorIdentityNumber.length < 1 || client.guarantorAddress.length < 1 || client.guarantorRelationship.length < 1) {
             setError(true)
         }
         else {
@@ -23,6 +23,8 @@ const CreateClientForm2 = ({ handleChange, setPage }) => {
 
 
     return (
+        <div className="col-11 col-sm-9 col-md-7 col-lg-6 p-0 mt-3 mb-2">
+            <div className="card px-0 pt-4 pb-0 mt-3 mb-3">
         <div className='p-6 m-4'>
             <h4 className='text-center'><strong>Register Client</strong></h4>
             <p className='text-center'>Fill all form field to go to next step</p>
@@ -74,7 +76,7 @@ const CreateClientForm2 = ({ handleChange, setPage }) => {
                                 <div className="input-field ">
                                     <label className="label_field">Gaurantor's Identity Type</label>
                                     <select class="custom-select" onChange={ (e) => handleChange(e) } name="guarantorIdentityType">
-                                        <option selected>Identification Type</option>
+                                        <option selected value={""}>Identification Type</option>
                                         <option value="NIN">NIN</option>
                                         <option value="PVC">PVC</option>
                                         <option value="INTERNATIONAL PASSPORT">INTERNATIONAL PASSPORT</option>
@@ -160,7 +162,9 @@ const CreateClientForm2 = ({ handleChange, setPage }) => {
                 </div>
 
             </div>
-        </div>
+                </div>
+            </div>
+            </div>
 
     );
 }

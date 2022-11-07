@@ -1,27 +1,30 @@
 import {useContext, useState} from 'react';
 import { ClientFormContext } from '../store/ClientFormContext';
+import Toaster from './Toaster';
 
 const CreateClientForm1 = ({handleChange, setPage}) => {
 
     const { client } = useContext(ClientFormContext)
-    const [textFieldErrorText] = useState("This field is can not be blank!")
+    const [textFieldErrorText] = useState("This field can not be blank!")
     const [error, setError] = useState(false)
 
     const onNext = e => {
         e.preventDefault()
         
-        if (client.name.length < 1 || client.phone.length < 1 || client.identityType.length < 1 || JSON.stringify(client.identityNumber).length < 11){
+        if (client.name.length < 1 || client.phone.length < 11 || client.identityType ==="" || client.identityNumber.length < 1){
             setError(true)
         }
         else {
             setPage(prev => prev + 1)
+            console.log(client.identityType)
         }
         }
     
 
 
     return (
-
+        <div className="col-11 col-sm-9 col-md-7 col-lg-6 p-0 mt-3 mb-2">
+            <div className="card px-0 pt-4 pb-0 mt-3 mb-3">
         <div className='p-6 m-4'>
             <h4 className='text-center'><strong>Register Client</strong></h4>
             <p className='text-center'>Fill all form field to go to next step</p>
@@ -61,8 +64,7 @@ const CreateClientForm1 = ({handleChange, setPage}) => {
                                         type="tel"
                                         name="phone"
                                         value={ client.phone }
-                                        onChange={ (e) => handleChange(e) }
-                                        minLength="11"
+                                        onChange={(e)=>handleChange(e)}
                                         maxLength="11"
                                     />
                                 </div>
@@ -76,19 +78,11 @@ const CreateClientForm1 = ({handleChange, setPage}) => {
                                     <label className="label_field">Identity Type</label>
 
                                     <select class="custom-select" onChange={ (e) => handleChange(e) } name="identityType">
-                                        <option selected>Identification Type</option>
+                                        <option value="">Identification Type</option>
                                         <option value="NIN">NIN</option>
                                         <option value="PVC">PVC</option>
                                         <option value="INTERNATIONAL PASSPORT">INTERNATIONAL PASSPORT</option>
                                     </select>
-                                    {/* <input
-                                        className="input"
-                                        type="text"
-                                        name="identityType"
-                                        placeholder="NIN"
-                                        value={ client.identityType }
-                                        onChange={ (e) => handleChange(e) }
-                                    /> */}
                                 </div>
                                 <sup className='text-danger'>{ (error & client.identityType.length < 1) ? textFieldErrorText : "" }</sup>
                             </div>
@@ -131,7 +125,8 @@ const CreateClientForm1 = ({handleChange, setPage}) => {
                <div className="previous col-6 text-right">
                     <button className='btn btn-success' onClick={ onNext }>next</button>
                 </div>
-
+                    </div>
+                    </div>
             </div>
         </div>
 
