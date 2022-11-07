@@ -7,36 +7,37 @@
   color: #fff;
 }
 
- .input-field {
-   display: flex;
-   flex-direction: column;
- }
+.input-field {
+  display: flex;
+  flex-direction: column;
+}
 
 .input-field .input {
   border-radius: 5px !important;
   border: 1px solid #adacac !important;
   padding: 5px;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 
 .label {
   white-space: nowrap;
 }
-.label_field{
- margin-top: 8px;
+.label_field {
+  margin-top: 8px;
 }
 
-.button{
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.main_bt{
+.main_bt {
   max-width: 200px;
-
 }
 
-.multi-form{
+.multi-form {
   background: red;
   height: 150% !important;
 }
@@ -47,9 +48,9 @@
 
 /*progressbar*/
 #progressbar {
-display: flex;
-justify-content: space-between;
-padding: 6px;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
 }
 
 #progressbar .active {
@@ -57,11 +58,22 @@ padding: 6px;
   font-weight: 400;
 }
 
-.success-green{
+.success-green {
   color: #1ed085;
 }
 
-.form-buttons{
-padding: 3rem 5rem;
+.form-buttons {
+  padding: 3rem 5rem;
+}
+
+.btn-section {
+  padding-bottom: 30px;
+}
+
+.table-size {
+  float: left;
+  margin-right: 200px !important;
+  width: 100%;
+  padding: 35px 20px;
 }
 

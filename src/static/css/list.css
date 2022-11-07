@@ -1,14 +1,21 @@
-.stretch {
-  width: 122.5% !important;
-}
+/* .stretch {
+  width: 110% !important;
+} */
 
 .search-section {
-  width: 120%;
+  width: 116%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.register-btn {
-  display: flex;
-  justify-content: flex-end;
+.search-input {
+  width: 50%;
+}
+
+.table-header > th {
+  font-weight: bold !important;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .btn-color {
@@ -17,15 +24,27 @@
 }
 
 .table-pad {
-  padding: 45px 0 !important;
+  padding: 25px 0 !important;
 }
 
 .actions {
   display: flex;
-  margin-top: 10px;
-  gap: 5px;
+  align-items: center;
+  padding-top: 1rem !important;
 }
 
 .icon {
-  font-size: 25px !important;
+  font-size: 15px !important;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+  background-color: #dde8ee;
+  color: #595555;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #fff;
+  color: #034a6b;
 }

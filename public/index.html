@@ -15,7 +15,6 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-  
 
     <!-- site icon -->
     <link rel="icon" href="%PUBLIC_URL%/images/fevicon.png" type="image/png" />
@@ -34,19 +33,17 @@
     <!-- custom css -->
     <link rel="stylesheet" href="%PUBLIC_URL%/css/custom.css" />
     <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-          <![endif]-->
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
-
-
-    <title>React App</title>
+    <title>Tamalin PMS</title>
   </head>
   <body class="dashboard dashboard_2">
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
     <div id="root" class="full_container"></div>
-
-    
 
     <script src="%PUBLIC_URL%/js/jquery.min.js"></script>
     <script src="%PUBLIC_URL%/js/popper.min.js"></script>
@@ -65,7 +62,7 @@
     <!-- nice scrollbar -->
     <script src="%PUBLIC_URL%/js/perfect-scrollbar.min.js"></script>
     <script>
-      var ps = new PerfectScrollbar('#sidebar');
+      var ps = new PerfectScrollbar("#sidebar");
     </script>
     <!-- custom js -->
     <script src="%PUBLIC_URL%/js/custom.js"></script>

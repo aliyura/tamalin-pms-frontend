@@ -18,6 +18,8 @@ import AllClients from "./pages/AllClients";
 import AllAdmins from "./pages/AllAdmins";
 import AllAgents from "./pages/AllAgents";
 import CreateVehicle from "./pages/CreateVehicle";
+import CreateVehicleType from "./pages/CreateVehicleType";
+import VehicleTypes from "./pages/VehicleTypes";
 import Client from "./pages/Client";
 
 function App() {
@@ -36,16 +38,18 @@ function App() {
           {/* <Route path="/clients" element={<Clients />} /> */}
           <Route path="/contracts" element={<Contracts />} />
           <Route path="/vehicles" element={<Vehicles />} />
+          <Route path="/vehicletypes" element={<VehicleTypes />} />
           <Route path="/payments" element={<Payments />} />
           <Route path="/reports" element={<Reports />} />
             <Route path="/clients" element={ <AllClients /> } />
-            <Route path="/client" element={ <Client /> } />
+            <Route path="/client" element={ <Client/> } />
           <Route path="/admins" element={<AllAdmins />} />
           <Route path="/agents" element={<AllAgents />} />
           <Route path="/createadmin" element={<CreateAdmin />} />
           <Route path="/createagent" element={<CreateAgent />} />
           <Route path="/registerclient" element={<CreateClient />} />
           <Route path="/createvehicle" element={<CreateVehicle />} />
+          <Route path="/createvehicletype" element={<CreateVehicleType />} />
         </Route>
         </Routes>
       </ClientFormProvider>

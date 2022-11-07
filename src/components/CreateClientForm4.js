@@ -4,9 +4,10 @@ import Spinner from './Spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 import instance from '../api';
 
-const CreateClientForm4 = ({ setCreatedClient }) => {
+const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
 
 
     const { client, setClient } = useContext(ClientFormContext)
@@ -72,7 +73,7 @@ const CreateClientForm4 = ({ setCreatedClient }) => {
                 <div className="card px-0 pt-4 pb-0 mt-3 mb-3">
                     <div className='p-6 m-4'>
                         <h4 className='text-center'><strong>Register Client</strong></h4>
-                        <p className='text-center'>Fill all form field to go to next step</p>
+                        <p className='text-center'>Please confirm all inputs</p>
 
                         <div className="row">
 
@@ -87,7 +88,7 @@ const CreateClientForm4 = ({ setCreatedClient }) => {
                             </div>
 
                             <div className='col-md-4'>
-                                <div className="active" id="client"><strong>Client's Info <i className="fa fa-check"></i></strong></div>
+                                <div className="active" id="client"><strong>Guarantor's Info <i className="fa fa-check"></i></strong></div>
                                 <ul>
                                     <li><p><strong>Name: </strong>{ client.name }</p></li>
                                     <li><p><strong>Phone: </strong>{ client.guarantorPhone }</p></li>
@@ -113,12 +114,20 @@ const CreateClientForm4 = ({ setCreatedClient }) => {
 
 
                         </div>
-                        <div className='form-buttons row'>
+                        <div className="row">
+                            <div className="col-6">
+                                <button className='btn  btn-lg btn-success' onClick={ (e) => {
+                                    e.preventDefault()
+                                    setPage(3)
+                                } }>Prev</button>
+                            </div>
+                            <div className="text-right col-6">
+                                <button className='btn  btn-lg btn-success' onClick={ createClient }>Submit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button className='btn  btn-lg btn-success' onClick={ createClient }>Submit</button>
         </div>
     );
 }

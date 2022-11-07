@@ -299,7 +299,7 @@ a.btn {
 .padding_infor_info {
   padding: 35px 35px;
   float: left;
-  width: 100%;
+  /* width: 120%; */
 }
 
 .color_black p,
@@ -3233,9 +3233,9 @@ table.projects tr td:first-child {
   max-width: 640px;
   background: #fff;
   min-height: 540px;
-  width: 100%;
+  width: 120%;
   box-shadow: 0px 0 10px -8px #000;
-  margin: 0px;
+  margin: 0px; 
   padding: 0;
   border-radius: 10px;
   overflow: hidden;

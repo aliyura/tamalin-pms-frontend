@@ -179,7 +179,7 @@ const CreateAgent = () => {
                     />
                     <p className="err-color">{ninError ? "NIN empty" : ""}</p>
                   </div>
-                  <div className="input-field margin_0">
+                  <div className="input-field margin_0 btn-section">
                     <label className="label_field hidden">hidden label</label>
                     {createButtonActivated ? (
                        <div className="button">
