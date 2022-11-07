@@ -14,7 +14,7 @@ const AllClients = () => {
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
 
-  const getAllAdmins = useCallback(async () => {
+  const getAllClients = useCallback(async () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
@@ -47,11 +47,11 @@ const AllClients = () => {
       currentPage = action;
     }
     setCurrentPage(currentPage);
-    getAllAdmins();
+    getAllClients();
   };
 
   useEffect(() => {
-    getAllAdmins();
+    getAllClients();
   }, []);
 
   return (
@@ -79,19 +79,22 @@ const AllClients = () => {
                     <table className="table table-striped">
                       <thead>
                         <tr>
+                          <th>s. No</th>
                           <th>Full Name</th>
                           <th>Phone Number</th>
-                          <th>Email</th>
+                          <th>Status</th>
                           <th>action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {clients.map((admin, index) => {
+                        {clients.map((client, index) => {
                           return (
                             <>
                               <tr key={index}>
                                 <td>{++index}</td>
-                                <td>{admin.name}</td>
+                                <td>{ client.name }</td>
+                                <td>{ client.phoneNumber }</td>
+                                <td>{ client.status }</td>
                                 <td>
                                   <Link to="/">
                                     <i className="fa fa-edit text-success"></i>
