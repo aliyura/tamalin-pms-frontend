@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
-import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
 
@@ -20,7 +19,7 @@ const CreateVehicle = () => {
   const [plateNumberError, setPlateNumberError] = useState(false);
   const [identityNumberError, setIdentityNumberError] = useState(false);
   const [error, setError] = useState("");
-  const { setisAuthenticated } = useLoginContext();
+  // const { setisAuthenticated } = useLoginContext();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -50,14 +49,13 @@ const CreateVehicle = () => {
       )
       .then((res) => {
         console.log(res);
-        setisAuthenticated(true);
         navigate("/");
         setIsLoading(false);
       })
       .catch((err) => {
-        const { message } = err.response.data;
+        // const { message } = err.response.data;
         console.log(err);
-        setError(message);
+        // setError(message);
         setIsLoading(false);
       });
   };
@@ -176,7 +174,7 @@ const CreateVehicle = () => {
                       onChange={SimHandler}
                     />
                   </div>
-                  <div className="input-field margin_0">
+                  <div className="input-field margin_0 btn-section">
                     <label className="label_field hidden">hidden label</label>
                     {createButtonActivated ? (
                       <div className="button">
