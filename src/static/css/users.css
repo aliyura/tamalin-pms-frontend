@@ -16,6 +16,8 @@
   border-radius: 5px !important;
   border: 1px solid #adacac !important;
   padding: 5px;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
 
 .label {
@@ -66,4 +68,11 @@
 
 .btn-section {
   padding-bottom: 30px;
+}
+
+.table-size {
+  float: left;
+  margin-right: 200px !important;
+  width: 100%;
+  padding: 35px 20px;
 }

@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
-import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
 

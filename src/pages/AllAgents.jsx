@@ -93,6 +93,7 @@ const AllAgents = () => {
                               <tr key={index}>
                                 <td>{++index}</td>
                                 <td>{admin.name}</td>
+                                <td>{admin.email}</td>
                                 <td>
                                   <Link to="/">
                                     <i className="fa fa-edit text-success"></i>

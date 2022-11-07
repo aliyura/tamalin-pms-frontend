@@ -108,8 +108,18 @@ const Sidebar = () => {
                 </Link>
               </li>
               <li>
+                <Link to={"/createvehicletype"}>
+                  &gt; <span>Create Vehicle Type</span>
+                </Link>
+              </li>
+              <li>
                 <Link to={"/vehicles"}>
                   &gt; <span>All Vehicles</span>
+                </Link>
+              </li>
+              <li>
+                <Link to={"/vehicletypes"}>
+                  &gt; <span>All Vehicle Types</span>
                 </Link>
               </li>
             </ul>

@@ -1,0 +1,69 @@
+body.active-modal {
+  overflow-y: hidden !important;
+}
+
+.form-btn-modal {
+  padding: 10px 20px !important;
+  display: block !important;
+  margin: 100px auto 0 !important;
+  font-size: 18px !important;
+}
+
+.form-modal,
+.form-overlay {
+  width: 100vw !important;
+  height: 100vh !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.form-modal {
+  top: 100px !important;
+}
+
+.form-overlay {
+  background: rgba(86, 86, 86, 0.8) !important;
+}
+.form-modal-content {
+  position: absolute !important;
+  top: 40% !important;
+  left: 40% !important;
+  transform: translate(-50%, -50%) !important;
+  line-height: 1.4 !important;
+  /* background: #474747 !important; */
+  padding: 14px 28px !important;
+  border-radius: 3px !important;
+  max-width: 600px !important;
+  min-width: 300px !important;
+}
+
+.form-close-modal {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  padding: 5px 7px !important;
+}
+
+.btn-sec {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cancel-btn {
+  min-width: 125px;
+  height: auto;
+  float: left;
+  background: #e22b13;
+  text-align: center;
+  color: #fff;
+  padding: 10px 25px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  transition: ease all 0.5s;
+  cursor: pointer;
+  font-weight: 300;
+}
