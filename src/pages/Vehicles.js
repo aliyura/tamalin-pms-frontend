@@ -19,14 +19,14 @@ const Vehicles = () => {
   const [sim, setSim] = useState("");
   const [vuid, setVuid] = useState("");
   const [inProgress, setInProgress] = useState(true);
-  const [active, setActiveness] = useState();
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
 
+  let token;
   const getVehicles = useCallback(async () => {
     setInProgress(true);
     setModal(false);
-    const token = sessionStorage.getItem("token");
+    token = sessionStorage.getItem("token");
     await instance
       .get(`vehicle/list?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -86,28 +86,30 @@ const Vehicles = () => {
     });
   };
 
-  const UpdateStatus = async (e, id, status) => {
+  const UpdateStatusHandler = async (e, id, status) => {
     e.preventDefault();
-    const token = sessionStorage.getItem("token");
+    token = sessionStorage.getItem("token");
+    console.log(token);
+    
     await instance
       .put(
         `vehicle/status/change/${id}?status=${
-          status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
+          status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
         }`,
+        {},
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
       .then((res) => {
         console.log(res);
-        setActiveness(!active);
         setVehicles(vehicles);
       })
       .catch((err) => console.log(err));
   };
 
   const SearchHandler = async (e) => {
-    const token = sessionStorage.getItem("token");
+    token = sessionStorage.getItem("token");
     await instance
       .get(`vehicle/search?q=${e.target.value}`, {
         headers: {
@@ -217,7 +219,9 @@ const Vehicles = () => {
                         <a
                           href=""
                           type="button"
-                          onClick={(e) => UpdateStatus(e, v.vuid, v.status)}
+                          onClick={(e) =>
+                            UpdateStatusHandler(e, v.vuid, v.status)
+                          }
                         >
                           {/* Open Modal */}
                           <i
