@@ -41,6 +41,7 @@ const EditVehicle = (props) => {
     await instance
       .put(
         `/vehicle/${vuid}`,
+        {},
         {
           plateNumber:
             (plateNumberRef.current.value !== plate &&
