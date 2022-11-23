@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import instance from "../api";
 import "../static/css/users.css";
 import "../static/css/list.css";
@@ -28,9 +28,11 @@ const EditContract = (props) => {
     e.preventDefault();
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
+    console.log(token);
     await instance
       .put(
         `/contract/${cuid}`,
+        {},
         {
           discount:
             (discountRef.current.value !== discount &&
@@ -38,7 +40,6 @@ const EditContract = (props) => {
               discountRef.current.value) ||
             discount,
         },
-        {},
         {
           headers: {
             "Content-Type": "application/json",
@@ -70,7 +71,7 @@ const EditContract = (props) => {
                 <div className="login_section">
                   <div className="logo_login">
                     <div className="center">
-                      <h1 className="heading">Updated Contract</h1>
+                      <h1 className="heading">Update Contract</h1>
                     </div>
                   </div>
                   <div className="register_form">

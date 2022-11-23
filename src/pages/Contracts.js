@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 import "./EditVehicles.css";
-import EditContract from "./EditVehicles";
+import EditContract from "./EditContract";
 import { useRef } from "react";
 
 const Contracts = () => {
@@ -21,7 +21,7 @@ const Contracts = () => {
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
 
-  const getVehicles = useCallback(async () => {
+  const getContracts = useCallback(async () => {
     setInProgress(true);
     setModal(false);
     const token = sessionStorage.getItem("token");
@@ -57,11 +57,11 @@ const Contracts = () => {
       currentPage = action;
     }
     setCurrentPage(currentPage);
-    getVehicles();
+    getContracts();
   };
 
   useEffect(() => {
-    getVehicles();
+    getContracts();
   }, []);
 
   const showModal = (e) => {
@@ -72,7 +72,7 @@ const Contracts = () => {
 
   const CloseModal = () => {
     setModal(false);
-    getVehicles();
+    getContracts();
   };
 
   const setData = () => {
@@ -193,7 +193,7 @@ const Contracts = () => {
                                   },
                                 })
                                 .then(() => {
-                                  getVehicles();
+                                  getContracts();
                                 });
                             }
                             return;
