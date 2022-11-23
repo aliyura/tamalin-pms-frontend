@@ -32,7 +32,6 @@ const EditContract = (props) => {
     await instance
       .put(
         `/contract/${cuid}`,
-        {},
         {
           discount:
             (discountRef.current.value !== discount &&
@@ -80,13 +79,13 @@ const EditContract = (props) => {
                       <fieldset>
                         <div className="input-field ">
                           <label className="label_field">Discount</label>
-                          <label className="label_field text-success">{`Current Plate Number is "${discount}"`}</label>
+                          <label className="label_field text-success">{`Current Discount is "${discount}"`}</label>
                           <input
                             className="input"
                             type="text"
                             name="Plate"
                             ref={discountRef}
-                            placeholder="ex. 08000000000"
+                            placeholder="ex. 2000"
                             onBlur={discountHandler}
                             onChange={discountHandler}
                           />

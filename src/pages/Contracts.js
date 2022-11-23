@@ -90,7 +90,6 @@ const Contracts = () => {
         `contract/status/change/${id}?status=${
           status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
         }`,
-        {},
         {
           headers: { Authorization: `Bearer ${token}` },
         }
