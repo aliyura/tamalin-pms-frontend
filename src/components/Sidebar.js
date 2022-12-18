@@ -137,6 +137,11 @@ const Sidebar = () => {
             </a>
             <ul className="collapse list-unstyled" id="contracts">
               <li>
+                <Link to={"/newcontract"}>
+                  &gt; <span>New Contract</span>
+                </Link>
+              </li>
+              <li>
                 <Link to={"/contracts"}>
                   &gt; <span>All Contracts</span>
                 </Link>
