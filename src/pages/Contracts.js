@@ -134,7 +134,7 @@ const Contracts = () => {
           </div>
           <div className="register-btn">
             <Button onClick={() => navigate("/createvehicle")}>
-              Register a new Vehicle
+              Create a new Contract
             </Button>
           </div>
         </div>
