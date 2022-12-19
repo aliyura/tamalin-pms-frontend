@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Clients from "./pages/AllAdmins";
 import Contracts from "./pages/Contracts";
+import CreateContract from "./pages/CreateContract";
 import Vehicles from "./pages/Vehicles";
 import Payments from "./pages/Payments";
 import Reports from "./pages/Reports";
@@ -37,6 +38,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           {/* <Route path="/clients" element={<Clients />} /> */}
           <Route path="/contracts" element={<Contracts />} />
+          <Route path="/newcontract" element={<CreateContract />} />
           <Route path="/vehicles" element={<Vehicles />} />
           <Route path="/vehicletypes" element={<VehicleTypes />} />
           <Route path="/payments" element={<Payments />} />
