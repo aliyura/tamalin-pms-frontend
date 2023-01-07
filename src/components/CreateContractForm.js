@@ -35,13 +35,12 @@ const CreateContractForm = ({ clients, vehicles }) => {
     e.preventDefault();
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
-    if ((vehicleRef.current.value = "")) setVehicleIdError(true);
-    if ((clientRef.current.value = "")) setClientIdError(true);
-    if ((startDateRef.current.value = "")) setStartDateError(true);
-    if ((endDateRef.current.value = "")) setEndDateError(true);
-    if ((amountRef.current.value = "")) setAmountError(true);
-    if ((discountRef.current.value = "")) setDiscountError(true);
-    
+    if (vehicleRef.current.value === "") setVehicleIdError(true);
+    if (clientRef.current.value === "") setClientIdError(true);
+    if (startDateRef.current.value === "") setStartDateError(true);
+    if (endDateRef.current.value === "") setEndDateError(true);
+    if (amountRef.current.value === "") setAmountError(true);
+    if (discountRef.current.value === "") setDiscountError(true);
     else {
       await instance
         .post(

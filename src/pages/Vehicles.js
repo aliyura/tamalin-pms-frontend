@@ -21,6 +21,9 @@ const Vehicles = () => {
   const [inProgress, setInProgress] = useState(true);
   const [active, setActiveness] = useState();
   const [modal, setModal] = useState(false);
+  const [SearchInput, setSearchInput] = useState("");
+  const SearchInputRef = useRef();
+  // const []
   const navigate = useNavigate();
 
   const getVehicles = useCallback(async () => {
@@ -36,16 +39,15 @@ const Vehicles = () => {
         console.log(res);
         const { page } = res.data.data;
         const { data } = res.data;
-
         setVehicles(data);
-        // if (page.length > 0) {
-        //   setTotalPage(++data.totalPages);
-        //   setCurrentPage(data.currentPage);
-        // }
+        if (page.length > 0) {
+          setTotalPage(++data.totalPages);
+          setCurrentPage(data.currentPage);
+        }
       })
       .catch((err) => {
         setInProgress(false);
-        const { message } = err.response.data;
+        const { message } = err;
         throw new Error(message);
       });
   }, [currentPage]);
@@ -107,19 +109,44 @@ const Vehicles = () => {
   };
 
   const SearchHandler = async (e) => {
+    // if (e.target.value === "") {
+    //   console.log("Getting search vehicle");
+    //   await getVehicles();
+    // } else {
+    //   setSearchInput(e.target.value);
+    //   const ValuesMatch = vehicles.filter((v, _) =>
+    //     v.model.includes(SearchInput)
+    //   );
+    //   console.log(ValuesMatch);
+    //   setVehicles(ValuesMatch);
+    // }
+
     const token = sessionStorage.getItem("token");
-    await instance
-      .get(`vehicle/search?q=${e.target.value}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        const { data } = res.data;
-        setVehicles(data);
-        console.log(data);
-      });
+    if (e.target.value === "") {
+      console.log("Getting search vehicle");
+      await getVehicles();
+    } else {
+      await instance
+        .get(`vehicle/search?q=${e.target.value}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(async (res) => {
+          console.log(res);
+          const { data } = res.data;
+
+          const findMatch = data.filter((v, _) =>
+            v.model.includes(e.target.value)
+          );
+          setVehicles(findMatch);
+          console.log(findMatch);
+        })
+        .catch((err) => {
+          console.log(err);
+          // throw new Error(err.message);
+        });
+    }
   };
 
   return (
@@ -132,6 +159,7 @@ const Vehicles = () => {
             {modal || (
               <Search
                 placeholder={"Search Admins e.g John Doe"}
+                ref={SearchInputRef}
                 onChange={SearchHandler}
               />
             )}
