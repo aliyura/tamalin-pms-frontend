@@ -6,14 +6,60 @@ import Search from "../components/Search";
 import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
+import EditClient from "./EditClient";
 
 const AllClients = () => {
+
+  const [modal, setModal] = useState(false);
   const [clients, setClients] = useState([]);
+  const [clientName, setClientName] = useState();
+  const [clientId, setClientId] = useState();
+  const [clientPhone, setClientPhone] = useState();
   const [searchKey, setSearchKey] = useState("");
   const [totalPages, setTotalPage] = useState();
+  const [active, setActiveness] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
+
+  const setData = (client) => {
+      setClientName(client.name);
+      setClientPhone(client.phoneNumber);
+      setClientId(client.cuid);
+  };
+
+
+  const showModal = (e, client) => {
+    e.preventDefault();
+    setData(client);
+    setModal(true);
+  };
+
+  const CloseModal = () => {
+    setModal(false);
+    AllClients()
+  };
+
+  const UpdateStatus = async (e, id, status) => {
+    e.preventDefault();
+    const token = sessionStorage.getItem("token");
+    await instance
+      .put(
+        `client/status/change/${id}?status=${
+          status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
+        }`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setActiveness(!active);
+        // setVehicles(vehicles);
+      })
+      .catch((err) => console.log(err));
+  };
+
 
   const search =async () => {
     setInProgress(true);
@@ -48,7 +94,7 @@ const AllClients = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        setInProgress(false);
+        
         const { page } = res.data.data;
         const { data } = res.data;
         console.log(res);
@@ -57,11 +103,13 @@ const AllClients = () => {
           setTotalPage(++data.totalPages);
           setCurrentPage(data.currentPage);
         }
+        setInProgress(false);
       })
       .catch((err) => {
-        setInProgress(false);
+        
         const { message } = err.response.data;
         throw new Error(message);
+        setInProgress(false);
       });
   };
 
@@ -81,11 +129,11 @@ const AllClients = () => {
     getAllClients();
   }, []);
 
-  useEffect(() => {
-    if(searchKey.length < 1)
-      getAllClients()
-      search();
-  }, [searchKey]);
+  // useEffect(() => {
+  //   if(searchKey.length < 1)
+  //     getAllClients()
+  //     search();
+  // }, [searchKey]);
 
   return (
     <>
@@ -103,9 +151,10 @@ const AllClients = () => {
               }}
               onClick={(e)=>{
                 e.preventDefault()
-                setClients([])
+                // setClients([])
                 if(searchKey.length < 1)
                   getAllClients()
+                else
                   search()}} />
             {/* Search Bar */}
 
@@ -141,15 +190,57 @@ const AllClients = () => {
                                 <td>{client.name}</td>
                                 <td>{client.phoneNumber}</td>
                                 <td>{client.status}</td>
-                                <td>
-                                  <Link to="/">
-                                    <i className="fa fa-edit text-success"></i>
-                                  </Link>
-                                  &nbsp;|&nbsp;
-                                  <Link to="/">
-                                    <i className="fa fa-trash text-danger"></i>
-                                  </Link>
-                                </td>
+                                <td className="actions">
+                        <a href="" type="button" onClick={(e)=>showModal(e, client)}>
+                          {/* Open Modal */}
+                          <i className="fa fa-edit edit-icon icon text-success"></i>
+                        </a>
+                        <div className="icon actions">
+                          <p className="icon">&nbsp;|&nbsp;</p>
+                        </div>
+                        <a
+                          href=""
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            if (
+                              window.confirm(
+                                "Are you sure you want to delete this vehicle?"
+                              )
+                            ) {
+                              const token = sessionStorage.getItem("token");
+                              await instance
+                                .delete(`client/${client.cuid}`, {
+                                  headers: {
+                                    Authorization: `Bearer ${token}`,
+                                  },
+                                })
+                                .then(() => {
+                                  AllClients();
+                                }).catch(err=>console.log(err));
+                            }
+                            return;
+                          }}
+                        >
+                          <i className="fa fa-trash delete-icon icon text-danger"></i>
+                        </a>
+                        <div className="icon actions">
+                          <p className="icon">&nbsp;|&nbsp;</p>
+                        </div>
+                        <a
+                          href=""
+                          type="button"
+                          onClick={(e) => UpdateStatus(e, client.cuid, client.status)}
+                        >
+                          {/* Open Modal */}
+                          <i
+                            className={`fa  ${
+                              client.status === "ACTIVE"
+                                ? "fa-toggle-on"
+                                : "fa-toggle-off"
+                            } aria-hidden="true" edit-icon icon text-success`}
+                          ></i>
+                        </a>
+                      </td>
                               </tr>
                             </>
                           );
@@ -181,16 +272,7 @@ const AllClients = () => {
               </button>
             )}
           </li>
-          {/* <li className="page-item">
-             <button
-              className="page-link btn-primary bg-white text-dark"
-              // "page-link"
 
-              // onClick={() => changePage(i)}
-            >
-              {currentPage}
-            </button>
-          </li> */}
           {[...Array(totalPages)].map((_, i) => (
             <li className="page-item" key={i}>
               <button
@@ -219,6 +301,14 @@ const AllClients = () => {
           </li>
         </ul>
       </nav>
+      {modal && (
+        <EditClient
+          Close={CloseModal}
+          clientName={clientName}
+          clientPhone={clientPhone}
+          clientId={clientId}
+          getAllClients={getAllClients}
+        />)}
     </>
   );
 };
