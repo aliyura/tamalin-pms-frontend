@@ -25,6 +25,7 @@ const AllClients = () => {
         setInProgress(false);
         const { page } = res.data.data;
         const { data } = res.data;
+        console.log(res);
         setClients(page);
         if (page.length > 0) {
           setTotalPage(++data.totalPages);
@@ -92,9 +93,9 @@ const AllClients = () => {
                             <>
                               <tr key={index}>
                                 <td>{++index}</td>
-                                <td>{ client.name }</td>
-                                <td>{ client.phoneNumber }</td>
-                                <td>{ client.status }</td>
+                                <td>{client.name}</td>
+                                <td>{client.phoneNumber}</td>
+                                <td>{client.status}</td>
                                 <td>
                                   <Link to="/">
                                     <i className="fa fa-edit text-success"></i>
@@ -124,13 +125,27 @@ const AllClients = () => {
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-end">
           <li className="page-item">
-            <button
-              className="page-link btn-color"
-              onClick={() => changePage(-1)}
-            >
-              Previous
-            </button>
+            {currentPage === 0 ? (
+              ""
+            ) : (
+              <button
+                className="page-link btn-color"
+                onClick={() => changePage(-1)}
+              >
+                Previous
+              </button>
+            )}
           </li>
+          {/* <li className="page-item">
+             <button
+              className="page-link btn-primary bg-white text-dark"
+              // "page-link"
+
+              // onClick={() => changePage(i)}
+            >
+              {currentPage}
+            </button>
+          </li> */}
           {[...Array(totalPages)].map((_, i) => (
             <li className="page-item" key={i}>
               <button
@@ -146,12 +161,16 @@ const AllClients = () => {
             </li>
           ))}
           <li className="page-item">
-            <button
-              className="page-link btn-color"
-              onClick={() => changePage(+1)}
-            >
-              Next
-            </button>
+            {currentPage === totalPages ? (
+              ""
+            ) : (
+              <button
+                className="page-link btn-color"
+                onClick={() => changePage(+1)}
+              >
+                Next
+              </button>
+            )}
           </li>
         </ul>
       </nav>

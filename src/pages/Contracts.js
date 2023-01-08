@@ -43,7 +43,8 @@ const Contracts = () => {
       })
       .catch((err) => {
         setInProgress(false);
-        const { message } = err.response.data;
+        console.log(err);
+        const message = err;
         throw new Error(message);
       });
   }, [currentPage]);
@@ -127,7 +128,7 @@ const Contracts = () => {
           <div className="search-input">
             {modal || (
               <Search
-                placeholder={"Search Admins e.g John Doe"}
+                placeholder={"Search Contracts e.g John Doe"}
                 onChange={SearchHandler}
               />
             )}
@@ -232,12 +233,16 @@ const Contracts = () => {
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-end">
           <li className="page-item">
-            <button
-              className="page-link btn-color"
-              onClick={() => changePage(-1)}
-            >
-              Previous
-            </button>
+            {currentPage === 0 ? (
+              ""
+            ) : (
+              <button
+                className="page-link btn-color"
+                onClick={() => changePage(-1)}
+              >
+                Previous
+              </button>
+            )}
           </li>
           {[...Array(totalPages)].map((_, i) => (
             <li className="page-item" key={i}>
@@ -254,19 +259,22 @@ const Contracts = () => {
             </li>
           ))}
           <li className="page-item">
-            <button
-              className="page-link btn-color"
-              onClick={() => changePage(+1)}
-            >
-              Next
-            </button>
+            {currentPage === totalPages || currentPage === null ? (
+              ""
+            ) : (
+              <button
+                className="page-link btn-color"
+                onClick={() => changePage(+1)}
+              >
+                Next
+              </button>
+            )}
           </li>
         </ul>
       </nav>
       {modal && (
         <EditContract Close={CloseModal} discount={discount} cuid={cuid} />
       )}
-      {/* </div> */}
     </>
   );
 };
