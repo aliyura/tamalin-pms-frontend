@@ -17,27 +17,26 @@ const AllClients = () => {
 
   const search =async () => {
     setInProgress(true);
+    try{
     const token = sessionStorage.getItem("token");
-    await instance
-      .get(`client/search?q=${searchKey}`, {
+    const res = await instance.get(`client/search?q=${searchKey}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => {
         setInProgress(false);
         console.log(res.data.data.page)
-        const { page } = res.data.data;
-        const { data } = res.data;
+        const { page } = await res.data.data;
+        const { data } = await res.data;
         setClients(page);
         if (page.length > 0) {
           setTotalPage(++data.totalPages);
           setCurrentPage(data.currentPage);
         }
-      })
-      .catch((err) => {
+    }
+      catch(err) {
         setInProgress(false);
         const { message } = err.response.data;
         throw new Error(message);
-      });
+      };
   };
 
 
