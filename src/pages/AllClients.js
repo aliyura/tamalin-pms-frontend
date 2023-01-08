@@ -9,12 +9,39 @@ import Loader from "../components/Loader";
 
 const AllClients = () => {
   const [clients, setClients] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
   const [totalPages, setTotalPage] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
 
-  const getAllClients = useCallback(async () => {
+  const search =async () => {
+    setInProgress(true);
+    const token = sessionStorage.getItem("token");
+    await instance
+      .get(`client/search?q=${searchKey}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setInProgress(false);
+        console.log(res.data.data.page)
+        const { page } = res.data.data;
+        const { data } = res.data;
+        setClients(page);
+        if (page.length > 0) {
+          setTotalPage(++data.totalPages);
+          setCurrentPage(data.currentPage);
+        }
+      })
+      .catch((err) => {
+        setInProgress(false);
+        const { message } = err.response.data;
+        throw new Error(message);
+      });
+  };
+
+
+  const getAllClients = async () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
@@ -36,7 +63,7 @@ const AllClients = () => {
         const { message } = err.response.data;
         throw new Error(message);
       });
-  }, [currentPage]);
+  };
 
   const changePage = (action) => {
     if (action === -1) {
@@ -54,6 +81,12 @@ const AllClients = () => {
     getAllClients();
   }, []);
 
+  useEffect(() => {
+    if(searchKey.length < 1)
+      getAllClients()
+      search();
+  }, [searchKey]);
+
   return (
     <>
       <div className="row">
@@ -62,7 +95,20 @@ const AllClients = () => {
       <div className="row mt-4">
         <div className="col-sm-12 col-md-10 col-lg-10 table">
           <div className="d-flex search-section m-4">
-            <Search placeholder={"Search Clients e.g John Doe"} />
+
+            {/* Search Bar */}
+            <Search placeholder={"Search Clients e.g John Doe"}
+              onChange={(e)=>{
+                setSearchKey(e.target.value)
+              }}
+              onClick={(e)=>{
+                e.preventDefault()
+                setClients([])
+                if(searchKey.length < 1)
+                  getAllClients()
+                  search()}} />
+            {/* Search Bar */}
+
             <div className="col-6 register-btn m-2">
               <Button onClick={() => navigate("/registerclient")}>
                 Register a new client
