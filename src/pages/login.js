@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
-import tamalinlogo from '../static/images/logo/tamalinlogo.jpg'
+import tamalinlogo from "../static/images/logo/tamalinlogo.jpg";
 
 const Login = () => {
   const [phoneText, setPhoneText] = useState("");
@@ -73,7 +73,7 @@ const Login = () => {
           <div className="login_section">
             <div className="logo_login">
               <div className="center">
-                <h1 className="heading">Login</h1>
+                {/* <h1 className="heading">Login</h1> */}
                 <img width="100" src={tamalinlogo} alt="#" />
               </div>
             </div>
@@ -137,6 +137,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// Login page doesn't show error message - DONE
-// Disable Login Button when clicked - DONE
