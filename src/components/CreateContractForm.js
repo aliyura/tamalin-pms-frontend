@@ -10,9 +10,6 @@ const CreateContractForm = () => {
 
  
   const {clients, setClients, vehicles, setVehicles} = useContext(AllContext)
-  // const [clients, setClients] = useState(allClients);
-  console.log("jjjj", clients)
-  console.log("ttttt", vehicles)
   const [clientID, setClientId] = useState("");
   const [vehicleID, setVehicleId] = useState("");
   const [startDate, setStartDate] = useState("");

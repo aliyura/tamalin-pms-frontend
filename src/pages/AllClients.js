@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import instance from "../api";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -8,6 +8,7 @@ import "../static/css/list.css";
 import Loader from "../components/Loader";
 import EditClient from "./EditClient";
 import CreatePayment from "./CreatePayment";
+import { AllContext } from "../App";
 
 const AllClients = () => {
 
@@ -20,8 +21,10 @@ const AllClients = () => {
   const [searchKey, setSearchKey] = useState("");
   const [totalPages, setTotalPage] = useState();
   const [active, setActiveness] = useState();
+  const [contractId, setContractId] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
+  const {contracts, setContracts} = useContext(AllContext)
   const navigate = useNavigate();
 
   const setData = (client) => {
@@ -29,7 +32,6 @@ const AllClients = () => {
     setClientPhone(client.phoneNumber);
     setClientId(client.cuid);
   };
-
 
   const showUpdateModal = (e, client) => {
     e.preventDefault();
@@ -39,7 +41,8 @@ const AllClients = () => {
 
   const showPaymentModal = (e, client) => {
     e.preventDefault();
-    setData(client);
+    const contract = contracts.find(contract => contract.client.id === client)
+    console.log(contracts);
     setPaymentModal(true);
   };
 
@@ -112,7 +115,6 @@ const AllClients = () => {
 
         const { page } = res.data.data;
         const { data } = res.data;
-        console.log(res);
         setClients(page);
         if (page.length > 0) {
           setTotalPage(++data.totalPages);
@@ -140,15 +142,32 @@ const AllClients = () => {
     getAllClients();
   };
 
+  const allContracts = async ()=>{
+    const token = sessionStorage.getItem("token");
+    try{
+    const response = await instance.get(`contract/list?page=0`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        const { page } = await response.data.data;
+        setContracts(page)
+        console.log(contracts,"kkkk");
+    }
+
+      catch(err){
+        console.log(err)
+        // const { message } = err.response.data;
+        // throw new Error(message);
+        // setInProgress(false);
+      };
+
+  }
+
   useEffect(() => {
     getAllClients();
+    allContracts();
+
   }, []);
 
-  // useEffect(() => {
-  //   if(searchKey.length < 1)
-  //     getAllClients()
-  //     search();
-  // }, [searchKey]);
 
   return (
     <>
@@ -201,6 +220,7 @@ const AllClients = () => {
                         {clients.map((client, index) => {
                           return (
                             <>
+                            
                               <tr key={index}>
                                 <td>{++index}</td>
                                 <td>{client.name}</td>
@@ -208,13 +228,15 @@ const AllClients = () => {
                                 <td>{client.status}</td>
                                 <td className="actions">
 
-                                  <a href="" type="button" onClick={(e) => showPaymentModal(e, client)}>
+                                  <a href="" type="button" onClick={(e) => showPaymentModal(e, client.cuid)}>
                                     {/* Open updateModal */}
                                     <i className="fa fa-money edit-icon icon text-success"></i>
                                   </a>
+
                                   <div className="icon actions">
                                     <p className="icon">&nbsp;|&nbsp;</p>
                                   </div>
+
                                   <a href="" type="button" onClick={(e) => showUpdateModal(e, client)}>
                                     {/* Open updateModal */}
                                     <i className="fa fa-edit edit-icon icon text-success"></i>
@@ -329,7 +351,7 @@ const AllClients = () => {
           close={closeModal}
           clientName={clientName}
           clientPhone={clientPhone}
-          clientId={clientId}
+          contractId={contractId}
           getAllClients={getAllClients}
         />)}
 
