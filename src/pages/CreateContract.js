@@ -59,4 +59,4 @@ const CreateContract = () => {
     );
   };
 
-  export default CreateVehicle;
+  export default CreateContract;
