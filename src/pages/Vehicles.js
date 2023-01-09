@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 import "./EditVehicles.css";
-import EditContract from "./EditVehicles";
+import EditVehicle from "./EditVehicles";
 import { useRef } from "react";
 
 const Vehicles = () => {
@@ -308,7 +308,7 @@ const Vehicles = () => {
         </ul>
       </nav>
       {modal && (
-        <EditContract
+        <EditVehicle
           Close={CloseModal}
           plate={plate}
           imei={imei}

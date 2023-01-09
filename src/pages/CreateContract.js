@@ -6,7 +6,7 @@ import Spinner from "../components/Spinner";
 import CreateContractForm from "../components/CreateContractForm";
 
 
-const CreateVehicle = () => {
+const CreateContract = () => {
 
   const [clients, setClients] = useState([])
   const [vehicles, setVehicles] = useState([])
@@ -64,4 +64,4 @@ const CreateVehicle = () => {
   );
 };
 
-export default CreateVehicle;
+export default CreateContract;
