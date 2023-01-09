@@ -7,7 +7,7 @@ import CreateContractForm from "../components/CreateContractForm";
 import { AllContext } from "../App";
 
 
-const CreateVehicle = () => {
+const CreateContract = () => {
 
   const {clients, setClients, vehicles, setVehicles} = useContext(AllContext)
 
