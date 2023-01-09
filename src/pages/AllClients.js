@@ -7,10 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 import EditClient from "./EditClient";
+import CreatePayment from "./CreatePayment";
 
 const AllClients = () => {
 
-  const [modal, setModal] = useState(false);
+  const [ updateModal, setUpdateModal] = useState(false);
+  const [ paymentModal, setPaymentModal] = useState(false);
   const [clients, setClients] = useState([]);
   const [clientName, setClientName] = useState();
   const [clientId, setClientId] = useState();
@@ -23,66 +25,79 @@ const AllClients = () => {
   const navigate = useNavigate();
 
   const setData = (client) => {
-      setClientName(client.name);
-      setClientPhone(client.phoneNumber);
-      setClientId(client.cuid);
+    setClientName(client.name);
+    setClientPhone(client.phoneNumber);
+    setClientId(client.cuid);
   };
 
 
-  const showModal = (e, client) => {
+  const showUpdateModal = (e, client) => {
     e.preventDefault();
     setData(client);
-    setModal(true);
+    setUpdateModal(true);
   };
 
-  const CloseModal = () => {
-    setModal(false);
+  const showPaymentModal = (e, client) => {
+    e.preventDefault();
+    setData(client);
+    setPaymentModal(true);
+  };
+
+  const closeModal = () => {
+    setUpdateModal(false);
+    setPaymentModal(false);
     AllClients()
   };
+
 
   const UpdateStatus = async (e, id, status) => {
     e.preventDefault();
     const token = sessionStorage.getItem("token");
     await instance
       .put(
-        `client/status/change/${id}?status=${
-          status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
-        }`,
+        `client/status/change/${id}?status=${status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
+        }`, {},
         {
-          headers: { Authorization: `Bearer ${token}` },
+
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
         }
+
       )
       .then((res) => {
         console.log(res);
         setActiveness(!active);
         // setVehicles(vehicles);
+        getAllClients()
       })
       .catch((err) => console.log(err));
   };
 
 
-  const search =async () => {
+  const search = async () => {
     setInProgress(true);
-    try{
-    const token = sessionStorage.getItem("token");
-    const res = await instance.get(`client/search?q=${searchKey}`, {
+    try {
+      const token = sessionStorage.getItem("token");
+      const res = await instance.get(`client/search?q=${searchKey}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-        setInProgress(false);
-        console.log(res.data.data.page)
-        const { page } = await res.data.data;
-        const { data } = await res.data;
-        setClients(page);
-        if (page.length > 0) {
-          setTotalPage(++data.totalPages);
-          setCurrentPage(data.currentPage);
-        }
+      setInProgress(false);
+      console.log(res.data.data.page)
+      const { page } = await res.data.data;
+      const { data } = await res.data;
+      setClients(page);
+      if (page.length > 0) {
+        setTotalPage(++data.totalPages);
+        setCurrentPage(data.currentPage);
+      }
     }
-      catch(err) {
-        setInProgress(false);
-        const { message } = err.response.data;
-        throw new Error(message);
-      };
+    catch (err) {
+      setInProgress(false);
+      const { message } = err.response.data;
+      throw new Error(message);
+    };
   };
 
 
@@ -94,7 +109,7 @@ const AllClients = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        
+
         const { page } = res.data.data;
         const { data } = res.data;
         console.log(res);
@@ -106,7 +121,7 @@ const AllClients = () => {
         setInProgress(false);
       })
       .catch((err) => {
-        
+
         const { message } = err.response.data;
         throw new Error(message);
         setInProgress(false);
@@ -146,16 +161,17 @@ const AllClients = () => {
 
             {/* Search Bar */}
             <Search placeholder={"Search Clients e.g John Doe"}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setSearchKey(e.target.value)
               }}
-              onClick={(e)=>{
+              onClick={(e) => {
                 e.preventDefault()
                 // setClients([])
-                if(searchKey.length < 1)
+                if (searchKey.length < 1)
                   getAllClients()
                 else
-                  search()}} />
+                  search()
+              }} />
             {/* Search Bar */}
 
             <div className="col-6 register-btn m-2">
@@ -191,56 +207,63 @@ const AllClients = () => {
                                 <td>{client.phoneNumber}</td>
                                 <td>{client.status}</td>
                                 <td className="actions">
-                        <a href="" type="button" onClick={(e)=>showModal(e, client)}>
-                          {/* Open Modal */}
-                          <i className="fa fa-edit edit-icon icon text-success"></i>
-                        </a>
-                        <div className="icon actions">
-                          <p className="icon">&nbsp;|&nbsp;</p>
-                        </div>
-                        <a
-                          href=""
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            if (
-                              window.confirm(
-                                "Are you sure you want to delete this vehicle?"
-                              )
-                            ) {
-                              const token = sessionStorage.getItem("token");
-                              await instance
-                                .delete(`client/${client.cuid}`, {
-                                  headers: {
-                                    Authorization: `Bearer ${token}`,
-                                  },
-                                })
-                                .then(() => {
-                                  AllClients();
-                                }).catch(err=>console.log(err));
-                            }
-                            return;
-                          }}
-                        >
-                          <i className="fa fa-trash delete-icon icon text-danger"></i>
-                        </a>
-                        <div className="icon actions">
-                          <p className="icon">&nbsp;|&nbsp;</p>
-                        </div>
-                        <a
-                          href=""
-                          type="button"
-                          onClick={(e) => UpdateStatus(e, client.cuid, client.status)}
-                        >
-                          {/* Open Modal */}
-                          <i
-                            className={`fa  ${
-                              client.status === "ACTIVE"
-                                ? "fa-toggle-on"
-                                : "fa-toggle-off"
-                            } aria-hidden="true" edit-icon icon text-success`}
-                          ></i>
-                        </a>
-                      </td>
+
+                                  <a href="" type="button" onClick={(e) => showPaymentModal(e, client)}>
+                                    {/* Open updateModal */}
+                                    <i className="fa fa-money edit-icon icon text-success"></i>
+                                  </a>
+                                  <div className="icon actions">
+                                    <p className="icon">&nbsp;|&nbsp;</p>
+                                  </div>
+                                  <a href="" type="button" onClick={(e) => showUpdateModal(e, client)}>
+                                    {/* Open updateModal */}
+                                    <i className="fa fa-edit edit-icon icon text-success"></i>
+                                  </a>
+                                  <div className="icon actions">
+                                    <p className="icon">&nbsp;|&nbsp;</p>
+                                  </div>
+                                  <a
+                                    href=""
+                                    onClick={async (e) => {
+                                      e.preventDefault();
+                                      if (
+                                        window.confirm(
+                                          "Are you sure you want to delete this vehicle?"
+                                        )
+                                      ) {
+                                        const token = sessionStorage.getItem("token");
+                                        await instance
+                                          .delete(`client/${client.cuid}`, {
+                                            headers: {
+                                              Authorization: `Bearer ${token}`,
+                                            },
+                                          })
+                                          .then(() => {
+                                            AllClients();
+                                          }).catch(err => console.log(err));
+                                      }
+                                      return;
+                                    }}
+                                  >
+                                    <i className="fa fa-trash delete-icon icon text-danger"></i>
+                                  </a>
+                                  <div className="icon actions">
+                                    <p className="icon">&nbsp;|&nbsp;</p>
+                                  </div>
+                                  <a
+                                    href=""
+                                    type="button"
+                                    onClick={(e) => UpdateStatus(e, client.cuid, client.status)}
+                                  >
+                                    {/* Open updateModal */}
+                                    <i
+                                      className={`fa  ${client.status === "ACTIVE"
+                                          ? "fa-toggle-on text-success"
+                                          : "fa-toggle-off text-danger"
+                                        } aria-hidden="true" edit-icon icon `}
+                                    ></i>
+                                  </a>
+                                </td>
                               </tr>
                             </>
                           );
@@ -301,14 +324,24 @@ const AllClients = () => {
           </li>
         </ul>
       </nav>
-      {modal && (
-        <EditClient
-          Close={CloseModal}
+      {paymentModal && (
+        <CreatePayment
+          close={closeModal}
           clientName={clientName}
           clientPhone={clientPhone}
           clientId={clientId}
           getAllClients={getAllClients}
         />)}
+
+{updateModal && (
+        <EditClient
+          close={closeModal}
+          clientName={clientName}
+          clientPhone={clientPhone}
+          clientId={clientId}
+          getAllClients={getAllClients}
+        />)}
+
     </>
   );
 };

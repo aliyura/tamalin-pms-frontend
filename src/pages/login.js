@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
+import tamalinlogo from '../static/images/logo/tamalinlogo.jpg'
 
 const Login = () => {
   const [phoneText, setPhoneText] = useState("");
@@ -73,7 +74,7 @@ const Login = () => {
             <div className="logo_login">
               <div className="center">
                 <h1 className="heading">Login</h1>
-                {/* <img width="210" src="assets/images/logo/logo.png" alt="#" /> */}
+                <img width="100" src={tamalinlogo} alt="#" />
               </div>
             </div>
             <div className="login_form">
