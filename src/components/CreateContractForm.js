@@ -1,12 +1,18 @@
 import { useContext, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import instance from "../api";
+import { AllContext } from "../App";
 import { ClientFormContext } from "../store/ClientFormContext";
 import Toaster from "./Toaster";
 
-const CreateContractForm = ({ clients, vehicles }) => {
+const CreateContractForm = () => {
   const navigate = useNavigate();
 
+ 
+  const {clients, setClients, vehicles, setVehicles} = useContext(AllContext)
+  // const [clients, setClients] = useState(allClients);
+  console.log("jjjj", clients)
+  console.log("ttttt", vehicles)
   const [clientID, setClientId] = useState("");
   const [vehicleID, setVehicleId] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -96,11 +102,12 @@ const CreateContractForm = ({ clients, vehicles }) => {
                         className="custom-select"
                         onChange={(e) => setClientId(e.target.value)}
                         name="identityType"
+                        required
                       >
                         <option value="" ref={clientRef}>
                           Select a Client
                         </option>
-                        {clients.map((client) => (
+                        {clients?.map((client) => (
                           <option key={client.id} value={client.cuid}>
                             {client.name}- {client.cuid}
                           </option>
@@ -120,11 +127,12 @@ const CreateContractForm = ({ clients, vehicles }) => {
                         className="custom-select"
                         onChange={(e) => setVehicleId(e.target.value)}
                         name="identityType"
+                        required
                       >
                         <option value="" ref={vehicleRef}>
                           Select a Vehicle
                         </option>
-                        {vehicles.map((vehicle) => (
+                        {vehicles?.map((vehicle) => (
                           <option key={vehicle.id} value={vehicle.vuid}>
                             {vehicle.vuid}
                           </option>
@@ -147,6 +155,7 @@ const CreateContractForm = ({ clients, vehicles }) => {
                         ref={startDateRef}
                         name="identityNumber"
                         onChange={(e) => setStartDate(e.target.value)}
+                        required
                       />
                     </div>
                     <sup className="text-danger">
@@ -163,6 +172,7 @@ const CreateContractForm = ({ clients, vehicles }) => {
                         type="date"
                         name="identityNumber"
                         onChange={(e) => setEndDate(e.target.value)}
+                        required
                       />
                     </div>
                     <sup className="text-danger">
@@ -181,6 +191,7 @@ const CreateContractForm = ({ clients, vehicles }) => {
                         name="identityNumber"
                         ref={amountRef}
                         onChange={(e) => setAmount(e.target.value)}
+                        required
                       />
                     </div>
                     <sup className="text-danger">
@@ -199,6 +210,7 @@ const CreateContractForm = ({ clients, vehicles }) => {
                         name="identityNumber"
                         ref={discountRef}
                         onChange={(e) => setDiscount(e.target.value)}
+                        required
                       />
                     </div>
                     <sup className="text-danger">

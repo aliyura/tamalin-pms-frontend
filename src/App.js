@@ -22,13 +22,20 @@ import CreateVehicle from "./pages/CreateVehicle";
 import CreateVehicleType from "./pages/CreateVehicleType";
 import VehicleTypes from "./pages/VehicleTypes";
 import Client from "./pages/Client";
+import { createContext } from "react";
+
+export const AllContext = createContext()
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     sessionStorage.getItem("isAuthenticated")
-  );
+  ); 
+
+  const [clients, setClients] = useState([]);
+  const [vehicles, setVehicles] = useState([]);
 
   return (
+    <AllContext.Provider value={ { clients, vehicles, setClients, setVehicles} }>
     <LoginContext.Provider value={ { isAuthenticated, setIsAuthenticated } }>
       <ClientFormProvider>
       <Routes>
@@ -56,6 +63,7 @@ function App() {
         </Routes>
       </ClientFormProvider>
     </LoginContext.Provider>
+    </AllContext.Provider>
   );
 }
 

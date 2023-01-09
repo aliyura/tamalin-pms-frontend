@@ -1,67 +1,62 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
 import CreateContractForm from "../components/CreateContractForm";
+import { AllContext } from "../App";
 
 
 const CreateVehicle = () => {
 
-  const [clients, setClients] = useState([])
-  const [vehicles, setVehicles] = useState([])
+  const {clients, setClients, vehicles, setVehicles} = useContext(AllContext)
 
   useEffect(() => {
-    // declare the data fetching function
-    
     const token = sessionStorage.getItem("token");
-    const fetchData = async () => {
-      const res =  await instance
-      .get(`client/list`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      setClients(res.data.data.page)
-      console.log(res.data.data.page)
+    const fetchClients = async () => {
+      try {
+        const res = await instance
+          .get(`client/list`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+        setClients(res.data.data.page)
+        console.log(res.data.data.page)
+      }
+      catch (error) {
+        console.log(error)
+      }
+    }
+
+    const fetchVehicles = async () => {
+      try {
+        const res = await instance
+          .get(`vehicle/list`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+        setVehicles(res.data.data.page)
+        console.log(res.data.data.page, "vel")
+
+      }
+      catch (error) {
+        console.log(error)
+      }
 
     }
-  
-    // call the function
-    fetchData()
-      // make sure to catch any error
-      .catch(console.error);
-  }, [])
 
-  useEffect(() => {
-    // declare the data fetching function
-    
-    const token = sessionStorage.getItem("token");
-    const fetchData = async () => {
-      const res =  await instance
-      .get(`vehicle/list`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      setVehicles(res.data.data)
-      console.log(res.data.data, "vel")
-
-    }
-  
-    // call the function
-    fetchData()
-      // make sure to catch any error
-      .catch(console.error);
+    fetchClients()
+    fetchVehicles()
   }, [])
 
 
-
-  return (
-    <div className="full_container">
-      <div className="container">
-        <div className=" verticle_center full_height">
-          <CreateContractForm clients={clients} vehicles={vehicles} />
+    return (
+      <div className="full_container">
+        <div className="container">
+          <div className=" verticle_center full_height">
+            <CreateContractForm />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-export default CreateVehicle;
+  export default CreateVehicle;

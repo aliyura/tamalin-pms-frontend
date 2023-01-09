@@ -9,17 +9,22 @@ const Sidebar = () => {
         <div className="sidebar-header">
           <div className="logo_section">
             <Link to={"/"}>
-              <img
-                className="logo_icon img-responsive"
+              {/* <img
+                className="logo_icon "
                 src={tamalinlogo}
                 alt="Tamalin"
-              />
+              /> */}
             </Link>
           </div>
         </div>
       </div>
-      <div className="sidebar_blog_2">
-        <h4>TAMALIN Logo</h4>
+      <div className="sidebar_blog_2 text-center ">
+      <img
+                className=" rounded-circle"
+                width="70"
+                src={tamalinlogo}
+                alt="Tamalin"
+              />
         <ul className="list-unstyled components">
           <li className="active">
             <Link
