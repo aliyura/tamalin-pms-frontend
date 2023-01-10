@@ -186,7 +186,7 @@ const Sidebar = ({hideUser}) => {
             </a>
             <ul className="collapse list-unstyled" id="payments">
               <li>
-                <Link to={"/contracts"}>
+                <Link to={"/payments"}>
                   &gt; <span>Pending Payments</span>
                 </Link>
               </li>
