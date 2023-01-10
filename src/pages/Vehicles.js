@@ -39,7 +39,7 @@ const Vehicles = () => {
         console.log(res);
         const { page } = res.data.data;
         const { data } = res.data;
-        setVehicles(data);
+        setVehicles(data.page);
         if (page.length > 0) {
           setTotalPage(++data.totalPages);
           setCurrentPage(data.currentPage);
