@@ -171,7 +171,7 @@ const Contracts = () => {
                       <td>{c.updatedAt}</td>
                       <td className="actions">
                         <a href="" type="button" onClick={showModal}>
-                          <i className="fa fa-edit edit-icon icon text-success"></i>
+                          <i className="fa fa-money edit-icon icon text-success"></i>
                         </a>
                         <div className="icon actions">
                           <p className="icon">&nbsp;|&nbsp;</p>
@@ -182,12 +182,12 @@ const Contracts = () => {
                             e.preventDefault();
                             if (
                               window.confirm(
-                                "Are you sure you want to delete this vehicle?"
+                                "Are you sure you want to delete this contract?"
                               )
                             ) {
                               const token = sessionStorage.getItem("token");
                               await instance
-                                .delete(`contract/${c.vuid}`, {
+                                .delete(`contract/${c.cuid}`, {
                                   headers: {
                                     Authorization: `Bearer ${token}`,
                                   },
