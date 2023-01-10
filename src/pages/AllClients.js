@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 import EditClient from "./EditClient";
+import CreatePayment from "./CreatePayment";
 import { AllContext } from "../App";
 
 const AllClients = () => {
@@ -226,6 +227,9 @@ const AllClients = () => {
                                 <td>{client.phoneNumber}</td>
                                 <td>{client.status}</td>
                                 <td className="actions">
+                                  {/* <a href="" type="button" onClick={(e) => showPaymentModal(e, client.cuid)}>
+                                    <i className="fa fa-money edit-icon icon text-success"></i>
+                                  </a> */}
 
                                   <div className="icon actions">
                                     <p className="icon">&nbsp;|&nbsp;</p>
@@ -340,7 +344,14 @@ const AllClients = () => {
           </li>
         </ul>
       </nav>
-
+      {paymentModal && (
+        <CreatePayment
+          close={closeModal}
+          clientName={clientName}
+          clientPhone={clientPhone}
+          contractId={contractId}
+          getAllClients={getAllClients}
+        />)}
 
 {updateModal && (
         <EditClient
