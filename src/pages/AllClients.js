@@ -227,11 +227,6 @@ const AllClients = () => {
                                 <td>{client.status}</td>
                                 <td className="actions">
 
-                                  <a href="" type="button" onClick={(e) => showPaymentModal(e, client.cuid)}>
-                                    {/* Open updateModal */}
-                                    <i className="fa fa-money edit-icon icon text-success"></i>
-                                  </a>
-
                                   <div className="icon actions">
                                     <p className="icon">&nbsp;|&nbsp;</p>
                                   </div>
