@@ -4,16 +4,18 @@ import "../static/css/users.css";
 import "../static/css/list.css";
 import Spinner from "../components/Spinner";
 
-const CreatePayment = ({contractId, close, getAllClients }) => {
+const MakePaymentForm = ({ contractId, getContracts, close, paymentModal, setPaymentModal }) => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
   const [createButtonActivated, setSignInButtonActivated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [nameError, setNameError] = useState('');
   const [phoneNumber, setPhoneNumber] = useState();
 
+
   // const [contractId, setContractId] = useState();
   const [paymentRef, setPaymentRef] = useState();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState();
   const [narration, setNarration] = useState('');
 
   function generatePaymentReference() {
@@ -24,10 +26,10 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
     const hour = currentDate.getHours();
     const minute = currentDate.getMinutes();
     const second = currentDate.getSeconds();
-  
+
     const randomNumber = Math.floor(Math.random() * 1000000);
-  
-    return `pay${year}${month}${day}${hour}${minute}${second}${randomNumber}`;
+
+    return `pay${year}${month}${day}${hour}${minute}${second}${randomNumber}f`;
   }
 
   // const NameHandler = (e) => {
@@ -47,13 +49,13 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
     await instance
-      .put(
+      .post(
         `/payment/`,
         {
-         contractId:contractId,
-         paymentRef:paymentRef,
-         amount:amount,
-         narration
+          contractId: contractId,
+          paymentRef: generatePaymentReference(),
+          amount: Number(amount),
+          narration: narration
         },
         {
           headers: {
@@ -63,12 +65,15 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
         }
       )
       .then((res) => {
-        getAllClients()
         setIsLoading(false);
-        close();
+        setAmount('')
+        setNarration('')
+        close(e);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err.response.data.message);
+        setError(true)
+        setErrorMessage(err.response.data.message)
         setIsLoading(false);
       });
   };
@@ -76,8 +81,8 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
   return (
     <>
       <div className="form-modal">
-        <div className="form-overlay" onClick={close}>
-          {close}
+        <div className="form-overlay text-white" onClick={close}>
+          X
         </div>
         <div className="form-modal-content">
           <div className="full_container">
@@ -88,6 +93,7 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
                     <div className="center">
                       <h1 className="heading">Payment</h1>
                     </div>
+                    <div className="text-warning center">{error && errorMessage}</div>
                   </div>
                   <div className="register_form">
                     <p className="err-color">{error}</p>
@@ -99,27 +105,32 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
                           <input
                             className="input"
                             type="number"
-                            value={amount}
                             // onBlur={PlateNumberHandler}
-                            onChange={(e)=>setAmount(e.target.value)}
+                            onChange={(e) => {
+                              setError(false)
+                              setAmount(e.target.value)
+                            }}
                           />
                           <p className="err-color">
                             {nameError ? "Invalid Name" : ""}
                           </p>
                         </div>
                         <div className="input-field ">
-                          <label className="label_field">narration</label>
+                          <label className="label_field">Narration</label>
                           <label className="label_field text-success">{``}</label>
                           <textarea
                             className="input"
-                            cols={12} 
-                            rows={12}
-                            value={phoneNumber}
-                            onChange={(e)=>setPhoneNumber(e.target.value)}
-                          ></textarea>  
-                          
+                            cols={12}
+                            rows={6}
+                            onChange={(e) => {
+                              setError(false)
+                              setNarration(e.target.value)
+                            }
+                            }
+                          ></textarea>
+
                         </div>
-                       
+
                         <div className="input-field margin_0 btn-section">
                           <label className="label_field hidden">
                             hidden label
@@ -127,7 +138,7 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
                           <div className="btn-sec">
                             <button
                               className="btn-danger cancel-btn"
-                              onClick={close}
+                              onClick={(e) => close(e)}
                             >
                               Cancel
                             </button>
@@ -158,4 +169,4 @@ const CreatePayment = ({contractId, close, getAllClients }) => {
   );
 };
 
-export default CreatePayment;
+export default MakePaymentForm;

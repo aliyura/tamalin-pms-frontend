@@ -200,30 +200,12 @@ const Sidebar = ({hideUser}) => {
 
           <li>
             <a
-              href="#reports"
-              data-toggle="collapse"
+              href="reports"
               aria-expanded="false"
-              className="dropdown-toggle"
+              className=""
             >
               <i className="fa fa-file blue2_color"></i> <span>Reports</span>
             </a>
-            <ul className="collapse list-unstyled" id="reports">
-              <li>
-                <Link to={"/clients"}>
-                  &gt; <span>Clients</span>
-                </Link>
-              </li>
-              <li>
-                <Link to={"/contracts/monthly-report"}>
-                  &gt; <span>Vehicles</span>
-                </Link>
-              </li>
-              <li>
-                <Link to={"/contracts/monthly-report"}>
-                  &gt; <span>Payments</span>
-                </Link>
-              </li>
-            </ul>
           </li>
         </ul>
       </div>

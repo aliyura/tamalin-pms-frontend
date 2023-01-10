@@ -9,16 +9,19 @@ import Loader from "../components/Loader";
 import "./EditVehicles.css";
 import EditContract from "./EditContract";
 import { useRef } from "react";
+import MakePaymentForm from "./MakePaymentForm";
 
 const Contracts = () => {
   const [contracts, setContracts] = useState([]);
+  const [contractId, setContractId] = useState();
   const [totalPages, setTotalPage] = useState(0);
   let [currentPage, setCurrentPage] = useState(0);
   const [discount, setDiscount] = useState("");
   const [cuid, setCuid] = useState("");
   const [inProgress, setInProgress] = useState(true);
   const [active, setActiveness] = useState();
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);  
+  const [ paymentModal, setPaymentModal] = useState(false);
   const navigate = useNavigate();
 
   const getContracts = useCallback(async () => {
@@ -70,10 +73,18 @@ const Contracts = () => {
     setData();
     setModal(true);
   };
+  const showPaymentModal = (e, contract) => {
+    e.preventDefault();
+    console.log(contract);
+    setContractId(contract)
+    setPaymentModal(true);
 
-  const CloseModal = () => {
+  };
+
+  const closeModal = (e) => {
+    e.preventDefault()
     setModal(false);
-    getContracts();
+    setPaymentModal(false);
   };
 
   const setData = () => {
@@ -88,8 +99,7 @@ const Contracts = () => {
     const token = sessionStorage.getItem("token");
     await instance
       .put(
-        `contract/status/change/${id}?status=${
-          status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
+        `contract/status/change/${id}?status=${status == "ACTIVE" ? "INACTIVE" : "ACTIVE"
         }`,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -170,7 +180,7 @@ const Contracts = () => {
                       <td>{c.createdAt}</td>
                       <td>{c.updatedAt}</td>
                       <td className="actions">
-                        <a href="" type="button" onClick={showModal}>
+                        <a href="" type="button" onClick={(e)=>showPaymentModal(e, c.cuid)}>
                           <i className="fa fa-money edit-icon icon text-success"></i>
                         </a>
                         <div className="icon actions">
@@ -210,11 +220,10 @@ const Contracts = () => {
                           onClick={(e) => UpdateStatus(e, c.cuid, c.status)}
                         >
                           <i
-                            className={`fa  ${
-                              c.status === "ACTIVE"
+                            className={`fa  ${c.status === "ACTIVE"
                                 ? "fa-toggle-on"
                                 : "fa-toggle-off"
-                            } aria-hidden="true" edit-icon icon text-success`}
+                              } aria-hidden="true" edit-icon icon text-success`}
                           ></i>
                         </a>
                       </td>
@@ -273,8 +282,17 @@ const Contracts = () => {
         </ul>
       </nav>
       {modal && (
-        <EditContract Close={CloseModal} discount={discount} cuid={cuid} />
+        <EditContract Close={closeModal} discount={discount} cuid={cuid} />
       )}
+
+      {paymentModal && (
+        <MakePaymentForm
+          close={closeModal}
+          contractId={contractId}
+          paymentModal={paymentModal}
+          setPaymentModal={setPaymentModal}
+          getContracts={getContracts}
+        />)}
     </>
   );
 };

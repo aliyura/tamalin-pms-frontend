@@ -2,8 +2,8 @@ import React from 'react';
 
 const Reports = () => {
     return (
-        <div>
-            report
+        <div className='p-4 m-4 text-center'>
+           <h1>COMING SOON !</h1>
         </div>
     );
 }
