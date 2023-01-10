@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 import EditClient from "./EditClient";
-import CreatePayment from "./CreatePayment";
 import { AllContext } from "../App";
 
 const AllClients = () => {
@@ -346,14 +345,7 @@ const AllClients = () => {
           </li>
         </ul>
       </nav>
-      {paymentModal && (
-        <CreatePayment
-          close={closeModal}
-          clientName={clientName}
-          clientPhone={clientPhone}
-          contractId={contractId}
-          getAllClients={getAllClients}
-        />)}
+
 
 {updateModal && (
         <EditClient

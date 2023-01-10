@@ -200,7 +200,7 @@ const Sidebar = ({hideUser}) => {
 
           <li>
             <a
-              href="#reports"
+              href="reports"
               aria-expanded="false"
               className=""
             >
