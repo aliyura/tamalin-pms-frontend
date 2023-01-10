@@ -8,6 +8,7 @@ import "../static/css/list.css";
 import Loader from "../components/Loader";
 import "./EditVehicles.css";
 import EditContract from "./EditContract";
+import { useRef } from "react";
 
 const Contracts = () => {
   const [contracts, setContracts] = useState([]);
@@ -30,11 +31,11 @@ const Contracts = () => {
       })
       .then((res) => {
         setInProgress(false);
-        console.log(res.data.data.page);
+        console.log(res);
         const { page } = res.data.data;
         const { data } = res.data;
 
-        setContracts(data.page);
+        setContracts(data);
         if (page.length > 0) {
           setTotalPage(++data.totalPages);
           setCurrentPage(data.currentPage);
@@ -46,7 +47,7 @@ const Contracts = () => {
         const message = err;
         throw new Error(message);
       });
-  }, []);
+  }, [currentPage]);
 
   const changePage = (action) => {
     if (action === -1) {
@@ -133,7 +134,7 @@ const Contracts = () => {
             )}
           </div>
           <div className="register-btn">
-            <Button onClick={() => navigate("/newcontract")}>
+            <Button onClick={() => navigate("/createvehicle")}>
               Create a new Contract
             </Button>
           </div>
@@ -181,12 +182,12 @@ const Contracts = () => {
                             e.preventDefault();
                             if (
                               window.confirm(
-                                "Are you sure you want to delete this contract?"
+                                "Are you sure you want to delete this vehicle?"
                               )
                             ) {
                               const token = sessionStorage.getItem("token");
                               await instance
-                                .delete(`contract/${c.cuid}`, {
+                                .delete(`contract/${c.vuid}`, {
                                   headers: {
                                     Authorization: `Bearer ${token}`,
                                   },

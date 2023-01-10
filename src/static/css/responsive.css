@@ -20,8 +20,13 @@
         text-align: center;
     }
     #sidebar.active .sidebar-header h3,
-    #sidebar.active .CTAs {
+    #sidebar.active .CTAs{
         display: none;
+    }
+
+    .userprofile {
+        display: none;
+        background: #000 !important;
     }
     #sidebar.active .sidebar-header strong {
         display: block;

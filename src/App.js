@@ -33,9 +33,12 @@ function App() {
 
   const [clients, setClients] = useState([]);
   const [vehicles, setVehicles] = useState([]);
+  const [contracts, setContracts] = useState([]);
 
   return (
-    <AllContext.Provider value={ { clients, vehicles, setClients, setVehicles} }>
+    <AllContext.Provider value={ { clients, vehicles,
+                                    contracts, setContracts,
+                                    setClients, setVehicles} }>
     <LoginContext.Provider value={ { isAuthenticated, setIsAuthenticated } }>
       <ClientFormProvider>
       <Routes>
