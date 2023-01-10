@@ -10,9 +10,8 @@ import EditClient from "./EditClient";
 import { AllContext } from "../App";
 
 const AllClients = () => {
-
-  const [ updateModal, setUpdateModal] = useState(false);
-  const [ paymentModal, setPaymentModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
+  const [paymentModal, setPaymentModal] = useState(false);
   const [clients, setClients] = useState([]);
   const [clientName, setClientName] = useState();
   const [clientId, setClientId] = useState();
@@ -23,7 +22,7 @@ const AllClients = () => {
   const [contractId, setContractId] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
-  const {contracts, setContracts} = useContext(AllContext)
+  const { contracts, setContracts } = useContext(AllContext);
   const navigate = useNavigate();
 
   const setData = (client) => {
@@ -40,7 +39,9 @@ const AllClients = () => {
 
   const showPaymentModal = (e, client) => {
     e.preventDefault();
-    const contract = contracts.find(contract => contract.client.id === client)
+    const contract = contracts.find(
+      (contract) => contract.client.id === client
+    );
     console.log(contracts);
     setPaymentModal(true);
   };
@@ -48,35 +49,33 @@ const AllClients = () => {
   const closeModal = () => {
     setUpdateModal(false);
     setPaymentModal(false);
-    AllClients()
+    AllClients();
   };
-
 
   const UpdateStatus = async (e, id, status) => {
     e.preventDefault();
     const token = sessionStorage.getItem("token");
     await instance
       .put(
-        `client/status/change/${id}?status=${status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
-        }`, {},
+        `client/status/change/${id}?status=${
+          status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
+        }`,
+        {},
         {
-
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         }
-
       )
       .then((res) => {
         console.log(res);
         setActiveness(!active);
         // setVehicles(vehicles);
-        getAllClients()
+        getAllClients();
       })
       .catch((err) => console.log(err));
   };
-
 
   const search = async () => {
     setInProgress(true);
@@ -84,9 +83,9 @@ const AllClients = () => {
       const token = sessionStorage.getItem("token");
       const res = await instance.get(`client/search?q=${searchKey}`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
+      });
       setInProgress(false);
-      console.log(res.data.data.page)
+      console.log(res.data.data.page);
       const { page } = await res.data.data;
       const { data } = await res.data;
       setClients(page);
@@ -94,14 +93,12 @@ const AllClients = () => {
         setTotalPage(++data.totalPages);
         setCurrentPage(data.currentPage);
       }
-    }
-    catch (err) {
+    } catch (err) {
       setInProgress(false);
       const { message } = err.response.data;
       throw new Error(message);
-    };
+    }
   };
-
 
   const getAllClients = async () => {
     setInProgress(true);
@@ -111,7 +108,6 @@ const AllClients = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-
         const { page } = res.data.data;
         const { data } = res.data;
         setClients(page);
@@ -122,7 +118,6 @@ const AllClients = () => {
         setInProgress(false);
       })
       .catch((err) => {
-
         const { message } = err.response.data;
         throw new Error(message);
         setInProgress(false);
@@ -141,32 +136,27 @@ const AllClients = () => {
     getAllClients();
   };
 
-  const allContracts = async ()=>{
+  const allContracts = async () => {
     const token = sessionStorage.getItem("token");
-    try{
-    const response = await instance.get(`contract/list?page=0`, {
+    try {
+      const response = await instance.get(`contract/list?page=0`, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-        const { page } = await response.data.data;
-        setContracts(page)
-        console.log(contracts,"kkkk");
+      });
+      const { page } = await response.data.data;
+      setContracts(page);
+      console.log(contracts, "kkkk");
+    } catch (err) {
+      console.log(err);
+      // const { message } = err.response.data;
+      // throw new Error(message);
+      // setInProgress(false);
     }
-
-      catch(err){
-        console.log(err)
-        // const { message } = err.response.data;
-        // throw new Error(message);
-        // setInProgress(false);
-      };
-
-  }
+  };
 
   useEffect(() => {
     getAllClients();
     allContracts();
-
   }, []);
-
 
   return (
     <>
@@ -176,20 +166,19 @@ const AllClients = () => {
       <div className="row mt-4">
         <div className="col-sm-12 col-md-10 col-lg-10 table">
           <div className="d-flex search-section m-4">
-
             {/* Search Bar */}
-            <Search placeholder={"Search Clients e.g John Doe"}
+            <Search
+              placeholder={"Search Clients e.g John Doe"}
               onChange={(e) => {
-                setSearchKey(e.target.value)
+                setSearchKey(e.target.value);
               }}
               onClick={(e) => {
-                e.preventDefault()
+                e.preventDefault();
                 // setClients([])
-                if (searchKey.length < 1)
-                  getAllClients()
-                else
-                  search()
-              }} />
+                if (searchKey.length < 1) getAllClients();
+                else search();
+              }}
+            />
             {/* Search Bar */}
 
             <div className="col-6 register-btn m-2">
@@ -219,24 +208,25 @@ const AllClients = () => {
                         {clients.map((client, index) => {
                           return (
                             <>
-                            
                               <tr key={index}>
                                 <td>{++index}</td>
                                 <td>{client.name}</td>
                                 <td>{client.phoneNumber}</td>
                                 <td>{client.status}</td>
                                 <td className="actions">
-
-                                  <a href="" type="button" onClick={(e) => showPaymentModal(e, client.cuid)}>
-                                    {/* Open updateModal */}
+                                  {/* <a href="" type="button" onClick={(e) => showPaymentModal(e, client.cuid)}>
                                     <i className="fa fa-money edit-icon icon text-success"></i>
-                                  </a>
+                                  </a> */}
 
                                   <div className="icon actions">
                                     <p className="icon">&nbsp;|&nbsp;</p>
                                   </div>
 
-                                  <a href="" type="button" onClick={(e) => showUpdateModal(e, client)}>
+                                  <a
+                                    href=""
+                                    type="button"
+                                    onClick={(e) => showUpdateModal(e, client)}
+                                  >
                                     {/* Open updateModal */}
                                     <i className="fa fa-edit edit-icon icon text-success"></i>
                                   </a>
@@ -252,7 +242,8 @@ const AllClients = () => {
                                           "Are you sure you want to delete this vehicle?"
                                         )
                                       ) {
-                                        const token = sessionStorage.getItem("token");
+                                        const token =
+                                          sessionStorage.getItem("token");
                                         await instance
                                           .delete(`client/${client.cuid}`, {
                                             headers: {
@@ -261,7 +252,8 @@ const AllClients = () => {
                                           })
                                           .then(() => {
                                             AllClients();
-                                          }).catch(err => console.log(err));
+                                          })
+                                          .catch((err) => console.log(err));
                                       }
                                       return;
                                     }}
@@ -274,14 +266,21 @@ const AllClients = () => {
                                   <a
                                     href=""
                                     type="button"
-                                    onClick={(e) => UpdateStatus(e, client.cuid, client.status)}
+                                    onClick={(e) =>
+                                      UpdateStatus(
+                                        e,
+                                        client.cuid,
+                                        client.status
+                                      )
+                                    }
                                   >
                                     {/* Open updateModal */}
                                     <i
-                                      className={`fa  ${client.status === "ACTIVE"
+                                      className={`fa  ${
+                                        client.status === "ACTIVE"
                                           ? "fa-toggle-on text-success"
                                           : "fa-toggle-off text-danger"
-                                        } aria-hidden="true" edit-icon icon `}
+                                      } aria-hidden="true" edit-icon icon `}
                                     ></i>
                                   </a>
                                 </td>
@@ -346,16 +345,15 @@ const AllClients = () => {
         </ul>
       </nav>
 
-
-{updateModal && (
+      {updateModal && (
         <EditClient
           close={closeModal}
           clientName={clientName}
           clientPhone={clientPhone}
           clientId={clientId}
           getAllClients={getAllClients}
-        />)}
-
+        />
+      )}
     </>
   );
 };
