@@ -1,31 +1,51 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import tamalinlogo from "../static/images/logo/tamalinlogo.jpg";
+import user from "../static/images/user_avatar2.png";
 
-const Sidebar = () => {
+const Sidebar = ({hideUser}) => {
   return (
     <nav id="sidebar">
       <div className="sidebar_blog_1">
-        <div className="sidebar-header">
+        {/* <div className="sidebar-header">
           <div className="logo_section">
-            <Link to={"/"}>
-              {/* <img
-                className="logo_icon "
-                src={tamalinlogo}
-                alt="Tamalin"
-              /> */}
-            </Link>
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="sidebar_blog_2 text-center ">
-      <img
+      <div className="sidebar_blog_2 text-left mt-2 ">
+       <div className=" px-2" style={{"display":"flex", "flexWrap":"wrap"}}>
+       <img
+          className="rounded-rounded-2"
+          width="60"
+          src={tamalinlogo}
+          alt="Tamalin"
+        />
+        <div className="my-4 ml-2">Tamalin</div>
+       </div>
+              <hr className="bg-secondary"></hr>
+        <ul className="list-unstyled components">
+
+          {/* User Profile */}
+          {hideUser && <li className="userprofile text-center bg-weearning">
+            <Link
+              to={"/"}
+              data-toggle="collapse"
+              aria-expanded="false"
+              className=" text-center"
+            >
+              <img
                 className=" rounded-circle"
-                width="70"
-                src={tamalinlogo}
+                width="90"
+                src={user}
                 alt="Tamalin"
               />
-        <ul className="list-unstyled components">
+            </Link>
+            <div>Admin</div>
+          </li>}
+          <hr className="bg-secondary"></hr>         
+          {/* USer Profile End */}
+
+
           <li className="active">
             <Link
               to={"/"}

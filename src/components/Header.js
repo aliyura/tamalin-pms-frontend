@@ -1,12 +1,17 @@
 import React from "react";
 import Logout from "./Logout";
 
-const Header = () => {
+const Header = ({hideUser, setHideUser}) => {
   return (
     <div className="topbar">
       <nav className="navbar navbar-expand-lg navbar-light">
         <div className="full">
-          <button type="button" id="sidebarCollapse" className="sidebar_toggle">
+          <button type="button" id="sidebarCollapse" 
+          onClick={(e)=>{
+            e.preventDefault()
+            setHideUser(!hideUser)
+          }}
+          className="sidebar_toggle">
             <i className="fa fa-bars"></i>
           </button>
           <div className="right_topbar">
