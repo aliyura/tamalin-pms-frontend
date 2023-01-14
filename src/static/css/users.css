@@ -54,12 +54,12 @@
 }
 
 #progressbar .active {
-  color: #1ed085;
+  color: #df0000;
   font-weight: 400;
 }
 
 .success-green {
-  color: #1ed085;
+  color: #df0000;
 }
 
 .form-buttons {
