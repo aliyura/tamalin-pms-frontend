@@ -164,7 +164,7 @@ const AllClients = () => {
         <div className="col-12 recently registered"></div>
       </div>
       <div className="row mt-4">
-        <div className="col-sm-12 col-md-10 col-lg-10 table">
+        <div className="col-12 table">
           <div className="d-flex search-section m-4">
             {/* Search Bar */}
             <Search
@@ -188,7 +188,7 @@ const AllClients = () => {
             </div>
           </div>
           <div className="col-12">
-            <div className="white_shd full stretch margin_bottom_30">
+            <div className=" full stretch">
               <div className="table_section padding_infor_info">
                 <div className="table-responsive">
                   {inProgress ? (

@@ -61,7 +61,7 @@ const AllAgents = () => {
         <div className="col-12 recently registered"></div>
       </div>
       <div className="row mt-4">
-        <div className="col-sm-12 col-md-10 col-lg-10 table">
+        <div className="col-sm-12 table">
           <div className="d-flex search-section m-4">
             <Search placeholder={"Search Admins e.g John Doe"} />
             <div className="col-6 register-btn m-2">

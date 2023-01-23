@@ -61,7 +61,7 @@ const AllAdmins = () => {
         <div className="col-12 recently registered"></div>
       </div>
       <div className="row mt-4">
-        <div className="col-sm-12 col-md-10 col-lg-10 table">
+        <div className="col-12 ">
           <div className="d-flex search-section m-4">
             <Search placeholder={"Search Admins e.g John Doe"} />
             <div className="col-6 register-btn m-2">
@@ -71,8 +71,8 @@ const AllAdmins = () => {
             </div>
           </div>
           <div className="col-12">
-            <div className="white_shd full stretch margin_bottom_30">
-              <div className="table_section padding_infor_info">
+            <div className=" full stretch">
+              <div className="">
                 <div className="table-responsive">
                   {inProgress ? (
                     <Loader />
