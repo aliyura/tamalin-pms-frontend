@@ -6,7 +6,7 @@ import Contracts from "./pages/Contracts";
 import CreateContract from "./pages/CreateContract";
 import Vehicles from "./pages/Vehicles";
 import Payments from "./pages/Payments";
-import Reports from "./pages/Reports";
+import Reports from "./pages/ComingSoon";
 import Login from "./pages/login";
 import { LoginContext } from "./store/loginContext";
 import CreateAdmin from "./pages/CreateAdmin";
@@ -52,7 +52,7 @@ function App() {
           <Route path="/vehicles" element={<Vehicles />} />
           <Route path="/vehicletypes" element={<VehicleTypes />} />
           <Route path="/payments" element={<Payments />} />
-          <Route path="/reports" element={<Reports />} />
+          <Route path="/*" element={<Reports />} /> {/*Pages not implemented yet */}
             <Route path="/clients" element={ <AllClients /> } />
             <Route path="/client" element={ <Client/> } />
           <Route path="/admins" element={<AllAdmins />} />

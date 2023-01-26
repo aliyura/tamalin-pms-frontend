@@ -5,10 +5,10 @@ import Button from "../components/Button";
 import Search from "../components/Search";
 import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
-import Loader from "../components/Loader";
 import "./EditVehicles.css";
 import EditVehicle from "./EditVehicles";
 import { useRef } from "react";
+import Loader from "../components/Loader";
 
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState([]);
@@ -175,7 +175,7 @@ const Vehicles = () => {
         {/* <div className="padding_infor_info "> */}
         {/* <div className="table-responsive"> */}
         {inProgress ? (
-          <Loader />
+          <div className="col-12 text-center p-4 m-4"><Loader /></div>
         ) : vehicles.length > 0 ? (
           <table className="table table-striped">
             <thead>

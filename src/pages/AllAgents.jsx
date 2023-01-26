@@ -19,7 +19,7 @@ const AllAgents = () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
-      .get(`client/list?page=${currentPage}`, {
+      .get(`agent/list?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -71,8 +71,8 @@ const AllAgents = () => {
             </div>
           </div>
           <div className="col-12">
-            <div className="white_shd full stretch margin_bottom_30">
-              <div className="table_section padding_infor_info">
+            <div className=" full stretch">
+              <div className=" ">
                 <div className="table-responsive">
                   {inProgress ? (
                     <Loader />

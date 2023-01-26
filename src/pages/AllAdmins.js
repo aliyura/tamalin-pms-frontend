@@ -19,7 +19,7 @@ const AllAdmins = () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
-      .get(`client/list?page=${currentPage}`, {
+      .get(`admin/list?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
