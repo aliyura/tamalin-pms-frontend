@@ -11,6 +11,7 @@ import Loader from "../components/Loader";
 const AllAgents = () => {
   const [agents, setAgents] = useState([]);
   const [totalPages, setTotalPage] = useState();
+  const [tableMessage, setTableMessage]=useState("No Agent found")
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
@@ -34,8 +35,10 @@ const AllAgents = () => {
       })
       .catch((err) => {
         setInProgress(false);
-        const { message } = err.response.data;
-        throw new Error(message);
+        if(err.code ==="ERR_NETWORK"){
+          setTableMessage("Network failed, Check your internet connection!")
+        }
+        console.log(err.code)
       });
   }, [currentPage]);
 
@@ -111,7 +114,7 @@ const AllAgents = () => {
                     </table>
                   ) : (
                     <div className="text-center message-box">
-                      <p>No Agent found</p>
+                      <p>{tableMessage}</p>
                     </div>
                   )}
                 </div>

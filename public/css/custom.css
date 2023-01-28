@@ -3,3 +3,16 @@
 -------------------------------------------------------------------*/
 
 /** ADD YOUR AWESOME CODES HERE **/
+
+body{
+    font-size: 16px;
+}
+
+option, input{
+    height: 45px;
+    font-size: 16px;
+}
+table{
+    margin-left: 26px;
+    
+}

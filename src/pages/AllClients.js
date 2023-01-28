@@ -12,6 +12,7 @@ import { AllContext } from "../App";
 const AllClients = () => {
   const [updateModal, setUpdateModal] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
+  const [tableMessage, setTableMessage]=useState("No Agent found")
   const [clients, setClients] = useState([]);
   const [clientName, setClientName] = useState();
   const [clientId, setClientId] = useState();
@@ -94,8 +95,9 @@ const AllClients = () => {
      
     } catch (err) {
       setInProgress(false);
-      const { message } = err.response.data;
-      throw new Error(message);
+      if(err.code ==="ERR_NETWORK"){
+        setTableMessage("Network failed, Check your internet connection!")
+      }
     }
   };
 
@@ -296,7 +298,7 @@ const AllClients = () => {
                     </table>
                   ) : (
                     <div className="text-center message-box">
-                      <p>No client found</p>
+                      <p>{tableMessage}</p>
                     </div>
                   )}
                 </div>

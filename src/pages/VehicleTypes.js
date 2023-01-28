@@ -48,9 +48,10 @@ const VehicleTypes = () => {
           </div>
         </div>
         {inProgress ? (
-          <Loader />
+          <div className="col-12 text-center p-4 m-4"><Loader /></div>
         ) : vehicletypes.length > 0 ? (
-          <table className="table table-sm table-striped">
+          <div className="table-responsive">
+                      <table className="table table-sm table-striped">
             <thead>
               <tr>
                 <th className="font-weight-bold">S/N</th>
@@ -103,6 +104,7 @@ const VehicleTypes = () => {
               })}
             </tbody>
           </table>
+          </div>
         ) : (
           <div className="text-center message-box">
             <p>No Vehicle Type Found</p>
