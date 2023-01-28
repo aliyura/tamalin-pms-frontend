@@ -74,11 +74,11 @@ const Sidebar = ({hideUser}) => {
                   &gt; <span>Create Admin</span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to={"/admins"}>
                   &gt; <span>All Admins</span>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to={"/createagent/"}>
                   &gt; <span>Create Agent</span>

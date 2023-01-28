@@ -122,9 +122,10 @@ const Payments = () => {
           </div>
         </div>
         {inProgress ? (
-          <Loader />
+          <div className="col-12 text-center p-4 m-4"><Loader /></div>
         ) : payments.length > 0 ? (
-          <table className="table table-striped">
+          <div className="table-responsive">
+            <table className="table table-striped">
             <thead>
               <tr className="table-header">
                 <th>S/N</th>
@@ -190,6 +191,7 @@ const Payments = () => {
               })}
             </tbody>
           </table>
+          </div>
         ) : (
           <div className="text-center message-box">
             <p>No Payment found</p>

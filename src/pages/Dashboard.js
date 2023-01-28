@@ -41,16 +41,26 @@ const Dashboard = () => {
       <div className="row column1">
         <StatsCard
           title={"Vehicles"}
+          link={"vehicles"}
           total={summary.vehicles}
           icon={"automobile"}
         />
-        <StatsCard title={"Clients"} total={summary.clients} icon={"users"} />
+        <StatsCard 
+          title={"Clients"}
+          link={"clients"}
+          total={summary.clients}
+          icon={"users"} />
         <StatsCard
           title={"Contracts"}
+          link={"contracts"}
           total={summary.contracts}
           icon={"file"}
         />
-        <StatsCard title={"Payments"} total={summary.payments} icon={"money"} />
+        <StatsCard
+          title={"Payments"}
+          link={"payments"}
+          total={summary.payments}
+          icon={"money"} />
       </div>
       <DashboardChart chartData={summary} />
     </div>
