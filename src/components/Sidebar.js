@@ -26,7 +26,8 @@ const Sidebar = ({hideUser}) => {
         <ul className="list-unstyled components">
 
           {/* User Profile */}
-          {hideUser && <li className="userprofile text-center bg-weearning">
+          {hideUser && 
+          <li className="active">
             <Link
               to={"/"}
               data-toggle="collapse"
@@ -40,8 +41,9 @@ const Sidebar = ({hideUser}) => {
                 alt="Tamalin"
               />
             </Link>
-            <div>Admin</div>
-          </li>}
+            <div className="text-center col-12">Admin</div>
+          </li>
+          }
           <hr className="bg-secondary"></hr>         
           {/* USer Profile End */}
 
