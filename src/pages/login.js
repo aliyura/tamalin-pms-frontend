@@ -11,7 +11,6 @@ const Login = () => {
   const [passwordText, setPasswordText] = useState("");
   const phoneRef = useRef();
   const passwordRef = useRef();
-  const [signInButtonActivated, setSignInButtonActivated] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [error, setError] = useState("");
@@ -38,9 +37,10 @@ const Login = () => {
         setError("");
       })
       .catch((err) => {
-        const { message } = err.response.data;
-        setError(message);
         setIsLoading(false);
+        console.log(err.response.data.message);
+        setError(err.response.data.message);
+        
       });
   };
 
@@ -48,10 +48,8 @@ const Login = () => {
     setPhoneText(phoneRef.current.value);
     if (phoneText === "") {
       setPhoneError(true);
-      setSignInButtonActivated(false);
     } else {
       setPhoneError(false);
-      setSignInButtonActivated(passwordError ? false : true);
     }
   };
 
@@ -59,10 +57,8 @@ const Login = () => {
     setPasswordText(passwordRef.current.value);
     if (passwordText === "") {
       setPasswordError(true);
-      setSignInButtonActivated(false);
     } else {
       setPasswordError(false);
-      setSignInButtonActivated(phoneError ? false : true);
     }
   };
 
@@ -111,8 +107,7 @@ const Login = () => {
                   </div>
                   <div className="field margin_0">
                     <label className="label_field hidden">hidden label</label>
-                    {signInButtonActivated ? (
-                      <button
+                    <button
                         className="main_bt"
                         disabled={isLoading}
                         style={{
@@ -122,9 +117,6 @@ const Login = () => {
                       >
                         {isLoading ? <Spinner /> : "Sign In"}
                       </button>
-                    ) : (
-                      <p></p>
-                    )}
                   </div>
                 </fieldset>
               </form>

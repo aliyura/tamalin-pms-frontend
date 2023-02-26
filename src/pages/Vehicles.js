@@ -5,15 +5,16 @@ import Button from "../components/Button";
 import Search from "../components/Search";
 import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
-import Loader from "../components/Loader";
 import "./EditVehicles.css";
 import EditVehicle from "./EditVehicles";
 import { useRef } from "react";
+import Loader from "../components/Loader";
 
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState([]);
   const [totalPages, setTotalPage] = useState(0);
   let [currentPage, setCurrentPage] = useState(0);
+  const [tableMessage, setTableMessage]=useState("No Vehicles found")
   const [plate, setPlate] = useState("");
   const [imei, setImei] = useState("");
   const [sim, setSim] = useState("");
@@ -22,6 +23,7 @@ const Vehicles = () => {
   const [active, setActiveness] = useState();
   const [modal, setModal] = useState(false);
   const [SearchInput, setSearchInput] = useState("");
+  const [searchKey, setSearchKey] = useState("");
   const SearchInputRef = useRef();
   // const []
   const navigate = useNavigate();
@@ -47,8 +49,9 @@ const Vehicles = () => {
       })
       .catch((err) => {
         setInProgress(false);
-        const { message } = err;
-        throw new Error(message);
+        if(err.code ==="ERR_NETWORK"){
+          setTableMessage("Network failed, Check your internet connection!")
+        }
       });
   }, [currentPage]);
 
@@ -108,46 +111,61 @@ const Vehicles = () => {
       .catch((err) => console.log(err));
   };
 
-  const SearchHandler = async (e) => {
-    // if (e.target.value === "") {
-    //   console.log("Getting search vehicle");
-    //   await getVehicles();
-    // } else {
-    //   setSearchInput(e.target.value);
-    //   const ValuesMatch = vehicles.filter((v, _) =>
-    //     v.model.includes(SearchInput)
-    //   );
-    //   console.log(ValuesMatch);
-    //   setVehicles(ValuesMatch);
-    // }
-
-    const token = sessionStorage.getItem("token");
-    if (e.target.value === "") {
-      console.log("Getting search vehicle");
-      await getVehicles();
-    } else {
-      await instance
-        .get(`vehicle/search?q=${e.target.value}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(async (res) => {
-          console.log(res);
-          const { data } = res.data;
-
-          const findMatch = data.filter((v, _) =>
-            v.model.includes(e.target.value)
-          );
-          setVehicles(findMatch);
-          console.log(findMatch);
-        })
-        .catch((err) => {
-          console.log(err);
-          // throw new Error(err.message);
-        });
+  const searchHandler = async () => {
+    setInProgress(true);
+    try {
+      const token = sessionStorage.getItem("token");
+      const res = await instance.get(`vehicle/search?q=${searchKey}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }); 
+      setInProgress(false);
+      console.log(res.data.data.page);
+      const { page } = await res.data.data;
+      const { data } = await res.data;
+      setVehicles(page)
+      if (page.length > 0) {
+        setTotalPage(++data.totalPages);
+        setCurrentPage(data.currentPage);
+      }
+     
+    } catch (err) {
+      setInProgress(false);
+      if(err.code ==="ERR_NETWORK"){
+        setTableMessage("Network failed, Check your internet connection!")
+      }
     }
   };
+
+
+  // const SearchHandler = async (e) => {
+  //   const token = sessionStorage.getItem("token");
+  //   if (e.target.value === "") {
+  //     console.log("Getting search vehicle");
+  //     await getVehicles();
+  //   } else {
+  //     await instance
+  //       .get(`vehicle/search?q=${e.target.value}`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       })
+  //       .then(async (res) => {
+  //         console.log(res);
+  //         const { data } = res.data;
+  //         setVehicles(data)
+
+  //         const findMatch = data.filter((v, _) =>
+  //           v.model.includes(e.target.value)
+  //         );
+  //         setVehicles(findMatch);
+  //         console.log(findMatch);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         // throw new Error(err.message);
+  //       });
+  //   }
+  // };
 
   return (
     <>
@@ -158,10 +176,15 @@ const Vehicles = () => {
           <div className="search-input">
             {modal || (
               <Search
-                placeholder={"Search Admins e.g John Doe"}
-                ref={SearchInputRef}
-                onChange={SearchHandler}
-              />
+              placeholder={"Search a vehicle"}
+              onChange={(e) => {
+              setSearchKey(e.target.value);
+              }}
+              onClick={e=>{
+                e.preventDefault()
+                if (searchKey.length < 1) getVehicles();
+                else searchHandler()
+              }} />
             )}
           </div>
           <div className="register-btn">
@@ -170,12 +193,14 @@ const Vehicles = () => {
             </Button>
           </div>
         </div>
-        {/* <table className="table"> */}
-        {/* <div className="white_shd margin_bottom_30 "> */}
-        {/* <div className="padding_infor_info "> */}
-        {/* <div className="table-responsive"> */}
+
+        <div className="table-responsive">
+        <table className="table">
+        <div className="white_shd margin_bottom_30 ">
+        <div className="padding_infor_info ">
+        
         {inProgress ? (
-          <Loader />
+          <div className="col-12 text-center p-4 m-4"><Loader /></div>
         ) : vehicles.length > 0 ? (
           <table className="table table-striped">
             <thead>
@@ -265,14 +290,16 @@ const Vehicles = () => {
           </table>
         ) : (
           <div className="text-center message-box">
-            <p>No Vehicle found</p>
+            <p>{tableMessage}</p>
           </div>
         )}
-        {/* </div> */}
-        {/* </div> */}
-        {/* </table> */}
-        {/* </div> */}
-      </div>
+
+        {/* jjjjj */}
+       </div> 
+       </div> 
+       </table>
+        </div>
+      {/* // ksksksk */}
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-end">
           <li className="page-item">
@@ -316,7 +343,7 @@ const Vehicles = () => {
           vuid={vuid}
         />
       )}
-      {/* </div> */}
+      </div>
     </>
   );
 };

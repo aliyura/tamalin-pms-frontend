@@ -12,6 +12,7 @@ import { AllContext } from "../App";
 const AllClients = () => {
   const [updateModal, setUpdateModal] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
+  const [tableMessage, setTableMessage]=useState("No Agent found")
   const [clients, setClients] = useState([]);
   const [clientName, setClientName] = useState();
   const [clientId, setClientId] = useState();
@@ -69,12 +70,10 @@ const AllClients = () => {
         }
       )
       .then((res) => {
-        console.log(res);
         setActiveness(!active);
-        // setVehicles(vehicles);
         getAllClients();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.code));
   };
 
   const search = async () => {
@@ -83,7 +82,7 @@ const AllClients = () => {
       const token = sessionStorage.getItem("token");
       const res = await instance.get(`client/search?q=${searchKey}`, {
         headers: { Authorization: `Bearer ${token}` },
-      });
+      }); 
       setInProgress(false);
       console.log(res.data.data.page);
       const { page } = await res.data.data;
@@ -93,10 +92,12 @@ const AllClients = () => {
         setTotalPage(++data.totalPages);
         setCurrentPage(data.currentPage);
       }
+     
     } catch (err) {
       setInProgress(false);
-      const { message } = err.response.data;
-      throw new Error(message);
+      if(err.code ==="ERR_NETWORK"){
+        setTableMessage("Network failed, Check your internet connection!")
+      }
     }
   };
 
@@ -107,7 +108,9 @@ const AllClients = () => {
       .get(`client/list?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
+  
       .then((res) => {
+            console.log(res)
         const { page } = res.data.data;
         const { data } = res.data;
         setClients(page);
@@ -144,7 +147,6 @@ const AllClients = () => {
       });
       const { page } = await response.data.data;
       setContracts(page);
-      console.log(contracts, "kkkk");
     } catch (err) {
       console.log(err);
       // const { message } = err.response.data;
@@ -164,7 +166,7 @@ const AllClients = () => {
         <div className="col-12 recently registered"></div>
       </div>
       <div className="row mt-4">
-        <div className="col-sm-12 col-md-10 col-lg-10 table">
+        <div className="col-12 table">
           <div className="d-flex search-section m-4">
             {/* Search Bar */}
             <Search
@@ -188,8 +190,8 @@ const AllClients = () => {
             </div>
           </div>
           <div className="col-12">
-            <div className="white_shd full stretch margin_bottom_30">
-              <div className="table_section padding_infor_info">
+            <div className=" full stretch">
+              <div className="">
                 <div className="table-responsive">
                   {inProgress ? (
                     <Loader />
@@ -200,6 +202,8 @@ const AllClients = () => {
                           <th>s. No</th>
                           <th>Full Name</th>
                           <th>Phone Number</th>
+                          <th>guarantor's name</th>
+                          <th>guarantor's phone</th>
                           <th>Status</th>
                           <th>action</th>
                         </tr>
@@ -212,6 +216,8 @@ const AllClients = () => {
                                 <td>{++index}</td>
                                 <td>{client.name}</td>
                                 <td>{client.phoneNumber}</td>
+                                <td>{client.guarantorDetail.name}</td>
+                                <td>{client.guarantorDetail.phoneNumber}</td>
                                 <td>{client.status}</td>
                                 <td className="actions">
                                   {/* <a href="" type="button" onClick={(e) => showPaymentModal(e, client.cuid)}>
@@ -292,7 +298,7 @@ const AllClients = () => {
                     </table>
                   ) : (
                     <div className="text-center message-box">
-                      <p>No client found</p>
+                      <p>{tableMessage}</p>
                     </div>
                   )}
                 </div>

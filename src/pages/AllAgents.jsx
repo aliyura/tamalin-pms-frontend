@@ -11,6 +11,7 @@ import Loader from "../components/Loader";
 const AllAgents = () => {
   const [agents, setAgents] = useState([]);
   const [totalPages, setTotalPage] = useState();
+  const [tableMessage, setTableMessage]=useState("No Agent found")
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const AllAgents = () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
-      .get(`client/list?page=${currentPage}`, {
+      .get(`agent/list?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -34,8 +35,10 @@ const AllAgents = () => {
       })
       .catch((err) => {
         setInProgress(false);
-        const { message } = err.response.data;
-        throw new Error(message);
+        if(err.code ==="ERR_NETWORK"){
+          setTableMessage("Network failed, Check your internet connection!")
+        }
+        console.log(err.code)
       });
   }, [currentPage]);
 
@@ -61,7 +64,7 @@ const AllAgents = () => {
         <div className="col-12 recently registered"></div>
       </div>
       <div className="row mt-4">
-        <div className="col-sm-12 col-md-10 col-lg-10 table">
+        <div className="col-sm-12 table">
           <div className="d-flex search-section m-4">
             <Search placeholder={"Search Admins e.g John Doe"} />
             <div className="col-6 register-btn m-2">
@@ -71,8 +74,8 @@ const AllAgents = () => {
             </div>
           </div>
           <div className="col-12">
-            <div className="white_shd full stretch margin_bottom_30">
-              <div className="table_section padding_infor_info">
+            <div className=" full stretch">
+              <div className=" ">
                 <div className="table-responsive">
                   {inProgress ? (
                     <Loader />
@@ -111,7 +114,7 @@ const AllAgents = () => {
                     </table>
                   ) : (
                     <div className="text-center message-box">
-                      <p>No Agent found</p>
+                      <p>{tableMessage}</p>
                     </div>
                   )}
                 </div>
