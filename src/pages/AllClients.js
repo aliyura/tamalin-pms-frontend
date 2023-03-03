@@ -162,12 +162,12 @@ const AllClients = () => {
 
   return (
     <>
-      <div className="row">
+      <div className="row mx-0">
         <div className="col-12 recently registered"></div>
       </div>
-      <div className="row mt-4">
-        <div className="col-12 table">
-          <div className="d-flex search-section m-4">
+      <div className="row mx-0 mt-4">
+        <div className="col-12 table mx-0 px-0">
+          <div className="d-flex search-section mx-0">
             {/* Search Bar */}
             <Search
               placeholder={"Search Clients e.g John Doe"}
@@ -189,7 +189,7 @@ const AllClients = () => {
               </Button>
             </div>
           </div>
-          <div className="col-12">
+          <div className="col-12 card pl-0">
             <div className=" full stretch">
               <div className="">
                 <div className="table-responsive">

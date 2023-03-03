@@ -65,7 +65,7 @@ const AllAgents = () => {
       </div>
       <div className="row mt-4">
         <div className="col-sm-12 table">
-          <div className="d-flex search-section m-4">
+          <div className="d-flex search-section ">
             <Search placeholder={"Search Admins e.g John Doe"} />
             <div className="col-6 register-btn m-2">
               <Button onClick={() => navigate("/createagent")}>
@@ -73,8 +73,8 @@ const AllAgents = () => {
               </Button>
             </div>
           </div>
-          <div className="col-12">
-            <div className=" full stretch">
+          <div className="col-12 px-0">
+            <div className=" full stretch card">
               <div className=" ">
                 <div className="table-responsive">
                   {inProgress ? (

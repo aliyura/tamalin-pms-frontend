@@ -3419,8 +3419,8 @@ table.projects tr td:first-child {
 
 .table{
     width: 98%;
-    min-width: 100%;
+    min-width: 97%;
     margin-bottom: 1rem;
     background-color: #ffffff00;
-    margin-left: 20px;
+    
 }

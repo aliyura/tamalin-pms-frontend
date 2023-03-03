@@ -132,9 +132,9 @@ const Contracts = () => {
   return (
     <>
       {/* <div className="table-size"> */}
-      <div className="row mt-4">
+      <div className="row mt-4 mx-0">
         {/* <div className="col-sm-12 col-md-10 col-lg-10 "> */}
-        <div className="search-section m-4">
+        <div className="search-section ">
           <div className="search-input">
             {modal || (
               <Search
@@ -150,9 +150,9 @@ const Contracts = () => {
           </div>
         </div>
         {inProgress ? (
-          <div className="col-12 text-center p-4 m-4"><Loader /></div>
+          <div className="card col-12 text-center p-4"><Loader /></div>
         ) : contracts.length > 0 ? (
-          <div className="table-responsive">
+          <div className=" card table-responsive">
             <table className="table table-striped">
             <thead>
               <tr className="table-header">
