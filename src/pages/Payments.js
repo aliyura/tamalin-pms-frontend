@@ -106,8 +106,8 @@ const Payments = () => {
 
   return (
     <Fragment>
-      <div className="row mt-4">
-        <div className="search-section m-4">
+      <div className="row ml-1 mt-4">
+        <div className="search-section">
           <div className="search-input">
             <Search
               placeholder={"Search Admins e.g John Doe"}
@@ -122,9 +122,9 @@ const Payments = () => {
           </div>
         </div>
         {inProgress ? (
-          <div className="col-12 text-center p-4 m-4"><Loader /></div>
+          <div className="card col-12 text-center p-4"><Loader /></div>
         ) : payments.length > 0 ? (
-          <div className="table-responsive">
+          <div className="card table-responsive">
             <table className="table table-striped">
             <thead>
               <tr className="table-header">
@@ -156,8 +156,7 @@ const Payments = () => {
                         <div className="icon actions">
                           <p className="icon">&nbsp;|&nbsp;</p>
                         </div>
-                        <a
-                          href=""
+                        <button className="border-0 bg-transparent"
                           onClick={async (e) => {
                             e.preventDefault();
                             if (
@@ -180,7 +179,7 @@ const Payments = () => {
                           }}
                         >
                           <i className="fa fa-trash delete-icon icon text-danger"></i>
-                        </a>
+                        </button>
                         <div className="icon actions">
                           <p className="icon">&nbsp;|&nbsp;</p>
                         </div>

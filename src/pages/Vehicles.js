@@ -170,9 +170,9 @@ const Vehicles = () => {
   return (
     <>
       {/* <div className="table-size"> */}
-      <div className="row mt-4">
+      <div className="row mt-4 m-1">
         {/* <div className="col-sm-12 col-md-10 col-lg-10 "> */}
-        <div className="search-section m-4">
+        <div className="search-section">
           <div className="search-input">
             {modal || (
               <Search
@@ -194,10 +194,10 @@ const Vehicles = () => {
           </div>
         </div>
 
-        <div className="table-responsive">
-        <table className="table">
+        <div className="table mx-0 card">
+        <table className="table-responsive mx-0">
         <div className="white_shd margin_bottom_30 ">
-        <div className="padding_infor_info ">
+        <div className="">
         
         {inProgress ? (
           <div className="col-12 text-center p-4 m-4"><Loader /></div>

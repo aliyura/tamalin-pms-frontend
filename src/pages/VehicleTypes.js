@@ -48,9 +48,9 @@ const VehicleTypes = () => {
           </div>
         </div>
         {inProgress ? (
-          <div className="col-12 text-center p-4 m-4"><Loader /></div>
+          <div className="col-12 text-center p-4 m-4 card"><Loader /></div>
         ) : vehicletypes.length > 0 ? (
-          <div className="table-responsive">
+          <div className=" ml-4 card table-responsive">
                       <table className="table table-sm table-striped">
             <thead>
               <tr>
@@ -69,8 +69,7 @@ const VehicleTypes = () => {
                       <td>{v.title}</td>
                       <td>{v.description}</td>
                       <td className="actions">
-                        <a
-                          href=""
+                        <button className="border-0  bg-transparent"
                           onClick={async (e) => {
                             e.preventDefault();
                             if (
@@ -96,7 +95,7 @@ const VehicleTypes = () => {
                             className="fa fa-trash text-danger"
                             style={{ fontSize: 30 + "px" }}
                           ></i>
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   </>
