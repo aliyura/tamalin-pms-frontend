@@ -77,7 +77,7 @@ const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
 
                         <div className="row">
 
-                            <div className='col-md-4'>
+                            <div className='col-md-6'>
                                 <div className="active" id="client"><strong>Client's Info <i className="fa fa-check"></i></strong></div>
                                 <ul>
                                     <li><p><strong>Name: </strong>{ client.guarantorName }</p></li>
@@ -87,7 +87,7 @@ const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
                                 </ul>
                             </div>
 
-                            <div className='col-md-4'>
+                            <div className='col-md-6'>
                                 <div className="active" id="client"><strong>Guarantor's Info <i className="fa fa-check"></i></strong></div>
                                 <ul>
                                     <li><p><strong>Name: </strong>{ client.name }</p></li>
@@ -95,14 +95,14 @@ const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
                                     <li><p><strong>Identity Type: </strong>{ client.guarantorIdentityType }</p></li>
                                     <li><p><strong>Identity Number: </strong>{ client.guarantorIdentityNumber }</p></li>
                                     <li><p><strong>Relationship: </strong>{ client.guarantorRelationship }</p></li>
-                                    <li><p><strong>Address: </strong>{ client.guararantorAddress }</p></li>
+                                    <li><p><strong>Address: </strong>{ client.guarantorAddress }</p></li>
                                 </ul>
 
 
 
                             </div>
                                                         
-                            <div className='col-md-4'>
+                            {/* <div className='col-md-4'>
                                 <div className="active" id="client"><strong>Client's Info <i className="fa fa-check"></i></strong></div>
                                 <ul>
                                     <li><p><strong>Name: </strong>{ client.name }</p></li>
@@ -110,7 +110,7 @@ const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
                                     <li><p><strong>Identity Type: </strong>{ client.identityType }</p></li>
                                     <li><p><strong>Identity Number: </strong>{ client.identityNumber }</p></li>
                                 </ul>
-                            </div>
+                            </div> */}
 
 
                         </div>

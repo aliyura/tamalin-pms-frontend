@@ -73,7 +73,7 @@ const CreateAdmin = () => {
 
   const PhoneHandler = () => {
     setPhoneText(phoneRef.current.value);
-    if (phoneText === "") {
+    if (phoneText.length != 11) {
       setPhoneError(true);
       setSignInButtonActivated(false);
     } else {
@@ -113,7 +113,7 @@ const CreateAdmin = () => {
   return (
     <div className="full_container">
       <div className="container">
-        <div className="center verticle_center full_height">
+        <div className="left verticle_center full_height my-4">
           <div className="login_section">
             <div className="logo_login">
               <div className="center">
@@ -121,7 +121,7 @@ const CreateAdmin = () => {
               </div>
             </div>
             <div className="register_form">
-              <p className="err-color">{error}</p>
+              <p className="err-color px-4 mx-4">{error}</p>
               <form onSubmit={CreateUser} className="px-4 mx-4">
                 <fieldset>
                   <div className="input-field">
@@ -145,8 +145,9 @@ const CreateAdmin = () => {
                       ref={phoneRef}
                       name="tel"
                       placeholder="ex. 08000000000"
-                      onBlur={PhoneHandler}
+                      maxlength="11"
                       onChange={PhoneHandler}
+                      autocomplete="off"
                     />
                     <p className="err-color">
                       {phoneError ? "Invalid Phone Number" : ""}
@@ -162,6 +163,7 @@ const CreateAdmin = () => {
                       placeholder="****"
                       onBlur={PasswordHandler}
                       onChange={PasswordHandler}
+                    
                     />
                     <p className="err-color">
                       {passwordError ? "Password empty" : ""}
@@ -180,13 +182,9 @@ const CreateAdmin = () => {
                     />
                     <p className="err-color">{ninError ? "NIN empty" : ""}</p>
                   </div>
-                  <div className="input-field">
-                    <label className="label_field hidden">hidden label</label>
-                  </div>
-                  <div className="input-field margin_0 btn-section">
-                    <label className="label_field hidden">hidden label</label>
-                    {createButtonActivated ? (
-                      <div className="button">
+                 
+                  <div className="m-1">
+                      <div className="col-12 text-right m-4">
                         <button
                         className="main_bt"
                         onClick={CreateUser}
@@ -198,9 +196,6 @@ const CreateAdmin = () => {
                         {isLoading ? <Spinner /> : "Create User"}
                         </button>
                       </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                 </fieldset>
               </form>

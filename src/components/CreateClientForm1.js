@@ -23,14 +23,20 @@ const CreateClientForm1 = ({handleChange, setPage}) => {
 
 
     return (
-        <div className="col-11 col-sm-9 col-md-7 col-lg-6 p-0 mt-3 mb-2">
-            <div className="card px-0 pt-4 pb-0 mt-3 mb-3">
-        <div className='p-6 m-4'>
-            <h4 className='text-center'><strong>Register Client</strong></h4>
-            <p className='text-center'>Fill all form field to go to next step</p>
+    <div className="full_container">
+      <div className="container mx-0">
+        <div className="left  full_height my-4 mx-0">
+        <div className="login_section">
+           <div className="logo_login">
 
+
+             <div className="center"><h1 className='heading'>Register Client</h1></div>
+
+            </div>
+            
             {/* progressbar */}
-            <div id="progressbar">
+            <p className='text-center'>Fill all form fields to go to next step</p>
+            <div id="progressbar" className="px-4 mx-4">
                 <div className="active" id="client"><strong>Client's Info</strong></div>
                 <div id="guarantor"><strong>Guarantor's Info</strong></div>
                 <div id="documents"><strong>Documents</strong></div>
@@ -128,6 +134,7 @@ const CreateClientForm1 = ({handleChange, setPage}) => {
                     </div>
                     </div>
             </div>
+        </div>
         </div>
 
 

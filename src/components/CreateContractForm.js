@@ -79,14 +79,12 @@ const CreateContractForm = () => {
   };
 
   return (
-    <div className="col-11 col-sm-9 col-md-7 col-lg-6 p-0 mt-3 mb-2">
-      <div className="card px-0 pt-4 pb-0 mt-3 mb-1">
-        <div className="">
-          <h4 className="text-center">
-            <strong>New Contract</strong>
-          </h4>
-          {/* <p className='text-center'>Fill all form field to go to next step</p> */}
-
+    <div className="login_section">
+            <div className="logo_login">
+              <div className="center">
+                <h1 className="heading">Create Agent</h1>
+              </div>
+              </div>
           <div className="register_form">
             <form className="px-4 mx-4">
               <fieldset>
@@ -229,8 +227,6 @@ const CreateContractForm = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

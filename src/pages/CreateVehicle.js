@@ -96,8 +96,8 @@ const CreateVehicle = () => {
 
   return (
     <div className="full_container">
-      <div className="container">
-        <div className="center verticle_center full_height">
+      <div className="container mx-0 my-4">
+        <div className="left full_height">
           <div className="login_section">
             <div className="logo_login">
               <div className="center">
@@ -174,10 +174,8 @@ const CreateVehicle = () => {
                       onChange={SimHandler}
                     />
                   </div>
-                  <div className="input-field margin_0 btn-section">
-                    <label className="label_field hidden">hidden label</label>
-                    {createButtonActivated ? (
-                      <div className="button">
+                   <div className="m-1">
+                      <div className="col-12 text-right m-4">
                         <button
                           className="main_bt"
                           onClick={Registervehicle}
@@ -189,9 +187,6 @@ const CreateVehicle = () => {
                           {isLoading ? <Spinner /> : "Create Vehicle"}
                         </button>
                       </div>
-                    ) : (
-                      ""
-                    )}
                   </div>
                 </fieldset>
               </form>

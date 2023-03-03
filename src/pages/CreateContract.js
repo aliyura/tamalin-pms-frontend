@@ -51,7 +51,7 @@ const CreateContract = () => {
     return (
       <div className="full_container">
         <div className="container">
-          <div className=" verticle_center full_height">
+          <div className=" left my-4 mx-0 full_height">
             <CreateContractForm />
           </div>
         </div>
