@@ -21,7 +21,9 @@ const Contracts = () => {
   const [inProgress, setInProgress] = useState(true);
   const [active, setActiveness] = useState();
   const [modal, setModal] = useState(false);  
-  const [ paymentModal, setPaymentModal] = useState(false);
+  const [paymentModal, setPaymentModal] = useState(false);
+  const [searchKey, setSearchKey] = useState("");
+  const [tableMessage, setTableMessage] = useState("No Contract found")
   const navigate = useNavigate();
 
   const getContracts = useCallback(async () => {
@@ -112,22 +114,46 @@ const Contracts = () => {
       })
       .catch((err) => console.log(err));
   };
-
-  const SearchHandler = async (e) => {
-    const token = sessionStorage.getItem("token");
-    await instance
-      .get(`contract/search?q=${e.target.value}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        const { data } = res.data;
-        setContracts(data);
-        console.log(data);
+  const search = async () => {
+    setInProgress(true);
+    try {
+      const token = sessionStorage.getItem("token");
+      const res = await instance.get(`client/search?q=${searchKey}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
+      setInProgress(false);
+      console.log(res.data.data.page);
+      const { page } = await res.data.data;
+      const { data } = await res.data;
+      setContracts(page);
+      if (page.length > 0) {
+        setTotalPage(++data.totalPages);
+        setCurrentPage(data.currentPage);
+      }
+
+    } catch (err) {
+      setInProgress(false);
+      if (err.code === "ERR_NETWORK") {
+        setTableMessage("Network failed, Check your internet connection!")
+      }
+    }
   };
+
+  // const SearchHandler = async (e) => {
+  //   const token = sessionStorage.getItem("token");
+  //   await instance
+  //     .get(`contract/search?q=${e.target.value}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       const { data } = res.data;
+  //       setContracts(data);
+  //       console.log(data);
+  //     });
+  // };
 
   return (
     <>
@@ -136,12 +162,27 @@ const Contracts = () => {
         {/* <div className="col-sm-12 col-md-10 col-lg-10 "> */}
         <div className="search-section ">
           <div className="search-input">
-            {modal || (
+            {/* {modal || (
               <Search
-                placeholder={"Search Contracts e.g John Doe"}
-                onChange={SearchHandler}
+                placeholder={"Search Contracts"}
+                onClick={SearchHandler}
               />
-            )}
+            ) } */}
+            
+            {/* Search Bar */ }
+            <Search
+              placeholder={ "Search a contract" }
+              onChange={ (e) => {
+                setSearchKey(e.target.value);
+              } }
+              onClick={ (e) => {
+                e.preventDefault();
+                // setClients([])
+                if (searchKey.length < 1) getContracts();
+                else search();
+              } }
+            />
+            {/* Search Bar */ }
           </div>
           <div className="register-btn">
             <Button onClick={() => navigate("/createvehicle")}>
@@ -236,8 +277,8 @@ const Contracts = () => {
           </table>
           </div>
         ) : (
-          <div className="text-center message-box">
-            <p>No Contract Found</p>
+          <div className=" card col-12 text-center message-box p-2 m-2">
+            <p className="m-auto">No Contract Found</p>
           </div>
         )}
       </div>
