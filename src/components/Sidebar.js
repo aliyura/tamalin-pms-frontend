@@ -5,7 +5,7 @@ import user from "../static/images/user_avatar2.png";
 
 const Sidebar = ({ hideUser }) => {
   return (
-    <nav id="sidebar">
+    <nav id="sidebar" className="sidebar">
       <div className="sidebar_blog_1">
         {/* <div className="sidebar-header">
           <div className="logo_section">

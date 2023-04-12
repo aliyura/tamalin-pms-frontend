@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+.showSideBar{
+  width: 360px !important;
+  margin-left: 0 !important;
+}
+
+.hideSideBar{
+  width: 0 !important;
+  margin-left: 0 !important;
+}
