@@ -20,7 +20,7 @@ const Contracts = () => {
   const [cuid, setCuid] = useState("");
   const [inProgress, setInProgress] = useState(true);
   const [active, setActiveness] = useState();
-  const [modal, setModal] = useState(false);  
+  const [modal, setModal] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
   const [searchKey, setSearchKey] = useState("");
   const [tableMessage, setTableMessage] = useState("No Contract found")
@@ -139,21 +139,6 @@ const Contracts = () => {
     }
   };
 
-  // const SearchHandler = async (e) => {
-  //   const token = sessionStorage.getItem("token");
-  //   await instance
-  //     .get(`contract/search?q=${e.target.value}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //       const { data } = res.data;
-  //       setContracts(data);
-  //       console.log(data);
-  //     });
-  // };
 
   return (
     <>
@@ -168,24 +153,24 @@ const Contracts = () => {
                 onClick={SearchHandler}
               />
             ) } */}
-            
-            {/* Search Bar */ }
+
+            {/* Search Bar */}
             <Search
-              placeholder={ "Search a contract" }
-              onChange={ (e) => {
+              placeholder={"Search a contract"}
+              onChange={(e) => {
                 setSearchKey(e.target.value);
-              } }
-              onClick={ (e) => {
+              }}
+              onClick={(e) => {
                 e.preventDefault();
                 // setClients([])
                 if (searchKey.length < 1) getContracts();
                 else search();
-              } }
+              }}
             />
-            {/* Search Bar */ }
+            {/* Search Bar */}
           </div>
           <div className="register-btn">
-            <Button onClick={() => navigate("/createvehicle")}>
+            <Button onClick={() => navigate("/newcontract")}>
               Create a new Contract
             </Button>
           </div>
@@ -195,86 +180,90 @@ const Contracts = () => {
         ) : contracts.length > 0 ? (
           <div className=" card table-responsive">
             <table className="table table-striped">
-            <thead>
-              <tr className="table-header">
-                <th>S/N</th>
-                <th>Code</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Discount</th>
-                <th>Created By</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contracts.map((c, index) => {
-                return (
-                  <>
-                    <tr key={index}>
-                      <td>{++index}</td>
-                      <td>{c.code}</td>
-                      <td>{c.startDate}</td>
-                      <td>{c.endDate}</td>
-                      <td>{c.discount}</td>
-                      <td>{c.createdBy}</td>
-                      <td>{c.createdAt}</td>
-                      <td>{c.updatedAt}</td>
-                      <td className="actions">
-                        <a href="" type="button" onClick={(e)=>showPaymentModal(e, c.cuid)}>
-                          <i className="fa fa-money edit-icon icon text-success"></i>
-                        </a>
-                        <div className="icon actions">
-                          <p className="icon">&nbsp;|&nbsp;</p>
-                        </div>
-                        <a
-                          href=""
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            if (
-                              window.confirm(
-                                "Are you sure you want to delete this contract?"
-                              )
-                            ) {
-                              const token = sessionStorage.getItem("token");
-                              await instance
-                                .delete(`contract/${c.cuid}`, {
-                                  headers: {
-                                    Authorization: `Bearer ${token}`,
-                                  },
-                                })
-                                .then(() => {
-                                  getContracts();
-                                });
-                            }
-                            return;
-                          }}
-                        >
-                          <i className="fa fa-trash delete-icon icon text-danger"></i>
-                        </a>
-                        <div className="icon actions">
-                          <p className="icon">&nbsp;|&nbsp;</p>
-                        </div>
-                        <a
-                          href=""
-                          type="button"
-                          onClick={(e) => UpdateStatus(e, c.cuid, c.status)}
-                        >
-                          <i
-                            className={`fa  ${c.status === "ACTIVE"
+              <thead>
+                <tr className="table-header">
+                  <th>S/N</th>
+                  <th>Id</th>
+                  <th>Client</th>
+                  <th>Vehicle</th>
+                  <th>Amount</th>
+                  <th>Cleared Amount</th>
+                  <th>Balance</th>
+                  <th>Discount</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {contracts.map((c, index) => {
+                  return (
+                    <>
+                      <tr key={index}>
+                        <td>{++index}</td>
+                        <td>{c.code}</td>
+                        <td>{c.client.name}</td>
+                        <td>{c.vehicle.plateNumber}</td>
+                        <td>{c.amount}</td>
+                        <td>{c.clearedAmount ? c.clearedAmount : 0}</td>
+                        <td>{c.balance}</td>
+                        <td>{c.discount}</td>
+                        <td>{c.startDate}</td>
+                        <td>{c.endDate}</td>
+                        <td className="actions">
+                          <a type="button" onClick={(e) => showPaymentModal(e, c.cuid)}>
+                            <i className="fa fa-money edit-icon icon text-success"></i>
+                          </a>
+                          <div className="icon actions">
+                            <p className="icon">&nbsp;|&nbsp;</p>
+                          </div>
+                          <a
+                            href=""
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              if (
+                                window.confirm(
+                                  "Are you sure you want to delete this contract?"
+                                )
+                              ) {
+                                const token = sessionStorage.getItem("token");
+                                await instance
+                                  .delete(`contract/${c.cuid}`, {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  })
+                                  .then(() => {
+                                    getContracts();
+                                  });
+                              }
+                              return;
+                            }}
+                          >
+                            <i className="fa fa-trash delete-icon icon text-danger"></i>
+                          </a>
+                          <div className="icon actions">
+                            <p className="icon">&nbsp;|&nbsp;</p>
+                          </div>
+                          <a
+                            href=""
+                            type="button"
+                            onClick={(e) => UpdateStatus(e, c.cuid, c.status)}
+                          >
+                            <i
+                              className={`fa  ${c.status === "ACTIVE"
                                 ? "fa-toggle-on"
                                 : "fa-toggle-off"
-                              } aria-hidden="true" edit-icon icon text-success`}
-                          ></i>
-                        </a>
-                      </td>
-                    </tr>
-                  </>
-                );
-              })}
-            </tbody>
-          </table>
+                                } aria-hidden="true" edit-icon icon text-success`}
+                            ></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         ) : (
           <div className=" card col-12 text-center message-box p-2 m-2">

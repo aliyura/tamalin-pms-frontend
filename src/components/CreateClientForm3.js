@@ -16,7 +16,6 @@ const CreateClientForm3 = ({ setPage, setCreatedClient }) => {
 
     const { client, setClient } = useContext(ClientFormContext)
     const [isLoading, setIsLoading] = useState(false)
-    const [imagesURL, setImagesURL] = useState([])
     const [error, setError] = useState(false)
     const [uploaded, setUploaded] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")

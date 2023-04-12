@@ -1,6 +1,5 @@
 import { useState, useContext, useRef } from 'react';
 import { ClientFormContext } from '../store/ClientFormContext';
-import Spinner from './Spinner';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,17 +11,11 @@ const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
 
     const { client, setClient } = useContext(ClientFormContext)
     const [isLoading, setIsLoading] = useState(false)
-    const [imagesURL, setImagesURL] = useState([])
-    const [error, setError] = useState(false)
-    const [uploaded, setUploaded] = useState(false)
-    const [errorMessage, setErrorMessage] = useState("")
-    const submitRef = useRef()
-
-
+    
     const createClient = async (e) => {
-        e.preventDefault();
-        console.log(client)
         const token = sessionStorage.getItem("token");
+        setIsLoading(true);
+        console.log(client);
         await instance
             .post(
                 `/client`,
@@ -44,6 +37,8 @@ const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
                         "relationship": client.guarantorRelationship,
                         "address": client.guararantorAddress
                     }
+
+                    
                 },
                 {
                     headers: {
@@ -53,22 +48,24 @@ const CreateClientForm4 = ({ setCreatedClient, setPage}) => {
                 }
             )
             .then((res) => {
-                console.log(res.data.data);
-                // setPage(5)
-                setCreatedClient(res.data.data)
-                setClient("")
                 setIsLoading(false);
+                toast.success("Request Successful")
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1000);
             })
             .catch((err) => {
-                setError(true);
+                console.log(err)
+                const data  = err.response.data;
+                toast.error(data.message)
                 setIsLoading(false);
-                toast(err.response.data.message)
             });
     };
 
 
     return (
         <div>
+            <ToastContainer/>
             <div className="col-11 col-12 p-0 mt-3 mb-2">
                 <div className="card px-0 pt-4 pb-0 mt-3 mb-3">
                     <div className='p-6 m-4'>

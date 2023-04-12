@@ -1,15 +1,13 @@
-import { useRef, useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import instance from "../api";
-import { useNavigate } from "react-router-dom";
 import "../static/css/users.css";
-import Spinner from "../components/Spinner";
 import CreateContractForm from "../components/CreateContractForm";
 import { AllContext } from "../App";
 
 
 const CreateContract = () => {
 
-  const {clients, setClients, vehicles, setVehicles} = useContext(AllContext)
+  const { setClients, setVehicles } = useContext(AllContext)
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -48,15 +46,15 @@ const CreateContract = () => {
   }, [])
 
 
-    return (
-      <div className="full_container">
-        <div className="container">
-          <div className=" left my-4 mx-0 full_height">
-            <CreateContractForm />
-          </div>
+  return (
+    <div className="full_container">
+      <div className="container">
+        <div className=" left my-4 mx-0 full_height">
+          <CreateContractForm />
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-  export default CreateContract;
+export default CreateContract;

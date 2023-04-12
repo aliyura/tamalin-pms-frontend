@@ -17,7 +17,9 @@ const Dashboard = () => {
         console.log(res.data.data);
       })
       .catch((err) => {
-        const { message } = err.response.data;
+         console.log(err)
+        const data  = err.response.data;
+        toast.error(data.message)
         console.log(err);
         throw new Error(message);
       });

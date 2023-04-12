@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
+import { ToastContainer, toast } from "react-toastify";
 
 const CreateAgent = () => {
   const [nameText, setNameText] = useState("");
@@ -20,12 +21,9 @@ const CreateAgent = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [ninError, setNinError] = useState(false);
   const [error, setError] = useState("");
-  const { setisAuthenticated } = useLoginContext();
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const CreateUser = async (e) => {
-    e.preventDefault();
+  const CreateUser = async () => {
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
     await instance
@@ -46,14 +44,15 @@ const CreateAgent = () => {
         }
       )
       .then((res) => {
-        console.log(res);
-        setisAuthenticated(true);
-        navigate("/");
-        setIsLoading(false);
+        toast.success("Request Successful")
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((err) => {
-        const { message } = err.response.data;
-        setError(message);
+        console.log(err)
+        const data = err.response.data;
+        toast.error(data.message)
         setIsLoading(false);
       });
   };
@@ -112,6 +111,7 @@ const CreateAgent = () => {
 
   return (
     <div className="full_container">
+      <ToastContainer />
       <div className="container">
         <div className="left verticle_center full_height my-4">
           <div className="login_section">
@@ -122,79 +122,79 @@ const CreateAgent = () => {
             </div>
             <div className="register_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={CreateUser} className="px-4 mx-4">
-                <fieldset>
-                  <div className="input-field ">
-                    <label className="label_field">Full Name</label>
-                    <input
-                      className="input"
-                      type="text"
-                      ref={nameRef}
-                      name="name"
-                      placeholder="ex. John Doe"
-                      onBlur={NameHandler}
-                      onChange={NameHandler}
-                    />
-                    <p className="err-color">{nameError ? "Name empty" : ""}</p>
+              <fieldset>
+                <div className="input-field ">
+                  <label className="label_field">Full Name</label>
+                  <input
+                    className="input"
+                    type="text"
+                    ref={nameRef}
+                    name="name"
+                    placeholder="ex. John Doe"
+                    onBlur={NameHandler}
+                    onChange={NameHandler}
+                  />
+                  <p className="err-color">{nameError ? "Name empty" : ""}</p>
+                </div>
+                <div className="input-field ">
+                  <label className="label_field">Phone Number</label>
+                  <input
+                    className="input"
+                    ref={phoneRef}
+                    type="tel"
+                    name="tel"
+                    placeholder="ex. 08000000000"
+                    onBlur={PhoneHandler}
+                    onChange={PhoneHandler}
+                  />
+                  <p className="err-color">
+                    {phoneError ? "Invalid Phone Number" : ""}
+                  </p>
+                </div>
+                <div className="input-field ">
+                  <label className="label_field">Password</label>
+                  <input
+                    className="input"
+                    type="password"
+                    ref={passwordRef}
+                    name="password"
+                    // placeholder="Password"
+                    onBlur={PasswordHandler}
+                    onChange={PasswordHandler}
+                  />
+                  <p className="err-color">
+                    {passwordError ? "Password empty" : ""}
+                  </p>
+                </div>
+                <div className="input-field ">
+                  <label className="label_field">NIN</label>
+                  <input
+                    className="input"
+                    type="text"
+                    ref={ninRef}
+                    name="nin"
+                    placeholder="61250945671"
+                    onBlur={ninHandler}
+                    onChange={ninHandler}
+                  />
+                  <p className="err-color">{ninError ? "NIN empty" : ""}</p>
+                </div>
+                <div className="m-1">
+                  <div className="col-12 text-right m-4">
+                    <button
+                      className="main_bt"
+                      onClick={CreateUser}
+                      disabled={isLoading}
+                      style={{
+                        backgroundColor: isLoading ? "#e6e6e6" : null,
+                      }}
+                    >
+                      {isLoading ? <Spinner /> : "Create User"}
+                    </button>
                   </div>
-                  <div className="input-field ">
-                    <label className="label_field">Phone Number</label>
-                    <input
-                      className="input"
-                      type="tel"
-                      name="tel"
-                      placeholder="ex. 08000000000"
-                      onBlur={PhoneHandler}
-                      onChange={PhoneHandler}
-                    />
-                    <p className="err-color">
-                      {phoneError ? "Invalid Phone Number" : ""}
-                    </p>
-                  </div>
-                  <div className="input-field ">
-                    <label className="label_field">Password</label>
-                    <input
-                      className="input"
-                      type="password"
-                      ref={passwordRef}
-                      name="password"
-                      // placeholder="Password"
-                      onBlur={PasswordHandler}
-                      onChange={PasswordHandler}
-                    />
-                    <p className="err-color">
-                      {passwordError ? "Password empty" : ""}
-                    </p>
-                  </div>
-                  <div className="input-field ">
-                    <label className="label_field">NIN</label>
-                    <input
-                      className="input"
-                      type="text"
-                      ref={ninRef}
-                      name="nin"
-                      placeholder="61250945671"
-                      onBlur={ninHandler}
-                      onChange={ ninHandler }
-                    />
-                    <p className="err-color">{ninError ? "NIN empty" : ""}</p>
-                  </div>
-                  <div className="m-1">
-                      <div className="col-12 text-right m-4">
-                        <button
-                        className="main_bt"
-                        onClick={CreateUser}
-                        disabled={isLoading}
-                        style={{
-                          backgroundColor: isLoading ? "#e6e6e6" : null,
-                        }}
-                      >
-                        {isLoading ? <Spinner /> : "Create User"}
-                        </button>
-                      </div>
-                  </div>
-                </fieldset>
-              </form>
+                </div>
+              </fieldset>
+
             </div>
           </div>
         </div>

@@ -28,7 +28,9 @@ const VehicleTypes = () => {
       })
       .catch((err) => {
         setInProgress(false);
-        const { message } = err.response.data;
+         console.log(err)
+        const data  = err.response.data;
+        toast.error(data.message)
         throw new Error(message);
       });
   }, []);

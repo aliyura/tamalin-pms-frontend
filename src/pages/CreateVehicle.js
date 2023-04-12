@@ -3,6 +3,7 @@ import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
+import { ToastContainer, toast } from "react-toastify";
 
 const CreateVehicle = () => {
   const [modelText, setModelText] = useState("");
@@ -23,8 +24,7 @@ const CreateVehicle = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const Registervehicle = async (e) => {
-    e.preventDefault();
+  const Registervehicle = async () => {
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
     await instance
@@ -48,14 +48,15 @@ const CreateVehicle = () => {
         }
       )
       .then((res) => {
-        console.log(res);
-        navigate("/");
-        setIsLoading(false);
+        toast.success("Request Successful")
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((err) => {
-        // const { message } = err.response.data;
-        console.log(err);
-        // setError(message);
+        console.log(err)
+        const data = err.response.data;
+        toast.error(data.message)
         setIsLoading(false);
       });
   };
@@ -96,6 +97,7 @@ const CreateVehicle = () => {
 
   return (
     <div className="full_container">
+      <ToastContainer />
       <div className="container mx-0 my-4">
         <div className="left full_height">
           <div className="login_section">
@@ -106,7 +108,7 @@ const CreateVehicle = () => {
             </div>
             <div className="register_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={Registervehicle} className="px-4 mx-4">
+              <div className="px-4 mx-4">
                 <fieldset>
                   <div className="input-field ">
                     <label className="label_field">Model</label>
@@ -124,10 +126,11 @@ const CreateVehicle = () => {
                     <label className="label_field">Plate Number</label>
                     <input
                       className="input"
-                      type="number"
+                      type="text"
                       name="Plate"
+                      maxLength={9}
                       ref={plateNumberRef}
-                      placeholder="ex. 08000000000"
+                      placeholder="ex. ABC-123DE"
                       onBlur={PlateNumberHandler}
                       onChange={PlateNumberHandler}
                     />
@@ -174,22 +177,22 @@ const CreateVehicle = () => {
                       onChange={SimHandler}
                     />
                   </div>
-                   <div className="m-1">
-                      <div className="col-12 text-right m-4">
-                        <button
-                          className="main_bt"
-                          onClick={Registervehicle}
-                          disabled={isLoading}
-                          style={{
-                            backgroundColor: isLoading ? "#e6e6e6" : null,
-                          }}
-                        >
-                          {isLoading ? <Spinner /> : "Create Vehicle"}
-                        </button>
-                      </div>
+                  <div className="m-1">
+                    <div className="col-12 text-right m-4">
+                      <button
+                        className="main_bt"
+                        onClick={Registervehicle}
+                        disabled={isLoading}
+                        style={{
+                          backgroundColor: isLoading ? "#e6e6e6" : null,
+                        }}
+                      >
+                        {isLoading ? <Spinner /> : "Create Vehicle"}
+                      </button>
+                    </div>
                   </div>
                 </fieldset>
-              </form>
+              </div>
             </div>
           </div>
         </div>

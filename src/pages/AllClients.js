@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 import instance from "../api";
-import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Search from "../components/Search";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,11 +7,13 @@ import "../static/css/list.css";
 import Loader from "../components/Loader";
 import EditClient from "./EditClient";
 import { AllContext } from "../App";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const AllClients = () => {
   const [updateModal, setUpdateModal] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
-  const [tableMessage, setTableMessage]=useState("No Agent found")
+  const [tableMessage, setTableMessage] = useState("No Agent found")
   const [clients, setClients] = useState([]);
   const [clientName, setClientName] = useState();
   const [clientId, setClientId] = useState();
@@ -20,7 +21,6 @@ const AllClients = () => {
   const [searchKey, setSearchKey] = useState("");
   const [totalPages, setTotalPage] = useState();
   const [active, setActiveness] = useState();
-  const [contractId, setContractId] = useState();
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const { contracts, setContracts } = useContext(AllContext);
@@ -58,8 +58,7 @@ const AllClients = () => {
     const token = sessionStorage.getItem("token");
     await instance
       .put(
-        `client/status/change/${id}?status=${
-          status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
+        `client/status/change/${id}?status=${status === "ACTIVE" ? "INACTIVE" : "ACTIVE"
         }`,
         {},
         {
@@ -82,7 +81,7 @@ const AllClients = () => {
       const token = sessionStorage.getItem("token");
       const res = await instance.get(`client/search?q=${searchKey}`, {
         headers: { Authorization: `Bearer ${token}` },
-      }); 
+      });
       setInProgress(false);
       console.log(res.data.data.page);
       const { page } = await res.data.data;
@@ -92,10 +91,10 @@ const AllClients = () => {
         setTotalPage(++data.totalPages);
         setCurrentPage(data.currentPage);
       }
-     
+
     } catch (err) {
       setInProgress(false);
-      if(err.code ==="ERR_NETWORK"){
+      if (err.code === "ERR_NETWORK") {
         setTableMessage("Network failed, Check your internet connection!")
       }
     }
@@ -108,9 +107,9 @@ const AllClients = () => {
       .get(`client/list?page=${currentPage}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-  
+
       .then((res) => {
-            console.log(res)
+        console.log(res)
         const { page } = res.data.data;
         const { data } = res.data;
         setClients(page);
@@ -121,9 +120,10 @@ const AllClients = () => {
         setInProgress(false);
       })
       .catch((err) => {
-        const { message } = err.response.data;
-        throw new Error(message);
+        console.log(err)
         setInProgress(false);
+        const data = err.response.data;
+        toast.error(data.message)
       });
   };
 
@@ -149,7 +149,9 @@ const AllClients = () => {
       setContracts(page);
     } catch (err) {
       console.log(err);
-      // const { message } = err.response.data;
+      //  console.log(err)
+      const data = err.response.data;
+      toast.error(data.message)
       // throw new Error(message);
       // setInProgress(false);
     }
@@ -162,6 +164,7 @@ const AllClients = () => {
 
   return (
     <>
+    <ToastContainer/>
       <div className="row mx-0">
         <div className="col-12 recently registered"></div>
       </div>
@@ -282,11 +285,10 @@ const AllClients = () => {
                                   >
                                     {/* Open updateModal */}
                                     <i
-                                      className={`fa  ${
-                                        client.status === "ACTIVE"
+                                      className={`fa  ${client.status === "ACTIVE"
                                           ? "fa-toggle-on text-success"
                                           : "fa-toggle-off text-danger"
-                                      } aria-hidden="true" edit-icon icon `}
+                                        } aria-hidden="true" edit-icon icon `}
                                     ></i>
                                   </a>
                                 </td>

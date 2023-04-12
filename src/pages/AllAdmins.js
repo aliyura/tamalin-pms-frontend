@@ -7,6 +7,7 @@ import Search from "../components/Search";
 import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
+import { ToastContainer, toast } from "react-toastify";
 
 const AllAdmins = () => {
   const [admins, setAdmins] = useState([]);
@@ -19,7 +20,7 @@ const AllAdmins = () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
-      .get(`admin/list?page=${currentPage}`, {
+      .get(`user/list?page=${currentPage}&role=ADMIN`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -34,10 +35,12 @@ const AllAdmins = () => {
       })
       .catch((err) => {
         setInProgress(false);
-        const { message } = err.response.data;
-        throw new Error(message);
+        console.log(err)
+        const data = err.response.data;
+        toast.error(data.message)
+
       });
-  },[currentPage]);
+  }, [currentPage]);
 
   const changePage = (action) => {
     if (action === -1) {
@@ -57,6 +60,7 @@ const AllAdmins = () => {
 
   return (
     <Fragment>
+      <ToastContainer/>
       <div className="row">
         <div className="col-12 recently registered"></div>
       </div>
@@ -80,10 +84,12 @@ const AllAdmins = () => {
                     <table className="table table-striped">
                       <thead>
                         <tr>
+                        <th>S/N</th>
                           <th>Full Name</th>
                           <th>Phone Number</th>
-                          <th>Email</th>
-                          <th>action</th>
+                          <th>NIN</th>
+                          <th>Role</th>
+                          <th>#</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -93,6 +99,9 @@ const AllAdmins = () => {
                               <tr key={index}>
                                 <td>{++index}</td>
                                 <td>{admin.name}</td>
+                                <td>{admin.phoneNumber}</td>
+                                <td>{admin.nin}</td>
+                                <td>{admin.role}</td>
                                 <td>
                                   <Link to="/">
                                     <i className="fa fa-edit text-success"></i>

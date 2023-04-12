@@ -45,10 +45,12 @@ const ResetPassword = (props) => {
         setError("");
       })
       .catch((err) => {
-        const { message } = err.response.data;
+         console.log(err)
+        const data  = err.response.data;
+        toast.error(data.message)
         console.log(err);
         console.log(message);
-        setError(message);
+
         setIsLoading(false);
       });
   };

@@ -3,6 +3,7 @@ import instance from "../api";
 import { useNavigate } from "react-router-dom";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 const CreateVehicleType = () => {
   const [titleText, setTitleText] = useState("");
@@ -14,10 +15,8 @@ const CreateVehicleType = () => {
   const [descriptionError, setDescriptionError] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const RegisterVehicleType = async (e) => {
-    e.preventDefault();
+  const RegisterVehicleType = async () => {
     setIsLoading(true);
     const token = sessionStorage.getItem("token");
     await instance
@@ -36,14 +35,15 @@ const CreateVehicleType = () => {
         }
       )
       .then((res) => {
-        console.log(res);
-        navigate("/");
-        setIsLoading(false);
+        toast.success("Request Successful")
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch((err) => {
-        // const { message } = err.response.data;
-        console.log(err);
-        // setError(message);
+        console.log(err)
+        const data = err.response.data;
+        toast.error(data.message)
         setIsLoading(false);
       });
   };
@@ -82,7 +82,7 @@ const CreateVehicleType = () => {
             </div>
             <div className="register_form">
               <p className="err-color">{error}</p>
-              <form onSubmit={RegisterVehicleType} className="px-4 mx-4">
+              <div className="px-4 mx-4">
                 <fieldset>
                   <div className="input-field ">
                     <label className="label_field">Title</label>
@@ -114,23 +114,23 @@ const CreateVehicleType = () => {
                       {descriptionError ? "Invalid Description" : ""}
                     </p>
                   </div>
- <div className="m-1">
-                      <div className="col-12 text-right m-4">
-                        <button
-                          className="main_bt text-nowrap"
-                          onClick={RegisterVehicleType}
-                          disabled={isLoading}
-                          style={{
-                            backgroundColor: isLoading ? "#e6e6e6" : null,
-                          }}
-                        >
-                          {isLoading ? <Spinner /> : "Create Vehicle Type"}
-                        </button>
-                      </div>
+                  <div className="m-1">
+                    <div className="col-12 text-right m-4">
+                      <button
+                        className="main_bt text-nowrap"
+                        onClick={RegisterVehicleType}
+                        disabled={isLoading}
+                        style={{
+                          backgroundColor: isLoading ? "#e6e6e6" : null,
+                        }}
+                      >
+                        {isLoading ? <Spinner /> : "Create Vehicle Type"}
+                      </button>
+                    </div>
 
                   </div>
                 </fieldset>
-              </form>
+              </div>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import tamalinlogo from "../static/images/logo/tamalinlogo.jpg";
 import user from "../static/images/user_avatar2.png";
 
-const Sidebar = ({hideUser}) => {
+const Sidebar = ({ hideUser }) => {
   return (
     <nav id="sidebar">
       <div className="sidebar_blog_1">
@@ -13,38 +13,38 @@ const Sidebar = ({hideUser}) => {
         </div> */}
       </div>
       <div className="sidebar_blog_2 text-left mt-2 ">
-       <div className=" px-2" style={{"display":"flex", "flexWrap":"wrap"}}>
-       <img
-          className="rounded-rounded-2"
-          width="60"
-          src={tamalinlogo}
-          alt="Tamalin"
-        />
-        <div className="my-4 ml-2">Tamalin</div>
-       </div>
-              <hr className="bg-secondary"></hr>
+        <div className=" px-2" style={{ "display": "flex", "flexWrap": "wrap" }}>
+          <img
+            className="rounded-rounded-2"
+            width="60"
+            src={tamalinlogo}
+            alt="Tamalin"
+          />
+          <div className="my-4 ml-2">Tamalin</div>
+        </div>
+        <hr className="bg-secondary"></hr>
         <ul className="list-unstyled components">
 
           {/* User Profile */}
-          {hideUser && 
-          <li className="active">
-            <Link
-              to={"/"}
-              data-toggle="collapse"
-              aria-expanded="false"
-              className=" text-center"
-            >
-              <img
-                className=" rounded-circle"
-                width="90"
-                src={user}
-                alt="Tamalin"
-              />
-            </Link>
-            <div className="text-center col-12">Admin</div>
-          </li>
+          {hideUser &&
+            <li className="active">
+              <Link
+                to={"/"}
+                data-toggle="collapse"
+                aria-expanded="false"
+                className=" text-center"
+              >
+                <img
+                  className=" rounded-circle"
+                  width="90"
+                  src={user}
+                  alt="Tamalin"
+                />
+              </Link>
+              <div className="text-center col-12">Admin</div>
+            </li>
           }
-          <hr className="bg-secondary"></hr>         
+          <hr className="bg-secondary"></hr>
           {/* USer Profile End */}
 
 
@@ -76,11 +76,7 @@ const Sidebar = ({hideUser}) => {
                   &gt; <span>Create Admin</span>
                 </Link>
               </li>
-              {/* <li>
-                <Link to={"/admins"}>
-                  &gt; <span>All Admins</span>
-                </Link>
-              </li> */}
+
               <li>
                 <Link to={"/createagent/"}>
                   &gt; <span>Create Agent</span>
@@ -89,6 +85,11 @@ const Sidebar = ({hideUser}) => {
               <li>
                 <Link to={"/agents"}>
                   &gt; <span>All Agents</span>
+                </Link>
+              </li>
+              <li>
+                <Link to={"/admins"}>
+                  &gt; <span>All Admins</span>
                 </Link>
               </li>
             </ul>

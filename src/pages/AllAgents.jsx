@@ -11,7 +11,7 @@ import Loader from "../components/Loader";
 const AllAgents = () => {
   const [agents, setAgents] = useState([]);
   const [totalPages, setTotalPage] = useState();
-  const [tableMessage, setTableMessage]=useState("No Agent found")
+  const [tableMessage, setTableMessage] = useState("No Agent found")
   let [currentPage, setCurrentPage] = useState(0);
   const [inProgress, setInProgress] = useState(true);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const AllAgents = () => {
     setInProgress(true);
     const token = sessionStorage.getItem("token");
     await instance
-      .get(`agent/list?page=${currentPage}`, {
+      .get(`user/list?page=${currentPage}&role=AGENT`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -35,7 +35,7 @@ const AllAgents = () => {
       })
       .catch((err) => {
         setInProgress(false);
-        if(err.code ==="ERR_NETWORK"){
+        if (err.code === "ERR_NETWORK") {
           setTableMessage("Network failed, Check your internet connection!")
         }
         console.log(err.code)
@@ -83,10 +83,12 @@ const AllAgents = () => {
                     <table className="table table-striped">
                       <thead>
                         <tr>
+                          <th>S/N</th>
                           <th>Full Name</th>
                           <th>Phone Number</th>
-                          <th>Email</th>
-                          <th>action</th>
+                          <th>NIN</th>
+                          <th>Role</th>
+                          <th>#</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -96,7 +98,9 @@ const AllAgents = () => {
                               <tr key={index}>
                                 <td>{++index}</td>
                                 <td>{admin.name}</td>
-                                <td>{admin.email}</td>
+                                <td>{admin.phoneNumber}</td>
+                                <td>{admin.nin}</td>
+                                <td>{admin.role}</td>
                                 <td>
                                   <Link to="/">
                                     <i className="fa fa-edit text-success"></i>

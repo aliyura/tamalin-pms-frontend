@@ -12,13 +12,7 @@ const Payments = () => {
   const [payments, setPayments] = useState([]);
   const [totalPages, setTotalPage] = useState(0);
   let [currentPage, setCurrentPage] = useState(0);
-  const [plate, setPlate] = useState("");
-  const [imei, setImei] = useState("");
-  const [sim, setSim] = useState("");
-  const [puid, setPuid] = useState("");
   const [inProgress, setInProgress] = useState(true);
-  const [active, setActiveness] = useState();
-
   const SearchInputRef = useRef();
   const navigate = useNavigate();
 
@@ -117,7 +111,7 @@ const Payments = () => {
           </div>
           <div className="register-btn">
             <Button onClick={() => navigate("/createpayment")}>
-              Register a new Payment
+              Add new Payment
             </Button>
           </div>
         </div>
@@ -126,70 +120,70 @@ const Payments = () => {
         ) : payments.length > 0 ? (
           <div className="card table-responsive">
             <table className="table table-striped">
-            <thead>
-              <tr className="table-header">
-                <th>S/N</th>
-                <th>Contract Id</th>
-                <th>Payment Reference</th>
-                <th>Amount</th>
-                <th>Narration</th>
-                <th>Created By</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {payments.map((p, index) => {
-                return (
-                  <Fragment>
-                    <tr key={index}>
-                      <td>{++index}</td>
-                      <td>{p.contractId}</td>
-                      <td>{p.paymentRef}</td>
-                      <td>{p.amount}</td>
-                      <td>{p.narration}</td>
-                      <td>{p.createdAt}</td>
-                      <td>{p.createdBy}</td>
-                      <td>{p.updatedBy}</td>
-                      <td className="actions">
-                        <div className="icon actions">
-                          <p className="icon">&nbsp;|&nbsp;</p>
-                        </div>
-                        <button className="border-0 bg-transparent"
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            if (
-                              window.confirm(
-                                "Are you sure you want to delete this Payment Record?"
-                              )
-                            ) {
-                              const token = sessionStorage.getItem("token");
-                              await instance
-                                .delete(`payment/${p.cuid}`, {
-                                  headers: {
-                                    Authorization: `Bearer ${token}`,
-                                  },
-                                })
-                                .then(() => {
-                                  getPayments();
-                                });
-                            }
-                            return;
-                          }}
-                        >
-                          <i className="fa fa-trash delete-icon icon text-danger"></i>
-                        </button>
-                        <div className="icon actions">
-                          <p className="icon">&nbsp;|&nbsp;</p>
-                        </div>
-                      </td>
-                    </tr>
-                  </Fragment>
-                );
-              })}
-            </tbody>
-          </table>
+              <thead>
+                <tr className="table-header">
+                  <th>S/N</th>
+                  <th>Contract Id</th>
+                  <th>Payment Reference</th>
+                  <th>Amount</th>
+                  <th>Narration</th>
+                  <th>Created By</th>
+                  <th>Created At</th>
+                  <th>Updated At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {payments.map((p, index) => {
+                  return (
+                    <Fragment>
+                      <tr key={index}>
+                        <td>{++index}</td>
+                        <td>{p.contractCode ? p.contractCode : 'N/A'}</td>
+                        <td>{p.paymentRef}</td>
+                        <td>{p.amount}</td>
+                        <td>{p.narration}</td>
+                        <td>{p.createdAt}</td>
+                        <td>{p.createdBy}</td>
+                        <td>{p.updatedBy}</td>
+                        <td className="actions">
+                          <div className="icon actions">
+                            <p className="icon">&nbsp;|&nbsp;</p>
+                          </div>
+                          <button className="border-0 bg-transparent"
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              if (
+                                window.confirm(
+                                  "Are you sure you want to delete this Payment Record?"
+                                )
+                              ) {
+                                const token = sessionStorage.getItem("token");
+                                await instance
+                                  .delete(`payment/${p.cuid}`, {
+                                    headers: {
+                                      Authorization: `Bearer ${token}`,
+                                    },
+                                  })
+                                  .then(() => {
+                                    getPayments();
+                                  });
+                              }
+                              return;
+                            }}
+                          >
+                            <i className="fa fa-trash delete-icon icon text-danger"></i>
+                          </button>
+                          <div className="icon actions">
+                            <p className="icon">&nbsp;|&nbsp;</p>
+                          </div>
+                        </td>
+                      </tr>
+                    </Fragment>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         ) : (
           <div className="text-center message-box">
