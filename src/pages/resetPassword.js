@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoginContext } from "../store/loginContext";
 import "../static/css/users.css";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 const ResetPassword = (props) => {
   const [confirmPasswordText, setConfirmPasswordText] = useState("");
@@ -49,7 +50,6 @@ const ResetPassword = (props) => {
         const data  = err.response.data;
         toast.error(data.message)
         console.log(err);
-        console.log(message);
 
         setIsLoading(false);
       });

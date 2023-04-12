@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import StatsCard from "../components/StatsCard";
 import instance from "../api";
 import DashboardChart from "../components/DashBoardChart";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const [summary, setSummary] = useState([]);
@@ -21,7 +22,6 @@ const Dashboard = () => {
         const data  = err.response.data;
         toast.error(data.message)
         console.log(err);
-        throw new Error(message);
       });
   };
 

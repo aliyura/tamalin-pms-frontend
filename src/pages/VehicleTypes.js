@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../static/css/list.css";
 import Loader from "../components/Loader";
 import "./EditVehicles.css";
+import { toast } from "react-toastify";
 
 const VehicleTypes = () => {
   const [vehicletypes, setVehicleTypes] = useState([]);
@@ -31,7 +32,6 @@ const VehicleTypes = () => {
          console.log(err)
         const data  = err.response.data;
         toast.error(data.message)
-        throw new Error(message);
       });
   }, []);
 
