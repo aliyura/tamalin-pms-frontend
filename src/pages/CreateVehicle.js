@@ -139,7 +139,22 @@ const CreateVehicle = () => {
                     </p>
                   </div>
                   <div className="input-field ">
-                    <label className="label_field">Identity Number</label>
+                    <label className="label_field">Chasis Number</label>
+                    <input
+                      className="input"
+                      type="text"
+                      ref={identityNumberRef}
+                      name="id-number"
+                      // placeholder="Password"
+                      onBlur={identityNumberHandler}
+                      onChange={identityNumberHandler}
+                    />
+                    <p className="err-color">
+                      {identityNumberError ? "Identity Number empty" : ""}
+                    </p>
+                  </div>
+                  <div className="input-field ">
+                    <label className="label_field">Engine Number</label>
                     <input
                       className="input"
                       type="text"

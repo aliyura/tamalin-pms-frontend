@@ -205,8 +205,10 @@ const AllClients = () => {
                           <th>s. No</th>
                           <th>Full Name</th>
                           <th>Phone Number</th>
+                          <th>NIN</th>
                           <th>guarantor's name</th>
                           <th>guarantor's phone</th>
+                          <th>guarantor's NIN</th>
                           <th>Status</th>
                           <th>action</th>
                         </tr>
@@ -219,8 +221,10 @@ const AllClients = () => {
                                 <td>{++index}</td>
                                 <td>{client.name}</td>
                                 <td>{client.phoneNumber}</td>
+                                <td>{client.identityNumber}</td>
                                 <td>{client.guarantorDetail.name}</td>
                                 <td>{client.guarantorDetail.phoneNumber}</td>
+                                <td>{client.guarantorDetail.identityNumber}</td>
                                 <td>{client.status}</td>
                                 <td className="actions">
                                   {/* <a href="" type="button" onClick={(e) => showPaymentModal(e, client.cuid)}>
